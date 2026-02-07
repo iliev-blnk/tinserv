@@ -29,7 +29,7 @@ export default function Registration() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-gray-900 flex flex-col justify-center items-center p-4 py-12 relative">
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
                 <div className="absolute top-0 right-0 -mt-24 -mr-24 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl opacity-50" />
