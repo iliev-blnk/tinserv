@@ -68,6 +68,15 @@ export default function Hero() {
     return () => clearInterval(timerInterval);
   }, []);
 
+  // Body Scroll Lock
+  useEffect(() => {
+    if (isCollaborationModalOpen || isVolunteerModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isCollaborationModalOpen, isVolunteerModalOpen]);
+
   const nextSlide = () => {
     setActiveSlide((current) => (current + 1) % heroSlides.length);
   };
@@ -252,20 +261,20 @@ export default function Hero() {
           />
 
           {/* Modal Content */}
-          <div className="relative bg-gray-900 border border-gray-700 rounded-3xl p-8 max-w-2xl w-full shadow-2xl overflow-hidden">
+          <div className="relative bg-gray-900 border border-gray-700 rounded-3xl p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
             {/* Decor */}
-            <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-accent-500/20 rounded-full blur-3xl opacity-50" />
-            <div className="absolute bottom-0 left-0 -mb-12 -ml-12 w-32 h-32 bg-brand-500/20 rounded-full blur-3xl opacity-50" />
+            <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-accent-500/20 rounded-full blur-3xl opacity-50 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 -mb-12 -ml-12 w-32 h-32 bg-brand-500/20 rounded-full blur-3xl opacity-50 pointer-events-none" />
 
             <button
               onClick={() => setIsVolunteerModalOpen(false)}
-              className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors z-10"
+              className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors z-10 p-2 bg-gray-900/50 rounded-full"
               aria-label="Close modal"
             >
               <ChevronRight className="w-6 h-6 rotate-45" />
             </button>
 
-            <div className="text-center mb-8">
+            <div className="text-center mb-8 mt-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/20 text-accent-400 text-xs font-bold uppercase tracking-wider mb-4 border border-accent-500/20">
                 {t.volunteerEvent.modalTitle}
               </div>
@@ -275,13 +284,13 @@ export default function Hero() {
             </div>
 
             {/* Countdown Timer */}
-            <div className="grid grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-4 gap-2 md:gap-4 mb-8">
               {['days', 'hours', 'minutes', 'seconds'].map((unit) => (
-                <div key={unit} className="flex flex-col items-center p-4 rounded-2xl bg-gray-800/50 border border-gray-700 backdrop-blur-sm">
-                  <span className="text-3xl font-mono font-bold text-white mb-1">
+                <div key={unit} className="flex flex-col items-center p-2 md:p-4 rounded-2xl bg-gray-800/50 border border-gray-700 backdrop-blur-sm">
+                  <span className="text-xl md:text-3xl font-mono font-bold text-white mb-1">
                     {String(timeLeft[unit as keyof typeof timeLeft]).padStart(2, '0')}
                   </span>
-                  <span className="text-xs text-brand-300 uppercase tracking-wider">
+                  <span className="text-[10px] md:text-xs text-brand-300 uppercase tracking-wider">
                     {t.volunteerEvent.timer[unit as keyof typeof t.volunteerEvent.timer]}
                   </span>
                 </div>
@@ -298,7 +307,7 @@ export default function Hero() {
                     <p className="text-sm text-gray-400 uppercase tracking-wide font-bold mb-1">Locație</p>
                     <p className="text-white font-medium">{t.volunteerEvent.location}</p>
                     <a
-                      href="https://maps.google.com/?q=Parcul+Alunelul+Chisinau"
+                      href="https://maps.google.com/?q=Stefan+Voda"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-accent-400 hover:underline mt-1 inline-block"
@@ -316,7 +325,7 @@ export default function Hero() {
               </div>
 
               {/* Simulated Map / Geo-tag Visual */}
-              <div className="w-full md:w-1/3 aspect-square rounded-2xl overflow-hidden relative border border-gray-700 group cursor-pointer hover:border-brand-500/50 transition-colors">
+              <div className="w-full md:w-1/3 aspect-square rounded-2xl overflow-hidden relative border border-gray-700 group cursor-pointer hover:border-brand-500/50 transition-colors hidden md:block">
                 {/* Placeholder for map - using a stylized gradient/mockup if real map api not avail, checking if keeping it static image is better */}
                 <div className="absolute inset-0 bg-gray-800 flex items-center justify-center bg-[url('/map-placeholder.png')] bg-cover bg-center">
                   <div className="absolute inset-0 bg-brand-900/20 group-hover:bg-transparent transition-colors" />
@@ -325,7 +334,7 @@ export default function Hero() {
               </div>
             </div>
 
-            <div className="flex gap-4 justify-center md:justify-end border-t border-gray-800 pt-6">
+            <div className="flex flex-col-reverse md:flex-row gap-4 justify-center md:justify-end border-t border-gray-800 pt-6">
               <button
                 onClick={() => setIsVolunteerModalOpen(false)}
                 className="px-6 py-3 rounded-xl bg-transparent hover:bg-gray-800 text-gray-400 hover:text-white font-medium transition-all"
@@ -334,7 +343,7 @@ export default function Hero() {
               </button>
               <Link
                 to="/inscriere"
-                className="px-8 py-3 rounded-xl bg-accent-600 hover:bg-accent-700 text-white font-bold shadow-lg hover:shadow-accent-500/20 transition-all transform hover:-translate-y-1 inline-block"
+                className="px-8 py-3 rounded-xl bg-accent-600 hover:bg-accent-700 text-white font-bold shadow-lg hover:shadow-accent-500/20 transition-all transform hover:-translate-y-1 inline-block text-center"
               >
                 {t.volunteerEvent.joinBtn}
               </Link>
