@@ -7,15 +7,15 @@ export default function Footer() {
     return (
         <footer className="bg-gray-900 text-gray-300">
             {/* Main Footer */}
-            <div className="max-w-7xl mx-auto px-6 py-16 overflow-hidden">
-                <div className="grid grid-cols-1 md:grid-cols-[60%_40%] gap-12 items-center mb-20">
+            <div className="max-w-7xl mx-auto px-6 py-16">
+                <div className="grid grid-cols-1 md:grid-cols-[45%_55%] gap-12 items-center mb-20">
                     {/* Logo Column */}
                     <div className="flex items-center justify-center md:justify-start w-full">
-                        <a href="#" className="block w-full max-w-[400px] md:max-w-none">
+                        <a href="#" className="block w-full max-w-[300px] md:max-w-none">
                             <img
                                 src="/logo-1.png"
                                 alt="TinSerV Logo"
-                                className="w-full h-auto object-cover max-h-[300px] md:max-h-[500px] mx-auto md:mx-0"
+                                className="w-full h-auto object-cover max-h-[250px] md:max-h-[400px] mx-auto md:mx-0"
                             />
                         </a>
                     </div>
@@ -29,7 +29,7 @@ export default function Footer() {
                             </p>
                         </div>
 
-                        <ul className="space-y-4 inline-block text-left">
+                        <ul className="space-y-4 w-full">
                             <li className="flex gap-4">
                                 <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-500/20 flex items-center justify-center mt-0.5">
                                     <div className="w-2 h-2 rounded-full bg-brand-500" />
