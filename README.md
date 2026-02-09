@@ -1,8 +1,8 @@
 # TinSerV Chișinău 🕊️
 
-> **"Schimbă-te pentru a schimba"** (Change yourself to change)
+> **"Schimbă-te pentru a schimba"**
 
-TinSerV Chișinău is a modern, high-performance web platform designed for the Youth in Volunteer Service organization. It serves as a central hub for organizing volunteer activities, connecting dedicated youth with community projects, and tracking social impact in the Chișinău region.
+TinSerV Chișinău is a modern, high-performance web platform designed for the Youth in Volunteer Service NGO - TinSerV. It serves as a central hub for organizing volunteer activities, connecting dedicated youth with community projects, and tracking social impact in the Central region of Moldova.
 
 ## ✨ Features
 
@@ -22,39 +22,6 @@ TinSerV Chișinău is a modern, high-performance web platform designed for the Y
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js (Latest LTS recommended)
-- npm or pnpm
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/iliev-blnk/tinserv.git
-   cd tinserv
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-### Google Sheets Setup
-
-The registration form requires a Google Apps Script backend to save submissions. 
-Please refer to the [GOOGLE_SHEETS_SETUP.md](./GOOGLE_SHEETS_SETUP.md) (check artifacts if not in root) for detailed instructions on:
-1. Creating the Google Sheet.
-2. Deploying the Apps Script.
-3. Connecting the Web App URL to the React frontend.
-
 ## 📁 Project Structure
 
 - `src/components`: UI components (Hero, Stats, Testimonials, etc.)
@@ -64,7 +31,7 @@ Please refer to the [GOOGLE_SHEETS_SETUP.md](./GOOGLE_SHEETS_SETUP.md) (check ar
 
 ## 📄 License
 
-This project is private and intended for the use of TinSerV Chișinău.
+This project is private and intended for the use of TinSerV Chișinău NGO.
 
 ---
-Made with ❤️ for a better world.
+ilyushavb.
