@@ -3,6 +3,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { ArrowLeft, Send, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL_HERE"; // TODO: Replace with your Google Script Web App URL
+
 export default function Registration() {
     const { t } = useLanguage();
     const [formData, setFormData] = useState({
@@ -12,12 +14,41 @@ export default function Registration() {
         message: ''
     });
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Here you would typically send the data to a backend
-        console.log('Registration submitted:', formData);
-        setIsSubmitted(true);
+        setIsSubmitting(true);
+        setError('');
+
+        if (GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_SCRIPT_URL_HERE") {
+            alert("Please configure the Google Script URL in src/pages/Registration.tsx");
+            setIsSubmitting(false);
+            return;
+        }
+
+        try {
+            const data = new FormData();
+            data.append('name', formData.name);
+            data.append('email', formData.email);
+            data.append('phone', formData.phone);
+            data.append('message', formData.message);
+
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: data,
+                mode: 'no-cors' // Important for Google Apps Script to work without complex CORS headers
+            });
+
+            // Since mode is 'no-cors', we can't read the response, so we assume success if no network error thrown
+            setIsSubmitted(true);
+        } catch (err) {
+            console.error("Submission error:", err);
+            setError('Something went wrong. Please try again later.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -118,12 +149,19 @@ export default function Registration() {
                                     />
                                 </div>
 
+                                {error && (
+                                    <div className="text-red-500 text-sm text-center">
+                                        {error}
+                                    </div>
+                                )}
+
                                 <button
                                     type="submit"
-                                    className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-brand-500 to-accent-500 hover:from-brand-600 hover:to-accent-600 text-white font-bold text-lg shadow-lg hover:shadow-brand-500/25 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                                    disabled={isSubmitting}
+                                    className={`w-full py-4 px-6 rounded-xl bg-gradient-to-r from-brand-500 to-accent-500 hover:from-brand-600 hover:to-accent-600 text-white font-bold text-lg shadow-lg hover:shadow-brand-500/25 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-50 cursor-not-allowed hover:transform-none' : ''}`}
                                 >
-                                    <span>{t.registration.fields.submit}</span>
-                                    <Send className="w-5 h-5" />
+                                    <span>{isSubmitting ? 'Se trimite...' : t.registration.fields.submit}</span>
+                                    {!isSubmitting && <Send className="w-5 h-5" />}
                                 </button>
                             </form>
                         </>

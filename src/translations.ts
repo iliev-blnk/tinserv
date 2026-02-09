@@ -200,7 +200,7 @@ export const translations = {
                 call: 'Звоните'
             },
             locationValue: 'Кишинёв, Молдова',
-            copyright: '© 2026 TinSerV Кишинев. Сделано с ❤️ для лучшего мира.'
+            copyright: '© 2026 TinSerV Chisinau. Built with ❤️ for a better world.'
         },
         videoShowcase: {
             title: 'Наше влияние в кадрах',
