@@ -34,4 +34,4 @@ TinSerV Chișinău is a modern, high-performance web platform designed for the Y
 This project is private and intended for the use of TinSerV Chișinău NGO.
 
 ---
-ilyushavb.
+tinserv.site | ilyushavb.
