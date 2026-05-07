@@ -1,36 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Users, Clock, Building2, Globe } from 'lucide-react';
-
-const stats = [
-    {
-        icon: Users,
-        value: 2547,
-        suffix: '+',
-        label: 'Active Volunteers',
-        description: 'Dedicated individuals making a difference',
-    },
-    {
-        icon: Clock,
-        value: 15420,
-        suffix: '',
-        label: 'Hours Donated',
-        description: 'Time invested in community service',
-    },
-    {
-        icon: Building2,
-        value: 58,
-        suffix: '',
-        label: 'Partner Organizations',
-        description: 'Non-profits in our network',
-    },
-    {
-        icon: Globe,
-        value: 12,
-        suffix: '',
-        label: 'Communities Served',
-        description: 'Local areas positively impacted',
-    },
-];
+import { useLanguage } from '../contexts/LanguageContext';
 
 function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
     const [count, setCount] = useState(0);
@@ -69,26 +39,32 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
     }, [value, hasAnimated]);
 
     return (
-        <div ref={ref} className="font-heading text-4xl lg:text-5xl font-bold text-gray-900">
+        <div ref={ref} className="font-black-heading text-4xl lg:text-5xl text-white">
             {count.toLocaleString()}{suffix}
         </div>
     );
 }
 
 export default function Stats() {
+    const { t } = useLanguage();
+
+    const stats = [
+        { icon: Users,     value: 2547,  suffix: '+', label: t.impact.volunteers },
+        { icon: Clock,     value: 15420, suffix: '',  label: t.impact.hours },
+        { icon: Building2, value: 58,    suffix: '',  label: t.impact.organizations },
+        { icon: Globe,     value: 12,    suffix: '',  label: t.impact.projects },
+    ];
+
     return (
-        <section id="impact" className="py-24 bg-gradient-to-b from-gray-50 to-white">
+        <section id="impact" className="py-24 bg-[#1a1a1a] border-t border-white/[0.06]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <span className="inline-block text-brand-600 font-semibold text-sm uppercase tracking-wider mb-3">
-                        Our Impact
-                    </span>
-                    <h2 className="font-heading text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                        Together We're Stronger
+                    <h2 className="font-black-heading text-5xl lg:text-7xl text-white mb-4">
+                        {t.impact.title}
                     </h2>
-                    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                        Every volunteer hour creates ripples of positive change. See the impact our community has made.
+                    <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+                        {t.impact.subtitle}
                     </p>
                 </div>
 
@@ -97,25 +73,17 @@ export default function Stats() {
                     {stats.map((stat) => (
                         <div
                             key={stat.label}
-                            className="relative group bg-white rounded-2xl p-8 text-center border border-gray-100 card-hover"
+                            className="relative group bg-white/5 border border-white/10 hover:border-brand-500/50 hover:bg-white/10 transition-all duration-300 p-8 text-center"
                         >
-                            {/* Icon */}
-                            <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-brand-50 text-brand-600 mb-6 group-hover:bg-brand-100 transition-colors">
+                            <div className="inline-flex items-center justify-center w-14 h-14 bg-brand-500/20 text-brand-400 mb-6 group-hover:bg-brand-500/30 transition-colors">
                                 <stat.icon className="h-7 w-7" />
                             </div>
 
-                            {/* Value */}
                             <AnimatedCounter value={stat.value} suffix={stat.suffix} />
 
-                            {/* Label */}
-                            <div className="text-lg font-semibold text-gray-900 mt-2 mb-1">
+                            <div className="text-lg font-bold text-white mt-2">
                                 {stat.label}
                             </div>
-
-                            {/* Description */}
-                            <p className="text-sm text-gray-500">
-                                {stat.description}
-                            </p>
                         </div>
                     ))}
                 </div>

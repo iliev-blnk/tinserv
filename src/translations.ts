@@ -8,9 +8,9 @@ export const translations = {
             getStarted: 'Începe acum'
         },
         hero: {
-            headline1: 'Schimba-te',
-            headline2: 'pentru a',
-            headlineHighlight: 'Schimba',
+            headline1: 'Fii lumina',
+            headline2: 'care schimba',
+            headlineHighlight: 'lumea',
             headline3: '',
             ctaPrimary: 'Colaborează',
             ctaSecondary: 'Voluntariat',
@@ -27,19 +27,19 @@ export const translations = {
             learnMore: 'Află mai mult'
         },
         howItWorks: {
-            title: 'Cum Funcționează',
-            subtitle: 'Începe călătoria ta de voluntariat în 3 pași simpli',
+            title: 'Ce Facem',
+            subtitle: 'Trei valori care definesc misiunea noastră',
             step1: {
-                title: 'Înregistrează-te',
-                description: 'Creează un cont gratuit și spune-ne despre interesele tale'
+                title: 'Slujire',
+                description: 'Ajutor practic și concret — mâini gata să lucreze, inimi gata să dăruiască fără așteptarea unei recompense.'
             },
             step2: {
-                title: 'Găsește oportunități',
-                description: 'Răsfoiește proiecte locale care se potrivesc cu pasiunile tale'
+                title: 'Comunitate',
+                description: 'Tineri care se implică activ în viața comunității — organizăm activități, sprijinim familii și construim relații reale.'
             },
             step3: {
-                title: 'Fă diferența',
-                description: 'Conectează-te cu organizații și începe să creezi impact'
+                title: 'Transformare',
+                description: 'Lumina transformă întunericul. Nu doar ajutăm — schimbăm vieți, construim un viitor mai bun pentru tineri și comunitate.'
             }
         },
         impact: {
@@ -59,7 +59,7 @@ export const translations = {
         },
         footer: {
             title: 'TinSerV (Tinerii în Serviciul Voluntar)',
-            slogan: '„Schimbă-te pentru a schimba"',
+            slogan: '„Fii lumina care schimba lumea"',
             items: {
                 practical: 'Ajutor Practic: Sprijin direct familiilor vulnerabile.',
                 community: 'Activități Comunitare: Școli de vacanță, activități educative și ateliere creative.',
@@ -104,7 +104,9 @@ export const translations = {
                 seconds: 'Secunde'
             },
             joinBtn: 'Mă Înscriu!',
-            close: 'Închide'
+            close: 'Închide',
+            locationLabel: 'Locație',
+            viewOnMap: 'Vezi pe hartă →'
         },
         registration: {
             title: 'Înscriere Voluntariat',
@@ -123,15 +125,15 @@ export const translations = {
     ru: {
         nav: {
             opportunities: 'Возможности',
-            howItWorks: 'Как это работает',
-            impact: 'Наше влияние',
+            howItWorks: 'О нас',
+            impact: 'Импакт',
             stories: 'Истории',
             getStarted: 'Начать'
         },
         hero: {
-            headline1: 'Изменись',
-            headline2: 'что-бы',
-            headlineHighlight: 'Изменить',
+            headline1: 'Будь светом',
+            headline2: 'который',
+            headlineHighlight: 'меняет мир',
             headline3: '',
             ctaPrimary: 'Сотрудничать',
             ctaSecondary: 'Волонтёрство',
@@ -148,19 +150,19 @@ export const translations = {
             learnMore: 'Узнать больше'
         },
         howItWorks: {
-            title: 'Как это работает',
-            subtitle: 'Начните свой путь волонтёра за 3 простых шага',
+            title: 'Что Мы Делаем',
+            subtitle: 'Три ценности, которые определяют нашу миссию',
             step1: {
-                title: 'Зарегистрируйтесь',
-                description: 'Создайте бесплатную учетную запись и расскажите нам о своих интересах'
+                title: 'Служение',
+                description: 'Практическая помощь сообществу — руки готовы трудиться, сердца готовы отдавать без ожидания награды.'
             },
             step2: {
-                title: 'Найдите возможности',
-                description: 'Просматривайте местные проекты, которые соответствуют вашим интересам'
+                title: 'Сообщество',
+                description: 'Молодые люди, которые активно участвуют в жизни сообщества — организуем мероприятия, поддерживаем семьи и строим настоящие отношения.'
             },
             step3: {
-                title: 'Делайте разницу',
-                description: 'Свяжитесь с организациями и начните создавать влияние'
+                title: 'Трансформация',
+                description: 'Свет преобразует тьму. Мы не просто помогаем — мы меняем жизни и строим лучшее будущее для молодёжи и сообщества.'
             }
         },
         impact: {
@@ -180,7 +182,7 @@ export const translations = {
         },
         footer: {
             title: 'TinSerV (Молодежь в волонтерском служении)',
-            slogan: '«Изменись, чтобы изменить»',
+            slogan: '«Будь светом который меняет мир»',
             items: {
                 practical: 'Практическая помощь: Прямая поддержка уязвимых семей.',
                 community: 'Общественная деятельность: Летние школы, образовательные мероприятия и творческие мастерские.',
@@ -226,7 +228,9 @@ export const translations = {
                 seconds: 'Секунд'
             },
             joinBtn: 'Я участвую!',
-            close: 'Закрыть'
+            close: 'Закрыть',
+            locationLabel: 'Местоположение',
+            viewOnMap: 'Посмотреть на карте →'
         },
         registration: {
             title: 'Регистрация Волонтёра',

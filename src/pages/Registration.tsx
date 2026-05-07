@@ -3,7 +3,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { ArrowLeft, Send, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL_HERE"; // TODO: Replace with your Google Script Web App URL
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyx88nINdcSPkueotz2Y_fDGjPoReXkEzAb2neW6kHFbTxwqczunyUwNKi8P5rMKliNmQ/exec";
 
 export default function Registration() {
     const { t } = useLanguage();

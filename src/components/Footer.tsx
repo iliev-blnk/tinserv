@@ -5,7 +5,7 @@ export default function Footer() {
     const { t } = useLanguage();
 
     return (
-        <footer className="bg-gray-900 text-gray-300">
+        <footer className="bg-[#171717] border-t border-white/[0.06] text-gray-300">
             {/* Main Footer */}
             <div className="max-w-7xl mx-auto px-6 py-16">
                 <div className="grid grid-cols-1 md:grid-cols-[45%_55%] gap-12 items-center mb-20">
@@ -23,53 +23,27 @@ export default function Footer() {
                     {/* Content Column */}
                     <div className="text-center md:text-left">
                         <div className="mb-8">
-                            <h3 className="text-xl md:text-2xl font-heading font-bold text-white mb-3">{t.footer.title}</h3>
-                            <p className="text-gray-400 leading-relaxed italic border-l-0 md:border-l-4 border-brand-500 pl-0 md:pl-4 mb-6">
+                            <h3 className="font-black-heading text-2xl md:text-3xl text-white mb-3">{t.footer.title}</h3>
+                            <blockquote className="border-l-4 border-brand-500 pl-4 italic text-brand-300 mb-6">
                                 {t.footer.slogan}
-                            </p>
+                            </blockquote>
                         </div>
 
                         <ul className="space-y-4 w-full">
-                            <li className="flex gap-4">
-                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-500/20 flex items-center justify-center mt-0.5">
-                                    <div className="w-2 h-2 rounded-full bg-brand-500" />
-                                </div>
-                                <p className="text-gray-300 text-sm leading-relaxed">
-                                    {t.footer.items.practical}
-                                </p>
-                            </li>
-                            <li className="flex gap-4">
-                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-500/20 flex items-center justify-center mt-0.5">
-                                    <div className="w-2 h-2 rounded-full bg-brand-500" />
-                                </div>
-                                <p className="text-gray-300 text-sm leading-relaxed">
-                                    {t.footer.items.community}
-                                </p>
-                            </li>
-                            <li className="flex gap-4">
-                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-500/20 flex items-center justify-center mt-0.5">
-                                    <div className="w-2 h-2 rounded-full bg-brand-500" />
-                                </div>
-                                <p className="text-gray-300 text-sm leading-relaxed">
-                                    {t.footer.items.spiritual}
-                                </p>
-                            </li>
-                            <li className="flex gap-4">
-                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-500/20 flex items-center justify-center mt-0.5">
-                                    <div className="w-2 h-2 rounded-full bg-brand-500" />
-                                </div>
-                                <p className="text-gray-300 text-sm leading-relaxed">
-                                    {t.footer.items.charity}
-                                </p>
-                            </li>
-                            <li className="flex gap-4">
-                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-500/20 flex items-center justify-center mt-0.5">
-                                    <div className="w-2 h-2 rounded-full bg-brand-500" />
-                                </div>
-                                <p className="text-gray-300 text-sm leading-relaxed">
-                                    {t.footer.items.youth}
-                                </p>
-                            </li>
+                            {[
+                                t.footer.items.practical,
+                                t.footer.items.community,
+                                t.footer.items.spiritual,
+                                t.footer.items.charity,
+                                t.footer.items.youth,
+                            ].map((item) => (
+                                <li key={item} className="flex gap-4">
+                                    <div className="flex-shrink-0 w-2 h-2 bg-brand-500 mt-2" />
+                                    <p className="text-gray-300 text-sm leading-relaxed">
+                                        {item}
+                                    </p>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>
@@ -77,33 +51,32 @@ export default function Footer() {
                 {/* Centered Contact Section */}
                 <div className="max-w-4xl mx-auto border-t border-gray-800 pt-16">
                     <div className="text-center mb-12 px-4">
-                        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-accent-500/10 border border-accent-500/20 mb-6">
-                            <span className="w-2 h-2 rounded-full bg-accent-500 animate-pulse" />
-                            <span className="text-accent-400 font-bold text-sm tracking-wide uppercase">{t.footer.cta.badge}</span>
+                        <div className="inline-flex items-center gap-3 px-4 py-2 bg-brand-500 mb-6">
+                            <span className="text-black font-black text-sm tracking-widest uppercase">{t.footer.cta.badge}</span>
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4">{t.footer.cta.title}</h2>
+                        <h2 className="font-black-heading text-4xl md:text-6xl text-white mb-4">{t.footer.cta.title}</h2>
                         <p className="text-gray-400 max-w-xl mx-auto">{t.footer.cta.subtitle}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <a href="mailto:oponeatovskii@mail.ru" className="group p-6 rounded-2xl bg-gray-800/20 border border-gray-700/30 hover:border-brand-500/40 hover:bg-gray-800/40 transition-all duration-300 text-center">
-                            <div className="w-12 h-12 rounded-xl bg-gray-800/50 flex items-center justify-center text-gray-400 group-hover:text-brand-400 group-hover:bg-brand-500/10 transition-all duration-300 mx-auto mb-4">
+                        <a href="mailto:oponeatovskii@mail.ru" className="group p-6 border border-gray-700 hover:border-brand-500 hover:bg-brand-500/5 transition-all duration-300 text-center">
+                            <div className="w-12 h-12 bg-brand-500/10 flex items-center justify-center text-brand-400 group-hover:bg-brand-500/20 transition-all duration-300 mx-auto mb-4">
                                 <Mail className="h-6 w-6" />
                             </div>
                             <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mb-1">{t.footer.contacts.write}</p>
                             <p className="text-gray-300 group-hover:text-white transition-colors text-sm font-medium break-all">{"oponeatovskii@mail.ru"}</p>
                         </a>
 
-                        <div className="group p-6 rounded-2xl bg-gray-800/20 border border-gray-700/30 hover:border-brand-500/40 hover:bg-gray-800/40 transition-all duration-300 text-center">
-                            <div className="w-12 h-12 rounded-xl bg-gray-800/50 flex items-center justify-center text-gray-400 group-hover:text-brand-400 group-hover:bg-brand-500/10 transition-all duration-300 mx-auto mb-4">
+                        <div className="group p-6 border border-gray-700 hover:border-brand-500 hover:bg-brand-500/5 transition-all duration-300 text-center">
+                            <div className="w-12 h-12 bg-brand-500/10 flex items-center justify-center text-brand-400 group-hover:bg-brand-500/20 transition-all duration-300 mx-auto mb-4">
                                 <MapPin className="h-6 w-6" />
                             </div>
                             <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mb-1">{t.footer.contacts.location}</p>
                             <p className="text-gray-300 group-hover:text-white transition-colors text-sm font-medium">{t.footer.items.location}</p>
                         </div>
 
-                        <a href="tel:+37368753358" className="group p-6 rounded-2xl bg-gray-800/20 border border-gray-700/30 hover:border-brand-500/40 hover:bg-gray-800/40 transition-all duration-300 text-center">
-                            <div className="w-12 h-12 rounded-xl bg-gray-800/50 flex items-center justify-center text-gray-400 group-hover:text-brand-400 group-hover:bg-brand-500/10 transition-all duration-300 mx-auto mb-4">
+                        <a href="tel:+37368753358" className="group p-6 border border-gray-700 hover:border-brand-500 hover:bg-brand-500/5 transition-all duration-300 text-center">
+                            <div className="w-12 h-12 bg-brand-500/10 flex items-center justify-center text-brand-400 group-hover:bg-brand-500/20 transition-all duration-300 mx-auto mb-4">
                                 <Phone className="h-6 w-6" />
                             </div>
                             <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mb-1">{t.footer.contacts.call}</p>
