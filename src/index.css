@@ -1,34 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap');
 @import "tailwindcss";
 
 /* Tailwind v4 theme configuration */
 @theme {
   --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-family-heading: 'Outfit', 'Inter', sans-serif;
+  --font-family-heading: 'Montserrat', 'Inter', sans-serif;
 
-  /* Violet/Indigo - Primary brand color */
-  --color-brand-50: #f5f3ff;
-  --color-brand-100: #ede9fe;
-  --color-brand-200: #ddd6fe;
-  --color-brand-300: #c4b5fd;
-  --color-brand-400: #a78bfa;
-  --color-brand-500: #818cf8;
-  --color-brand-600: #7c3aed;
-  --color-brand-700: #6d28d9;
-  --color-brand-800: #4c1d95;
-  --color-brand-900: #2e1065;
+  /* Electric Yellow - Primary brand color */
+  --color-brand-50:  #fffff0;
+  --color-brand-100: #fefcbf;
+  --color-brand-200: #fef08a;
+  --color-brand-300: #fde047;
+  --color-brand-400: #fadb14;
+  --color-brand-500: #ffe600;
+  --color-brand-600: #ccb800;
+  --color-brand-700: #a38d00;
+  --color-brand-800: #7a6900;
+  --color-brand-900: #524600;
 
-  /* Rose/Pink - Accent color */
-  --color-accent-50: #fff1f2;
-  --color-accent-100: #ffe4e6;
-  --color-accent-200: #fecdd3;
-  --color-accent-300: #fda4af;
-  --color-accent-400: #fb7185;
-  --color-accent-500: #f43f5e;
-  --color-accent-600: #e11d48;
-  --color-accent-700: #be123c;
-  --color-accent-800: #9f1239;
-  --color-accent-900: #881337;
+  /* Near-black - Accent / dark sections */
+  --color-accent-50:  #f8fafc;
+  --color-accent-100: #f1f5f9;
+  --color-accent-200: #e2e8f0;
+  --color-accent-300: #94a3b8;
+  --color-accent-400: #64748b;
+  --color-accent-500: #1e293b;
+  --color-accent-600: #0f172a;
+  --color-accent-700: #020617;
+  --color-accent-800: #020617;
+  --color-accent-900: #020617;
 
   /* Custom animations */
   --animate-fade-in-up: fadeInUp 0.6s ease-out forwards;
@@ -38,8 +38,8 @@
   --animate-bounce-gentle: bounce-gentle 2s ease-in-out infinite;
 
   /* Custom shadows */
-  --shadow-glow: 0 0 20px rgba(124, 58, 237, 0.3);
-  --shadow-glow-lg: 0 0 40px rgba(124, 58, 237, 0.4);
+  --shadow-glow:    0 0 20px rgba(255, 230, 0, 0.35);
+  --shadow-glow-lg: 0 0 40px rgba(255, 230, 0, 0.45);
   --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-card-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
 }
@@ -55,6 +55,8 @@ body {
   font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #171717; /* matches hero/footer dark, prevents white flash on overscroll */
+  overscroll-behavior: none;
 }
 
 h1,
@@ -66,54 +68,103 @@ h6 {
   font-family: var(--font-family-heading);
 }
 
-/* Utility Classes */
-.glass {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+/* Bold display heading utility */
+.font-black-heading {
+  font-family: var(--font-family-heading);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
 }
 
+/* Font utilities */
+.font-heading {
+  font-family: var(--font-family-heading);
+}
+
+/* Gradient text (kept for any remaining uses) */
 .gradient-text {
-  background: linear-gradient(135deg, var(--color-brand-600) 0%, var(--color-brand-400) 50%, var(--color-accent-500) 100%);
+  background: linear-gradient(135deg, var(--color-brand-500) 0%, var(--color-brand-700) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+/* Electric yellow CTA — chunky hard-shadow button */
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-brand-500) 0%, var(--color-brand-700) 100%);
-  box-shadow: 0 8px 30px rgba(124, 58, 237, 0.3);
-  transition: all 0.3s ease;
+  background: #ffe600;
+  color: #000000;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  box-shadow: 4px 4px 0px #a38d00;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(124, 58, 237, 0.4);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #a38d00;
 }
 
-.btn-green {
-  background: var(--color-accent-500);
-  color: white;
+.btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #a38d00;
+}
+
+/* Ghost white button — for use on dark / image backgrounds */
+.btn-outline-white {
+  background: transparent;
+  color: #fff;
+  font-weight: 800;
+  border: 3px solid #fff;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-outline-white:hover {
+  background: #fff;
+  color: #0f172a;
+}
+
+/* Dark button — CTA on yellow/light sections */
+.btn-dark {
+  background: #0f172a;
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 4px 4px 0px #ffe600;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-dark:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #ffe600;
+}
+
+.btn-dark:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #ffe600;
+}
+
+/* Compact orange — inside cards */
+.btn-card {
+  background: #f97316;
+  color: #fff;
   font-weight: 700;
-  transition: all 0.3s ease;
+  transition: background 0.2s ease;
 }
 
-.btn-green:hover {
-  background: var(--color-accent-600);
-  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
+.btn-card:hover {
+  background: #ea580c;
 }
 
-.btn-navy {
-  background: var(--color-brand-500);
-  color: white;
-  font-weight: 700;
-  transition: all 0.3s ease;
+/* Diagonal section dividers */
+.section-slant-top {
+  clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 100%);
+  margin-top: -2rem;
+  padding-top: 5rem;
 }
 
-.btn-navy:hover {
-  background: var(--color-brand-600);
-  box-shadow: 0 12px 30px rgba(30, 58, 138, 0.4);
+.section-slant-both {
+  clip-path: polygon(0 4%, 100% 0, 100% 96%, 0 100%);
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 .card-hover {
@@ -125,9 +176,21 @@ h6 {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
 }
 
-/* Font utilities */
-.font-heading {
-  font-family: var(--font-family-heading);
+/* Category badges — flat solid fills */
+.badge-education {
+  background: #2563eb;
+}
+
+.badge-environment {
+  background: #16a34a;
+}
+
+.badge-healthcare {
+  background: #dc2626;
+}
+
+.badge-community {
+  background: #f97316;
 }
 
 /* Keyframe Animations */
@@ -159,11 +222,11 @@ h6 {
 
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+    box-shadow: 0 0 20px rgba(255, 230, 0, 0.35);
   }
 
   50% {
-    box-shadow: 0 0 40px rgba(124, 58, 237, 0.5);
+    box-shadow: 0 0 40px rgba(255, 230, 0, 0.55);
   }
 }
 
@@ -211,38 +274,21 @@ h6 {
   animation: bounce-gentle 2s ease-in-out infinite;
 }
 
-/* Category badges */
-.badge-education {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-}
-
-.badge-environment {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-}
-
-.badge-healthcare {
-  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
-}
-
-.badge-community {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-}
-
-/* Custom scrollbar - subtle and dark */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #171717;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.2);
+  background: rgba(148, 163, 184, 0.3);
   border-radius: 10px;
-  border: 2px solid #0f172a;
+  border: 2px solid #171717;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.4);
+  background: rgba(148, 163, 184, 0.5);
 }
