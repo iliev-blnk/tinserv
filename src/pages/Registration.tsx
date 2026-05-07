@@ -22,7 +22,7 @@ export default function Registration() {
         setIsSubmitting(true);
         setError('');
 
-        if (GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_SCRIPT_URL_HERE") {
+        if ((GOOGLE_SCRIPT_URL as string) === "YOUR_GOOGLE_SCRIPT_URL_HERE") {
             alert("Please configure the Google Script URL in src/pages/Registration.tsx");
             setIsSubmitting(false);
             return;
