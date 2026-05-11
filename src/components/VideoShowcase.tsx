@@ -6,12 +6,12 @@ export default function VideoShowcase() {
 
     const videos = [
         {
-            src: '/video1.MOV',
+            src: '/vid3.MOV',
             title: t.videoShowcase.video1,
             type: 'video/quicktime'
         },
         {
-            src: '/video2.mp4',
+            src: '/vid4.mp4',
             title: t.videoShowcase.video2,
             type: 'video/mp4'
         }
