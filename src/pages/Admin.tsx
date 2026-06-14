@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Search, RefreshCw, Download, Users, TrendingUp, Calendar, MessageSquare, LogOut, Eye, EyeOff, Trash2, RotateCcw } from 'lucide-react';
 
 // ─── CONFIG ─────────────────────────────────────────────────────────────────
-const ADMIN_PASSWORD = 'tinserv2025'; // change this
+const ADMIN_PASSWORD = '4tinserv2025';
 
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzsLMFea0FYkp6tj6ZR5meJhnEd1rL9v3RJDVPo2WCi6cQCMMkKVcxnhHJBbj1qTMsvbt4S5gEwkVl/pub?gid=0&single=true&output=csv';
 // ─────────────────────────────────────────────────────────────────────────────
