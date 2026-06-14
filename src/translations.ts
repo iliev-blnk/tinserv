@@ -244,13 +244,6 @@ export const translations = {
         registration: {
             title: 'Регистрация Волонтёра',
             subtitle: 'Заполните форму ниже, чтобы присоединиться к нашей команде.',
-            fields: {
-                name: 'Имя',
-                email: 'Email',
-                phone: 'Телефон',
-                message: 'Сообщение (необязательно)',
-                submit: 'Отправить заявку'
-            },
             heading: 'Стань',
             headingAccent: 'волонтёром',
             quote: '«Будь светом который меняет мир.»',
