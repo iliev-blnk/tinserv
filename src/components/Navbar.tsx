@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -71,8 +71,12 @@ export default function Navbar() {
               {language === 'ro' ? '🇷🇴 RO' : '🇷🇺 RU'}
             </button>
 
-            <Link to="/inscriere" className="btn-primary text-white px-6 py-2.5 text-sm">
+            <Link
+              to="/inscriere"
+              className="btn-primary flex items-center gap-2 px-6 py-2.5 text-sm font-black uppercase tracking-wide"
+            >
               {t.nav.getStarted}
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
@@ -115,9 +119,14 @@ export default function Navbar() {
             </div>
 
             <div className="pt-4">
-              <button className="w-full btn-primary font-bold px-6 py-3 text-sm uppercase tracking-wide">
+              <Link
+                to="/inscriere"
+                onClick={() => setIsOpen(false)}
+                className="btn-primary w-full flex items-center justify-center gap-2 font-black px-6 py-4 text-sm uppercase tracking-wide"
+              >
                 {t.nav.getStarted}
-              </button>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>

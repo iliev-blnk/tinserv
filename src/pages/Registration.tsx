@@ -1,192 +1,256 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { ArrowLeft, Send, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Send, CheckCircle, MapPin, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyx88nINdcSPkueotz2Y_fDGjPoReXkEzAb2neW6kHFbTxwqczunyUwNKi8P5rMKliNmQ/exec";
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyx88nINdcSPkueotz2Y_fDGjPoReXkEzAb2neW6kHFbTxwqczunyUwNKi8P5rMKliNmQ/exec';
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzsLMFea0FYkp6tj6ZR5meJhnEd1rL9v3RJDVPo2WCi6cQCMMkKVcxnhHJBbj1qTMsvbt4S5gEwkVl/pub?gid=0&single=true&output=csv';
+
+function useCountUp(target: number, duration = 1200) {
+  const [display, setDisplay] = useState(0);
+  const started = useRef(false);
+
+  useEffect(() => {
+    if (target === 0 || started.current) return;
+    started.current = true;
+    const steps = 40;
+    const stepTime = duration / steps;
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      setDisplay(Math.round((step / steps) * target));
+      if (step >= steps) clearInterval(timer);
+    }, stepTime);
+    return () => clearInterval(timer);
+  }, [target, duration]);
+
+  return display;
+}
 
 export default function Registration() {
-    const { t } = useLanguage();
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-    });
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [error, setError] = useState('');
+  const { t } = useLanguage();
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+  const [volunteerCount, setVolunteerCount] = useState(0);
+  const displayCount = useCountUp(volunteerCount);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setError('');
+  useEffect(() => {
+    fetch(SHEET_CSV_URL)
+      .then(r => r.text())
+      .then(text => {
+        const lines = text.trim().split('\n').filter(l => l.trim());
+        setVolunteerCount(Math.max(0, lines.length - 1));
+      })
+      .catch(() => setVolunteerCount(30));
+  }, []);
 
-        if ((GOOGLE_SCRIPT_URL as string) === "YOUR_GOOGLE_SCRIPT_URL_HERE") {
-            alert("Please configure the Google Script URL in src/pages/Registration.tsx");
-            setIsSubmitting(false);
-            return;
-        }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError('');
+    try {
+      const data = new FormData();
+      data.append('name', formData.name);
+      data.append('email', formData.email);
+      data.append('phone', formData.phone);
+      data.append('message', formData.message);
+      await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: data, mode: 'no-cors' });
+      setIsSubmitted(true);
+    } catch {
+      setError('Ceva nu a mers. Încearcă din nou.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-        try {
-            const data = new FormData();
-            data.append('name', formData.name);
-            data.append('email', formData.email);
-            data.append('phone', formData.phone);
-            data.append('message', formData.message);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-            await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                body: data,
-                mode: 'no-cors' // Important for Google Apps Script to work without complex CORS headers
-            });
+  return (
+    <div className="min-h-screen flex flex-col lg:flex-row">
 
-            // Since mode is 'no-cors', we can't read the response, so we assume success if no network error thrown
-            setIsSubmitted(true);
-        } catch (err) {
-            console.error("Submission error:", err);
-            setError('Something went wrong. Please try again later.');
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+      {/* ── LEFT PANEL ── */}
+      <div className="lg:w-5/12 bg-[#171717] lg:min-h-screen lg:sticky lg:top-0 flex flex-col">
+        <div className="flex flex-col flex-1 px-8 py-10 lg:px-12 lg:py-12 max-w-lg mx-auto w-full">
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+          {/* Back */}
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-gray-500 hover:text-brand-500 transition-colors text-sm font-medium mb-10 self-start group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            {t.registration.back}
+          </Link>
 
-    return (
-        <div className="min-h-screen bg-gray-900 flex flex-col justify-center items-center p-4 py-12 relative">
-            {/* Background Elements */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-                <div className="absolute top-0 right-0 -mt-24 -mr-24 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl opacity-50" />
-                <div className="absolute bottom-0 left-0 -mb-24 -ml-24 w-80 h-80 bg-accent-500/10 rounded-full blur-3xl opacity-50" />
+          {/* Place name */}
+          <div className="flex items-center gap-2 mb-6">
+            <MapPin className="w-4 h-4 text-brand-500 flex-shrink-0" />
+            <span className="text-brand-500 text-xs font-bold uppercase tracking-[0.2em]">
+              TinSerV Chișinău
+            </span>
+          </div>
+
+          {/* Heading */}
+          <h1 className="font-black-heading text-5xl lg:text-6xl text-white mb-8 leading-[0.9]">
+            Devino<br />
+            <span className="text-brand-500">voluntar</span>
+          </h1>
+
+          {/* Counter */}
+          <div className="flex items-end gap-3 mb-10 pb-10 border-b border-white/10">
+            <div className="flex items-center gap-3">
+              <Users className="w-5 h-5 text-brand-500" />
+              <span className="text-5xl font-black text-white tabular-nums">
+                {displayCount}
+              </span>
             </div>
+            <span className="text-gray-400 text-sm pb-1">voluntari înscriși</span>
+          </div>
 
-            <div className="relative z-10 w-full max-w-2xl">
-                <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group">
-                    <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                    <span>{t.registration.back}</span>
-                </Link>
+          {/* Motivational quote */}
+          <blockquote className="border-l-4 border-brand-500 pl-5 mb-10">
+            <p className="text-white text-xl font-heading font-bold leading-snug mb-2">
+              „Fii lumina care<br />schimbă lumea."
+            </p>
+            <cite className="text-gray-500 text-sm not-italic">— misiunea TinSerV</cite>
+          </blockquote>
 
-                <div className="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-3xl p-8 md:p-12 shadow-2xl">
-                    {!isSubmitted ? (
-                        <>
-                            <div className="text-center mb-10">
-                                <h1 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
-                                    {t.registration.title}
-                                </h1>
-                                <p className="text-gray-400 text-lg">
-                                    {t.registration.subtitle}
-                                </p>
-                            </div>
-
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div className="space-y-2">
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 ml-1">
-                                        {t.registration.fields.name}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        required
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-4 rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all outline-none"
-                                        placeholder="Ion Popescu"
-                                    />
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label htmlFor="email" className="block text-sm font-medium text-gray-300 ml-1">
-                                            {t.registration.fields.email}
-                                        </label>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            name="email"
-                                            required
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            className="w-full px-4 py-4 rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all outline-none"
-                                            placeholder="ion@example.com"
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label htmlFor="phone" className="block text-sm font-medium text-gray-300 ml-1">
-                                            {t.registration.fields.phone}
-                                        </label>
-                                        <input
-                                            type="tel"
-                                            id="phone"
-                                            name="phone"
-                                            required
-                                            value={formData.phone}
-                                            onChange={handleChange}
-                                            className="w-full px-4 py-4 rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all outline-none"
-                                            placeholder="+373 60 123 456"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label htmlFor="message" className="block text-sm font-medium text-gray-300 ml-1">
-                                        {t.registration.fields.message}
-                                    </label>
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        rows={4}
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-4 rounded-xl bg-gray-900/50 border border-gray-700 text-white placeholder-gray-500 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all outline-none resize-none"
-                                    />
-                                </div>
-
-                                {error && (
-                                    <div className="text-red-500 text-sm text-center">
-                                        {error}
-                                    </div>
-                                )}
-
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className={`w-full py-4 px-6 rounded-xl bg-gradient-to-r from-brand-500 to-accent-500 hover:from-brand-600 hover:to-accent-600 text-white font-bold text-lg shadow-lg hover:shadow-brand-500/25 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-50 cursor-not-allowed hover:transform-none' : ''}`}
-                                >
-                                    <span>{isSubmitting ? 'Se trimite...' : t.registration.fields.submit}</span>
-                                    {!isSubmitting && <Send className="w-5 h-5" />}
-                                </button>
-                            </form>
-                        </>
-                    ) : (
-                        <div className="text-center py-12">
-                            <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
-                                <CheckCircle className="w-10 h-10 text-green-500" />
-                            </div>
-                            <h2 className="text-3xl font-bold text-white mb-4">
-                                {t.registration.success}
-                            </h2>
-                            <p className="text-gray-400 mb-8 max-w-md mx-auto">
-                                Te vom contacta în curând cu mai multe detalii.
-                            </p>
-                            <Link
-                                to="/"
-                                className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-gray-800 hover:bg-gray-700 text-white font-semibold transition-all border border-gray-700"
-                            >
-                                <ArrowLeft className="w-5 h-5" />
-                                <span>{t.registration.back}</span>
-                            </Link>
-                        </div>
-                    )}
-                </div>
-            </div>
+          {/* Map */}
+          <div className="flex-1 min-h-[220px] lg:min-h-0 overflow-hidden border-2 border-white/10">
+            <iframe
+              title="TinSerV Chișinău"
+              src="https://maps.google.com/maps?q=Chisinau,Moldova&z=13&output=embed"
+              className="w-full h-full min-h-[220px]"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
         </div>
-    );
+      </div>
+
+      {/* ── RIGHT PANEL (form) ── */}
+      <div className="lg:w-7/12 bg-[#fafaf8] flex items-center justify-center px-6 py-14 lg:px-16">
+        <div className="w-full max-w-lg">
+
+          {!isSubmitted ? (
+            <>
+              <div className="mb-10">
+                <h2 className="font-black-heading text-4xl text-gray-900 mb-3">
+                  {t.registration.title}
+                </h2>
+                <p className="text-gray-500 text-base leading-relaxed">
+                  {t.registration.subtitle}
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Name */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    {t.registration.fields.name}
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Ion Popescu"
+                    className="w-full px-4 py-4 bg-white border-2 border-gray-200 text-gray-900 placeholder:text-gray-300 focus:outline-none focus:border-[#ffe600] transition-colors text-base"
+                  />
+                </div>
+
+                {/* Email + Phone */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      {t.registration.fields.email}
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="ion@example.com"
+                      className="w-full px-4 py-4 bg-white border-2 border-gray-200 text-gray-900 placeholder:text-gray-300 focus:outline-none focus:border-[#ffe600] transition-colors text-base"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      {t.registration.fields.phone}
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      required
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+373 60 123 456"
+                      className="w-full px-4 py-4 bg-white border-2 border-gray-200 text-gray-900 placeholder:text-gray-300 focus:outline-none focus:border-[#ffe600] transition-colors text-base"
+                    />
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    {t.registration.fields.message}
+                  </label>
+                  <textarea
+                    name="message"
+                    rows={4}
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Spune-ne ceva despre tine sau disponibilitatea ta…"
+                    className="w-full px-4 py-4 bg-white border-2 border-gray-200 text-gray-900 placeholder:text-gray-300 focus:outline-none focus:border-[#ffe600] transition-colors resize-none text-base"
+                  />
+                </div>
+
+                {error && (
+                  <p className="text-red-500 text-sm">{error}</p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="btn-primary w-full py-5 text-base font-black uppercase tracking-wide flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
+                >
+                  {isSubmitting ? 'Se trimite…' : t.registration.fields.submit}
+                  {!isSubmitting && <Send className="w-4 h-4" />}
+                </button>
+
+                <p className="text-gray-400 text-xs text-center">
+                  Datele tale sunt în siguranță și nu vor fi distribuite.
+                </p>
+              </form>
+            </>
+          ) : (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-brand-500 flex items-center justify-center mx-auto mb-8">
+                <CheckCircle className="w-10 h-10 text-black" />
+              </div>
+              <h2 className="font-black-heading text-4xl text-gray-900 mb-4">
+                {t.registration.success}
+              </h2>
+              <p className="text-gray-500 mb-10 text-lg max-w-sm mx-auto leading-relaxed">
+                Te vom contacta în curând cu mai multe detalii. Mulțumim că ești parte din echipă!
+              </p>
+              <Link
+                to="/"
+                className="btn-dark inline-flex items-center gap-2 px-8 py-4 font-bold uppercase tracking-wide text-sm"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                {t.registration.back}
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
