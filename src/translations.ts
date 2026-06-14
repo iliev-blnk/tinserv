@@ -111,15 +111,24 @@ export const translations = {
         registration: {
             title: 'Înscriere Voluntariat',
             subtitle: 'Completează formularul de mai jos pentru a te alătura echipei noastre.',
+            heading: 'Devino',
+            headingAccent: 'voluntar',
+            quote: '„Fii lumina care schimbă lumea."',
+            quoteCite: '— misiunea TinSerV',
             fields: {
                 name: 'Nume',
                 email: 'Email',
                 phone: 'Telefon',
                 message: 'Mesaj (opțional)',
-                submit: 'Trimite Înscrierea'
+                messagePlaceholder: 'Spune-ne ceva despre tine sau disponibilitatea ta…',
+                submit: 'Trimite Înscrierea',
+                sending: 'Se trimite…'
             },
+            privacy: 'Datele tale sunt în siguranță și nu vor fi distribuite.',
             success: 'Mulțumim! Te-ai înscris cu succes.',
-            back: 'Înapoi la acasă'
+            successSub: 'Te vom contacta în curând cu mai multe detalii. Mulțumim că ești parte din echipă!',
+            back: 'Înapoi la acasă',
+            error: 'Ceva nu a mers. Încearcă din nou.'
         }
     },
     ru: {
@@ -242,8 +251,24 @@ export const translations = {
                 message: 'Сообщение (необязательно)',
                 submit: 'Отправить заявку'
             },
+            heading: 'Стань',
+            headingAccent: 'волонтёром',
+            quote: '«Будь светом который меняет мир.»',
+            quoteCite: '— миссия TinSerV',
+            fields: {
+                name: 'Имя',
+                email: 'Email',
+                phone: 'Телефон',
+                message: 'Сообщение (необязательно)',
+                messagePlaceholder: 'Расскажи нам что-нибудь о себе или своей доступности…',
+                submit: 'Отправить заявку',
+                sending: 'Отправляем…'
+            },
+            privacy: 'Ваши данные в безопасности и не будут переданы третьим лицам.',
             success: 'Спасибо! Вы успешно зарегистрировались.',
-            back: 'На главную'
+            successSub: 'Мы свяжемся с вами в ближайшее время. Спасибо, что вы с нами!',
+            back: 'На главную',
+            error: 'Что-то пошло не так. Попробуйте ещё раз.'
         }
     }
 } as const;
