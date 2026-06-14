@@ -60,7 +60,7 @@ export default function Stats() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h2 className="font-black-heading text-5xl lg:text-7xl text-white mb-4">
+                    <h2 className="font-black-heading text-4xl sm:text-5xl lg:text-7xl text-white mb-4">
                         {t.impact.title}
                     </h2>
                     <p className="text-slate-400 text-lg max-w-2xl mx-auto">
@@ -69,7 +69,7 @@ export default function Stats() {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
                     {stats.map((stat) => (
                         <div
                             key={stat.label}

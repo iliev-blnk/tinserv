@@ -76,11 +76,11 @@ export default function Hero() {
 
         {/* Left — content */}
         <div className="flex flex-col justify-center px-8 sm:px-12 lg:px-16 pt-24 pb-12 lg:py-0">
-          <div className="inline-flex items-center gap-2 bg-brand-500 text-black px-4 py-2 mb-8 self-start animate-fade-in-up">
+          <div className="flex flex-wrap items-center gap-2 bg-brand-500 text-black px-4 py-2 mb-8 self-start max-w-full animate-fade-in-up">
             <span className="font-black text-xs uppercase tracking-widest">{t.hero.badge}</span>
           </div>
 
-          <h1 className="font-black-heading text-7xl sm:text-8xl lg:text-9xl text-white mb-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+          <h1 className="font-black-heading text-5xl sm:text-7xl lg:text-9xl text-white mb-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
             TinSerV
           </h1>
 
@@ -127,8 +127,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right — big yellow headline over the photo */}
-        <div className="relative flex flex-col justify-center p-8 lg:p-12 min-h-[50vh] lg:min-h-0">
+        {/* Right — big yellow headline over the photo (desktop only) */}
+        <div className="hidden lg:flex relative flex-col justify-center p-8 lg:p-12">
           <p className="font-black-heading text-6xl sm:text-7xl lg:text-8xl xl:text-[7rem] text-brand-500 leading-[0.9] uppercase drop-shadow-2xl text-right">
             {t.hero.headline1}
             <br />

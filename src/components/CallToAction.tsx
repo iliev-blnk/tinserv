@@ -17,15 +17,15 @@ export default function CallToAction() {
         <section className="py-24 bg-brand-500">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 bg-white/20 border-2 border-white/40 px-4 py-1.5 mb-6">
-                    <Sparkles className="h-4 w-4 text-white" />
+                <div className="inline-flex flex-wrap items-center gap-2 bg-white/20 border-2 border-white/40 px-4 py-1.5 mb-6 max-w-full">
+                    <Sparkles className="h-4 w-4 text-white flex-shrink-0" />
                     <span className="text-white font-black text-xs uppercase tracking-widest">Start making a difference today</span>
                 </div>
 
-                <h2 className="font-black-heading text-5xl lg:text-8xl text-white mb-6">
+                <h2 className="font-black-heading text-4xl sm:text-5xl lg:text-8xl text-white mb-6">
                     Ready to Change Lives?
                 </h2>
-                <p className="text-white/80 text-xl max-w-xl mx-auto mb-8">
+                <p className="text-white/80 text-base sm:text-xl max-w-xl mx-auto mb-8">
                     Join thousands of volunteers who are creating positive change in their communities.
                     Sign up for updates and be the first to know about new opportunities.
                 </p>

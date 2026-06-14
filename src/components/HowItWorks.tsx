@@ -29,7 +29,7 @@ export default function HowItWorks() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h2 className="font-black-heading text-5xl lg:text-7xl text-white mb-4">
+                    <h2 className="font-black-heading text-4xl sm:text-5xl lg:text-7xl text-white mb-4">
                         {t.howItWorks.title}
                     </h2>
                     <p className="text-gray-400 text-lg max-w-2xl mx-auto">
@@ -38,7 +38,7 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Steps */}
-                <div className="grid md:grid-cols-3 gap-8 lg:gap-12 items-stretch">
+                <div className="grid md:grid-cols-3 gap-10 lg:gap-12 items-stretch">
                     {steps.map((step, index) => (
                         <div key={step.title} className="relative group flex flex-col">
                             {/* Connector line */}
@@ -46,7 +46,7 @@ export default function HowItWorks() {
                                 <div className="hidden md:block absolute top-16 left-1/2 w-full h-1 bg-brand-500/30" />
                             )}
 
-                            <div className="relative bg-white/[0.03] border border-white/10 hover:border-brand-500 p-8 text-center transition-colors duration-300 h-full">
+                            <div className="relative bg-white/[0.03] border border-white/10 hover:border-brand-500 p-6 sm:p-8 text-center transition-colors duration-300 h-full">
                                 {/* Step number */}
                                 <div className="absolute -top-3 -right-3 w-10 h-10 bg-brand-500 text-white flex items-center justify-center text-base font-black">
                                     {index + 1}

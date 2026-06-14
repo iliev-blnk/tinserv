@@ -44,7 +44,7 @@ export default function Testimonials() {
                     <span className="inline-block text-brand-500 font-black text-xs uppercase tracking-[0.2em] mb-3">
                         {t.testimonials.title}
                     </span>
-                    <h2 className="font-black-heading text-5xl lg:text-7xl text-gray-900 mb-4">
+                    <h2 className="font-black-heading text-4xl sm:text-5xl lg:text-7xl text-gray-900 mb-4">
                         Hear From Our Community
                     </h2>
                     <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -53,7 +53,7 @@ export default function Testimonials() {
                 </div>
 
                 {/* Testimonial Card */}
-                <div className="relative bg-gray-50 border-l-8 border-brand-500 p-8 lg:p-12 shadow-[8px_8px_0_0_#f97316]">
+                <div className="relative bg-gray-50 border-l-8 border-brand-500 pt-12 pb-8 px-6 sm:p-8 lg:p-12 shadow-[4px_4px_0_0_#f97316] sm:shadow-[8px_8px_0_0_#f97316]">
                     {/* Quote icon */}
                     <div className="absolute -top-6 left-8 lg:left-12">
                         <div className="bg-brand-500 p-3 shadow-lg">

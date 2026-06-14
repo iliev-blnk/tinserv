@@ -24,7 +24,7 @@ export default function VideoShowcase() {
                     <div className="inline-flex items-center gap-3 px-4 py-2 bg-brand-500 mb-6 animate-fade-in-up">
                         <span className="text-black font-black text-sm tracking-widest uppercase">Media</span>
                     </div>
-                    <h2 className="font-black-heading text-5xl lg:text-7xl text-white mb-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+                    <h2 className="font-black-heading text-4xl sm:text-5xl lg:text-7xl text-white mb-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
                         {t.videoShowcase.title}
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg animate-fade-in-up" style={{ animationDelay: '200ms' }}>
