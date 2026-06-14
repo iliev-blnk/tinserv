@@ -36,12 +36,39 @@ export default function Registration() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
+  const langToggle = (
+    <button
+      onClick={() => setLanguage(language === 'ro' ? 'ru' : 'ro')}
+      className="border-2 border-white/20 text-gray-400 hover:border-brand-500 hover:text-brand-500 font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all flex-shrink-0"
+    >
+      {language === 'ro' ? '🇷🇺 RU' : '🇷🇴 RO'}
+    </button>
+  );
 
-      {/* ── LEFT PANEL ── */}
-      <div className="lg:w-5/12 bg-[#171717] lg:min-h-screen lg:sticky lg:top-0 flex flex-col">
-        <div className="flex flex-col flex-1 px-8 py-10 lg:px-12 lg:py-12 max-w-lg mx-auto w-full">
+  return (
+    <div className="min-h-screen bg-[#171717] flex flex-col lg:flex-row">
+
+      {/* ── MOBILE TOPBAR (hidden on desktop) ── */}
+      <div className="lg:hidden bg-[#171717] border-b border-white/10 px-5 py-4 flex items-center justify-between">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-brand-500 transition-colors text-sm font-medium group"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          {t.registration.back}
+        </Link>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 text-brand-500">
+            <MapPin className="w-3.5 h-3.5" />
+            <span className="text-xs font-bold uppercase tracking-[0.15em]">Ștefan Vodă</span>
+          </div>
+          {langToggle}
+        </div>
+      </div>
+
+      {/* ── LEFT PANEL (desktop only) ── */}
+      <div className="hidden lg:flex lg:w-5/12 bg-[#171717] lg:min-h-screen lg:sticky lg:top-0 flex-col">
+        <div className="flex flex-col flex-1 px-12 py-12 max-w-lg mx-auto w-full">
 
           {/* Back + lang switcher */}
           <div className="flex items-center justify-between mb-10">
@@ -52,12 +79,7 @@ export default function Registration() {
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               {t.registration.back}
             </Link>
-            <button
-              onClick={() => setLanguage(language === 'ro' ? 'ru' : 'ro')}
-              className="border-2 border-white/20 text-gray-400 hover:border-brand-500 hover:text-brand-500 font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all"
-            >
-              {language === 'ro' ? '🇷🇺 RU' : '🇷🇴 RO'}
-            </button>
+            {langToggle}
           </div>
 
           {/* Place name */}
@@ -83,11 +105,12 @@ export default function Registration() {
           </blockquote>
 
           {/* Map */}
-          <div className="flex-1 min-h-[220px] lg:min-h-0 overflow-hidden border-2 border-white/10">
+          <div className="flex-1 min-h-0 overflow-hidden border-2 border-white/10">
             <iframe
               title="TinSerV Ștefan Vodă"
               src="https://maps.google.com/maps?q=Stefan+Voda,Moldova&z=13&output=embed"
-              className="w-full h-full min-h-[220px]"
+              className="w-full h-full"
+              style={{ minHeight: '200px' }}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
@@ -95,22 +118,22 @@ export default function Registration() {
         </div>
       </div>
 
-      {/* ── RIGHT PANEL (form) ── */}
-      <div className="lg:w-7/12 bg-[#1e1e1e] flex items-center justify-center px-6 py-14 lg:px-16">
+      {/* ── FORM PANEL ── */}
+      <div className="flex-1 lg:w-7/12 bg-[#1e1e1e] flex items-center justify-center px-6 py-10 lg:py-16 lg:px-16">
         <div className="w-full max-w-lg">
 
           {!isSubmitted ? (
             <>
-              <div className="mb-10">
-                <h2 className="font-black-heading text-4xl text-white mb-3">
+              <div className="mb-8">
+                <h2 className="font-black-heading text-3xl lg:text-4xl text-white mb-3">
                   {t.registration.title}
                 </h2>
-                <p className="text-gray-400 text-base leading-relaxed">
+                <p className="text-gray-400 text-sm lg:text-base leading-relaxed">
                   {t.registration.subtitle}
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label className="block text-sm font-semibold text-gray-300 mb-2">
                     {t.registration.fields.name}
@@ -122,7 +145,7 @@ export default function Registration() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Ion Popescu"
-                    className="w-full px-4 py-4 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors text-base"
+                    className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors text-base"
                   />
                 </div>
 
@@ -138,7 +161,7 @@ export default function Registration() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="ion@example.com"
-                      className="w-full px-4 py-4 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors text-base"
+                      className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors text-base"
                     />
                   </div>
                   <div>
@@ -152,7 +175,7 @@ export default function Registration() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+373 60 123 456"
-                      className="w-full px-4 py-4 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors text-base"
+                      className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors text-base"
                     />
                   </div>
                 </div>
@@ -167,7 +190,7 @@ export default function Registration() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder={t.registration.fields.messagePlaceholder}
-                    className="w-full px-4 py-4 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors resize-none text-base"
+                    className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors resize-none text-base"
                   />
                 </div>
 
@@ -176,7 +199,7 @@ export default function Registration() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-primary w-full py-5 text-base font-black uppercase tracking-wide flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
+                  className="btn-primary w-full py-4 text-base font-black uppercase tracking-wide flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
                 >
                   {isSubmitting ? t.registration.fields.sending : t.registration.fields.submit}
                   {!isSubmitting && <Send className="w-4 h-4" />}
@@ -188,14 +211,14 @@ export default function Registration() {
               </form>
             </>
           ) : (
-            <div className="text-center py-16">
+            <div className="text-center py-12">
               <div className="w-20 h-20 bg-brand-500 flex items-center justify-center mx-auto mb-8">
                 <CheckCircle className="w-10 h-10 text-black" />
               </div>
-              <h2 className="font-black-heading text-4xl text-white mb-4">
+              <h2 className="font-black-heading text-3xl lg:text-4xl text-white mb-4">
                 {t.registration.success}
               </h2>
-              <p className="text-gray-400 mb-10 text-lg max-w-sm mx-auto leading-relaxed">
+              <p className="text-gray-400 mb-10 text-base lg:text-lg max-w-sm mx-auto leading-relaxed">
                 {t.registration.successSub}
               </p>
               <Link
