@@ -9,7 +9,7 @@ const ADMIN_PASSWORD = 'tinserv2025'; // change this
 //   2. File → Share → Publish to web
 //   3. Choose Sheet 1, CSV format → Publish
 //   4. Paste the URL below
-const SHEET_CSV_URL = ''; // e.g. "https://docs.google.com/spreadsheets/d/e/.../pub?output=csv"
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzsLMFea0FYkp6tj6ZR5meJhnEd1rL9v3RJDVPo2WCi6cQCMMkKVcxnhHJBbj1qTMsvbt4S5gEwkVl/pub?gid=0&single=true&output=csv';
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface Registrant {
@@ -44,25 +44,36 @@ function parseCSV(text: string): Registrant[] {
         cur += ch;
       }
       cols.push(cur);
+      // Sheet columns: name, email, phone, message, timestamp
       return {
-        timestamp: cols[0]?.trim() ?? '',
-        name:      cols[1]?.trim() ?? '',
-        email:     cols[2]?.trim() ?? '',
-        phone:     cols[3]?.trim() ?? '',
-        message:   cols[4]?.trim() ?? '',
+        name:      cols[0]?.trim() ?? '',
+        email:     cols[1]?.trim() ?? '',
+        phone:     cols[2]?.trim() ?? '',
+        message:   cols[3]?.trim() ?? '',
+        timestamp: cols[4]?.trim() ?? '',
       };
     })
     .reverse();
 }
 
+// Parses "DD.MM.YYYY HH:MM:SS" → Date
+function parseTimestamp(ts: string): Date {
+  const [datePart, timePart = '00:00:00'] = ts.split(' ');
+  const [day, month, year] = datePart.split('.');
+  return new Date(`${year}-${month}-${day}T${timePart}`);
+}
+
 function isToday(ts: string) {
-  return ts.startsWith(new Date().toISOString().slice(0, 10));
+  const d = parseTimestamp(ts);
+  const now = new Date();
+  return d.getDate() === now.getDate() &&
+    d.getMonth() === now.getMonth() &&
+    d.getFullYear() === now.getFullYear();
 }
 
 function isThisWeek(ts: string) {
-  const d = new Date(ts);
-  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-  return d >= weekAgo;
+  const d = parseTimestamp(ts);
+  return d >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 }
 
 // ─── PASSWORD GATE ───────────────────────────────────────────────────────────
