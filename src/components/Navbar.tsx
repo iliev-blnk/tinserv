@@ -80,14 +80,23 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className={`lg:hidden p-2 transition-colors justify-self-end ${isScrolled ? 'text-gray-300 hover:text-brand-500' : 'text-white'}`}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          {/* Mobile: registration button + hamburger */}
+          <div className="lg:hidden flex items-center gap-2 justify-self-end">
+            <Link
+              to="/registration"
+              className="btn-primary flex items-center gap-1.5 px-4 py-2 text-xs font-black uppercase tracking-wide"
+            >
+              {t.nav.getStarted}
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className={`p-2 transition-colors ${isScrolled ? 'text-gray-300 hover:text-brand-500' : 'text-white'}`}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
