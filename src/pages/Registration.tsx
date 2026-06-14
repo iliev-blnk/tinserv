@@ -28,7 +28,7 @@ function useCountUp(target: number, duration = 1200) {
 }
 
 export default function Registration() {
-  const { t } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -77,14 +77,22 @@ export default function Registration() {
       <div className="lg:w-5/12 bg-[#171717] lg:min-h-screen lg:sticky lg:top-0 flex flex-col">
         <div className="flex flex-col flex-1 px-8 py-10 lg:px-12 lg:py-12 max-w-lg mx-auto w-full">
 
-          {/* Back */}
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-gray-500 hover:text-brand-500 transition-colors text-sm font-medium mb-10 self-start group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            {t.registration.back}
-          </Link>
+          {/* Back + lang switcher */}
+          <div className="flex items-center justify-between mb-10">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-gray-500 hover:text-brand-500 transition-colors text-sm font-medium group"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              {t.registration.back}
+            </Link>
+            <button
+              onClick={() => setLanguage(language === 'ro' ? 'ru' : 'ro')}
+              className="border-2 border-white/20 text-gray-400 hover:border-brand-500 hover:text-brand-500 font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all"
+            >
+              {language === 'ro' ? '🇷🇺 RU' : '🇷🇴 RO'}
+            </button>
+          </div>
 
           {/* Place name */}
           <div className="flex items-center gap-2 mb-6">

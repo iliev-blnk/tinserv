@@ -27,7 +27,7 @@ function App() {
         <div className="min-h-screen bg-[#171717]">
           <Routes>
             <Route path="/" element={<MainLayout />} />
-            <Route path="/inscriere" element={<Registration />} />
+            <Route path="/registration" element={<Registration />} />
             <Route path="/admin" element={<Admin />} />
           </Routes>
         </div>

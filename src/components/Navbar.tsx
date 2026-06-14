@@ -72,7 +72,7 @@ export default function Navbar() {
             </button>
 
             <Link
-              to="/inscriere"
+              to="/registration"
               className="btn-primary flex items-center gap-2 px-6 py-2.5 text-sm font-black uppercase tracking-wide"
             >
               {t.nav.getStarted}
@@ -120,7 +120,7 @@ export default function Navbar() {
 
             <div className="pt-4">
               <Link
-                to="/inscriere"
+                to="/registration"
                 onClick={() => setIsOpen(false)}
                 className="btn-primary w-full flex items-center justify-center gap-2 font-black px-6 py-4 text-sm uppercase tracking-wide"
               >
