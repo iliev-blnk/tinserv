@@ -5,6 +5,7 @@ import HowItWorks from './components/HowItWorks';
 import VideoShowcase from './components/VideoShowcase';
 import Footer from './components/Footer';
 import Registration from './pages/Registration';
+import Admin from './pages/Admin';
 import { LanguageProvider } from './contexts/LanguageContext';
 
 function MainLayout() {
@@ -27,6 +28,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MainLayout />} />
             <Route path="/inscriere" element={<Registration />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </div>
       </LanguageProvider>
