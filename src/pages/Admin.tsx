@@ -1,13 +1,15 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Search, RefreshCw, Download, Users, TrendingUp, Calendar, MessageSquare, LogOut, Eye, EyeOff, Trash2, RotateCcw } from 'lucide-react';
+import { useState, useEffect, useCallback, Fragment } from 'react';
+import { Search, RefreshCw, Download, Users, TrendingUp, Calendar, MessageSquare, LogOut, Eye, EyeOff, Trash2 } from 'lucide-react';
 
 // ─── CONFIG ─────────────────────────────────────────────────────────────────
 const ADMIN_PASSWORD = '4tinserv2025';
 
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzsLMFea0FYkp6tj6ZR5meJhnEd1rL9v3RJDVPo2WCi6cQCMMkKVcxnhHJBbj1qTMsvbt4S5gEwkVl/pub?gid=0&single=true&output=csv';
-// ─────────────────────────────────────────────────────────────────────────────
 
-const DELETED_KEY = 'tinserv-deleted';
+// Same Apps Script URL as the registration form.
+// Add the delete handler to your script — see README or ask for the snippet.
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyx88nINdcSPkueotz2Y_fDGjPoReXkEzAb2neW6kHFbTxwqczunyUwNKi8P5rMKliNmQ/exec';
+// ─────────────────────────────────────────────────────────────────────────────
 
 interface Registrant {
   timestamp: string;
@@ -57,7 +59,6 @@ function parseCSV(text: string): Registrant[] {
     .reverse();
 }
 
-// Parses "DD.MM.YYYY HH:MM:SS" → Date
 function parseTimestamp(ts: string): Date {
   const [datePart, timePart = '00:00:00'] = ts.split(' ');
   const [day, month, year] = datePart.split('.');
@@ -75,19 +76,6 @@ function isToday(ts: string) {
 function isThisWeek(ts: string) {
   const d = parseTimestamp(ts);
   return d >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-}
-
-function loadDeleted(): Set<string> {
-  try {
-    const raw = localStorage.getItem(DELETED_KEY);
-    return new Set(raw ? JSON.parse(raw) : []);
-  } catch {
-    return new Set();
-  }
-}
-
-function saveDeleted(set: Set<string>) {
-  localStorage.setItem(DELETED_KEY, JSON.stringify([...set]));
 }
 
 // ─── PASSWORD GATE ───────────────────────────────────────────────────────────
@@ -158,14 +146,12 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
 export default function Admin() {
   const [authed, setAuthed] = useState(() => sessionStorage.getItem('tinserv-admin') === '1');
   const [data, setData] = useState<Registrant[]>([]);
-  const [deleted, setDeleted] = useState<Set<string>>(loadDeleted);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState('');
   const [isDemo, setIsDemo] = useState(false);
   const [search, setSearch] = useState('');
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
-  const [showDeleted, setShowDeleted] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
@@ -201,31 +187,23 @@ export default function Admin() {
     setAuthed(false);
   }
 
-  function deleteRow(key: string) {
-    const next = new Set(deleted);
-    next.add(key);
-    setDeleted(next);
-    saveDeleted(next);
+  function deleteRow(r: Registrant) {
+    // Optimistically remove from UI immediately
+    setData(prev => prev.filter(row => rowKey(row) !== rowKey(r)));
     setConfirmDelete(null);
     setExpandedRow(null);
-  }
 
-  function restoreRow(key: string) {
-    const next = new Set(deleted);
-    next.delete(key);
-    setDeleted(next);
-    saveDeleted(next);
-  }
-
-  function restoreAll() {
-    setDeleted(new Set());
-    saveDeleted(new Set());
+    // Fire delete to Apps Script — removes the row from Google Sheets
+    const body = new FormData();
+    body.append('action', 'delete');
+    body.append('email', r.email);
+    body.append('timestamp', r.timestamp);
+    fetch(SCRIPT_URL, { method: 'POST', body, mode: 'no-cors' }).catch(() => {});
   }
 
   function exportCSV() {
-    const visible = data.filter(r => !deleted.has(rowKey(r)));
     const header = ['Timestamp', 'Name', 'Email', 'Phone', 'Message'];
-    const rows = [header, ...visible.map(r => [r.timestamp, r.name, r.email, r.phone, r.message])];
+    const rows = [header, ...data.map(r => [r.timestamp, r.name, r.email, r.phone, r.message])];
     const csv = rows.map(r => r.map(v => `"${v.replace(/"/g, '""')}"`).join(',')).join('\n');
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
@@ -235,22 +213,19 @@ export default function Admin() {
 
   if (!authed) return <LoginScreen onLogin={() => setAuthed(true)} />;
 
-  const visible = data.filter(r => !deleted.has(rowKey(r)));
-  const hiddenRows = data.filter(r => deleted.has(rowKey(r)));
-
-  const filtered = (showDeleted ? hiddenRows : visible).filter(r =>
+  const filtered = data.filter(r =>
     `${r.name} ${r.email} ${r.phone}`.toLowerCase().includes(search.toLowerCase())
   );
 
-  const todayCount = visible.filter(r => isToday(r.timestamp)).length;
-  const weekCount = visible.filter(r => isThisWeek(r.timestamp)).length;
-  const withMsg = visible.filter(r => r.message).length;
+  const todayCount = data.filter(r => isToday(r.timestamp)).length;
+  const weekCount = data.filter(r => isThisWeek(r.timestamp)).length;
+  const withMsg = data.filter(r => r.message).length;
 
   const stats = [
-    { label: 'Total',     value: visible.length, icon: Users,         color: 'text-brand-500',  border: 'border-brand-500/30' },
-    { label: 'Today',     value: todayCount,      icon: Calendar,      color: 'text-green-400',  border: 'border-green-400/30' },
-    { label: 'This Week', value: weekCount,        icon: TrendingUp,    color: 'text-blue-400',   border: 'border-blue-400/30' },
-    { label: 'With Note', value: withMsg,          icon: MessageSquare, color: 'text-purple-400', border: 'border-purple-400/30' },
+    { label: 'Total',     value: data.length,  icon: Users,         color: 'text-brand-500',  border: 'border-brand-500/30' },
+    { label: 'Today',     value: todayCount,    icon: Calendar,      color: 'text-green-400',  border: 'border-green-400/30' },
+    { label: 'This Week', value: weekCount,     icon: TrendingUp,    color: 'text-blue-400',   border: 'border-blue-400/30' },
+    { label: 'With Note', value: withMsg,       icon: MessageSquare, color: 'text-purple-400', border: 'border-purple-400/30' },
   ];
 
   return (
@@ -316,22 +291,9 @@ export default function Admin() {
               className="w-full bg-gray-950 border border-gray-800 text-white text-sm font-mono pl-9 pr-4 py-2.5 focus:outline-none focus:border-brand-500/60 transition-colors placeholder:text-gray-700"
             />
           </div>
-          {hiddenRows.length > 0 && (
-            <button
-              onClick={() => { setShowDeleted(v => !v); setExpandedRow(null); }}
-              className={`flex items-center justify-center gap-2 text-xs font-mono uppercase tracking-wide px-5 py-2.5 border transition-colors whitespace-nowrap ${
-                showDeleted
-                  ? 'border-red-500/40 text-red-400 bg-red-500/5'
-                  : 'border-gray-800 text-gray-500 hover:border-red-500/30 hover:text-red-400'
-              }`}
-            >
-              <Trash2 className="w-3.5 h-3.5" />
-              {showDeleted ? 'show active' : `deleted (${hiddenRows.length})`}
-            </button>
-          )}
           <button
             onClick={exportCSV}
-            disabled={visible.length === 0}
+            disabled={data.length === 0}
             className="flex items-center justify-center gap-2 text-xs font-mono uppercase tracking-wide px-5 py-2.5 border border-gray-800 text-gray-500 hover:border-brand-500/50 hover:text-brand-400 transition-colors disabled:opacity-30 disabled:cursor-not-allowed whitespace-nowrap"
           >
             <Download className="w-3.5 h-3.5" />
@@ -343,20 +305,6 @@ export default function Admin() {
         {fetchError && (
           <div className="border border-red-500/20 bg-red-500/5 text-red-400 text-xs font-mono px-4 py-3">
             ✗ {fetchError}
-          </div>
-        )}
-
-        {/* Deleted view banner */}
-        {showDeleted && hiddenRows.length > 0 && (
-          <div className="border border-red-500/20 bg-red-500/5 px-4 py-3 flex items-center justify-between">
-            <span className="text-red-400 text-xs font-mono">{hiddenRows.length} hidden entries</span>
-            <button
-              onClick={restoreAll}
-              className="flex items-center gap-1.5 text-red-400 hover:text-white text-xs font-mono uppercase tracking-wide transition-colors"
-            >
-              <RotateCcw className="w-3 h-3" />
-              restore all
-            </button>
           </div>
         )}
 
@@ -376,32 +324,28 @@ export default function Admin() {
               <tbody>
                 {loading && data.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="px-4 py-16 text-center text-gray-700 text-xs">
-                      Loading…
-                    </td>
+                    <td colSpan={7} className="px-4 py-16 text-center text-gray-700 text-xs">Loading…</td>
                   </tr>
                 ) : filtered.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="px-4 py-16 text-center text-gray-700 text-xs">
-                      {search ? 'No results.' : showDeleted ? 'No deleted entries.' : 'No registrants yet.'}
+                      {search ? 'No results.' : 'No registrants yet.'}
                     </td>
                   </tr>
                 ) : (
                   filtered.map((r, i) => {
                     const key = rowKey(r);
-                    const isDeleted = deleted.has(key);
                     const isExpanded = expandedRow === i;
                     const isConfirming = confirmDelete === key;
                     return (
-                      <>
+                      <Fragment key={key}>
                         <tr
-                          key={key}
                           onClick={() => {
                             if (isConfirming) return;
                             if (r.message) setExpandedRow(isExpanded ? null : i);
                           }}
                           className={`border-b border-gray-900/80 transition-colors group ${
-                            isDeleted ? 'opacity-40' : r.message && !isConfirming ? 'cursor-pointer hover:bg-gray-900/60' : 'hover:bg-gray-950'
+                            r.message && !isConfirming ? 'cursor-pointer hover:bg-gray-900/60' : 'hover:bg-gray-950'
                           }`}
                         >
                           <td className="px-4 py-3 text-gray-700 text-xs">{filtered.length - i}</td>
@@ -429,20 +373,11 @@ export default function Admin() {
                               <span className="text-gray-800">—</span>
                             )}
                           </td>
-                          {/* Actions */}
                           <td className="px-4 py-3 text-right whitespace-nowrap">
-                            {isDeleted ? (
-                              <button
-                                onClick={e => { e.stopPropagation(); restoreRow(key); }}
-                                className="text-gray-600 hover:text-green-400 transition-colors"
-                                title="Restore"
-                              >
-                                <RotateCcw className="w-3.5 h-3.5" />
-                              </button>
-                            ) : isConfirming ? (
+                            {isConfirming ? (
                               <span className="flex items-center justify-end gap-2">
                                 <button
-                                  onClick={e => { e.stopPropagation(); deleteRow(key); }}
+                                  onClick={e => { e.stopPropagation(); deleteRow(r); }}
                                   className="text-red-400 hover:text-red-300 text-[10px] uppercase tracking-wide font-bold transition-colors"
                                 >
                                   confirm
@@ -466,7 +401,7 @@ export default function Admin() {
                           </td>
                         </tr>
                         {isExpanded && r.message && !isConfirming && (
-                          <tr key={`${key}-exp`} className="border-b border-gray-900/80 bg-gray-950/50">
+                          <tr className="border-b border-gray-900/80 bg-gray-950/50">
                             <td colSpan={7} className="px-4 py-3">
                               <div className="ml-[calc(3rem+16px)] border-l-2 border-purple-500/30 pl-4 text-gray-400 text-xs leading-relaxed">
                                 {r.message}
@@ -474,7 +409,7 @@ export default function Admin() {
                             </td>
                           </tr>
                         )}
-                      </>
+                      </Fragment>
                     );
                   })
                 )}
@@ -482,12 +417,7 @@ export default function Admin() {
             </table>
           </div>
           <div className="px-4 py-2.5 border-t border-gray-900 flex items-center justify-between text-[10px] text-gray-700 font-mono">
-            <span>
-              {showDeleted
-                ? `${hiddenRows.length} deleted entries`
-                : `${filtered.length} of ${visible.length} registrants${hiddenRows.length > 0 ? ` · ${hiddenRows.length} hidden` : ''}`
-              }
-            </span>
+            <span>{filtered.length} of {data.length} registrants</span>
             {isDemo && <span className="text-yellow-600/60">demo data</span>}
           </div>
         </div>
