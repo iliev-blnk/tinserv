@@ -40,7 +40,7 @@ export default function Navbar() {
             <img
               src="/logo.png"
               alt="TinSerV Logo"
-              className="h-10 w-auto lg:h-12 transition-transform group-hover:scale-105"
+              className="h-14 w-auto lg:h-16 transition-transform group-hover:scale-105"
             />
           </a>
 

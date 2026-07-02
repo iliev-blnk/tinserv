@@ -11,11 +11,11 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-[45%_55%] gap-12 items-center mb-20">
                     {/* Logo Column */}
                     <div className="flex items-center justify-center md:justify-start w-full">
-                        <a href="#" className="block w-full max-w-[300px] md:max-w-none">
+                        <a href="#" className="block max-w-[180px] md:max-w-[220px]">
                             <img
                                 src="/logo-1.png"
                                 alt="TinSerV Logo"
-                                className="w-full h-auto object-cover max-h-[250px] md:max-h-[400px] mx-auto md:mx-0"
+                                className="w-full h-auto mx-auto md:mx-0"
                             />
                         </a>
                     </div>
