@@ -34,13 +34,13 @@ export default function Navbar() {
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between lg:grid lg:grid-cols-3 items-center h-20 lg:h-24">
+        <div className="flex justify-between lg:grid lg:grid-cols-3 items-center h-16 lg:h-20">
           {/* Logo */}
           <a href="#" className="flex items-center space-x-3 group">
             <img
               src="/logo.png"
               alt="TinSerV Logo"
-              className="h-20 w-auto lg:h-24 transition-transform group-hover:scale-105"
+              className="h-9 w-auto lg:h-11 transition-transform group-hover:scale-105"
             />
           </a>
 
