@@ -128,7 +128,15 @@ export const translations = {
             success: 'Mulțumim! Te-ai înscris cu succes.',
             successSub: 'Te vom contacta în curând cu mai multe detalii. Mulțumim că ești parte din echipă!',
             back: 'Înapoi la acasă',
-            error: 'Ceva nu a mers. Încearcă din nou.'
+            error: 'Ceva nu a mers. Încearcă din nou.',
+            capacity: {
+                spotsLeft: 'locuri rămase',
+                full: 'Locurile s-au ocupat',
+                fullNote: 'Cele 40 de locuri disponibile s-au completat. Te poți înscrie pe lista de rezervă — te vom contacta dacă se eliberează un loc.',
+                submitReserve: 'Înscrie-mă pe lista de rezervă'
+            },
+            reserveSuccess: 'Ești pe lista de rezervă!',
+            reserveSuccessSub: 'Locurile disponibile s-au completat, dar te-am adăugat pe lista de rezervă. Te vom contacta dacă se eliberează un loc. Mulțumim pentru interes!'
         }
     },
     ru: {
@@ -261,7 +269,15 @@ export const translations = {
             success: 'Спасибо! Вы успешно зарегистрировались.',
             successSub: 'Мы свяжемся с вами в ближайшее время. Спасибо, что вы с нами!',
             back: 'На главную',
-            error: 'Что-то пошло не так. Попробуйте ещё раз.'
+            error: 'Что-то пошло не так. Попробуйте ещё раз.',
+            capacity: {
+                spotsLeft: 'мест осталось',
+                full: 'Места закончились',
+                fullNote: 'Все 40 мест заполнены. Вы можете записаться в резервный список — мы свяжемся с вами, если освободится место.',
+                submitReserve: 'Записаться в резервный список'
+            },
+            reserveSuccess: 'Вы в резервном списке!',
+            reserveSuccessSub: 'Все места заполнены, но мы добавили вас в резервный список. Мы свяжемся с вами, если освободится место. Спасибо за интерес!'
         }
     }
 } as const;

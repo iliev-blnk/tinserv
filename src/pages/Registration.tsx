@@ -1,9 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { ArrowLeft, Send, CheckCircle, MapPin } from 'lucide-react';
+import { ArrowLeft, Send, CheckCircle, MapPin, Clock, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyx88nINdcSPkueotz2Y_fDGjPoReXkEzAb2neW6kHFbTxwqczunyUwNKi8P5rMKliNmQ/exec';
+
+// Published CSV of the registrations sheet (same source the admin panel reads).
+// Used to count existing registrations so we know when the 40 spots are full.
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzsLMFea0FYkp6tj6ZR5meJhnEd1rL9v3RJDVPo2WCi6cQCMMkKVcxnhHJBbj1qTMsvbt4S5gEwkVl/pub?gid=0&single=true&output=csv';
+
+const CAPACITY = 40;
+
+// Count non-empty data rows in the published CSV (first line is the header).
+function countRegistrations(csv: string): number {
+  const lines = csv.trim().split('\n');
+  if (lines.length < 2) return 0;
+  return lines.slice(1).filter(l => l.trim()).length;
+}
+
+async function fetchRegistrationCount(): Promise<number> {
+  const res = await fetch(SHEET_CSV_URL, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return countRegistrations(await res.text());
+}
 
 export default function Registration() {
   const { t, language, setLanguage } = useLanguage();
@@ -11,18 +30,43 @@ export default function Registration() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  // null = not yet known; once loaded we know how many spots are taken.
+  const [registeredCount, setRegisteredCount] = useState<number | null>(null);
+  const [submittedAsReserve, setSubmittedAsReserve] = useState(false);
+
+  const refreshCount = useCallback(() => {
+    fetchRegistrationCount()
+      .then(setRegisteredCount)
+      .catch(() => {/* ignore — fall back to accepting the registration */});
+  }, []);
+
+  useEffect(() => { refreshCount(); }, [refreshCount]);
+
+  const isFull = registeredCount !== null && registeredCount >= CAPACITY;
+  const spotsLeft = registeredCount === null ? null : Math.max(0, CAPACITY - registeredCount);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
     try {
+      // Re-check the count at submit time so the reserve decision is as fresh as possible.
+      let count = registeredCount;
+      try {
+        count = await fetchRegistrationCount();
+        setRegisteredCount(count);
+      } catch {/* keep the count we already have */}
+
+      const goesToReserve = count !== null && count >= CAPACITY;
+
       const data = new FormData();
       data.append('name', formData.name);
       data.append('email', formData.email);
       data.append('phone', formData.phone);
       data.append('message', formData.message);
+      data.append('status', goesToReserve ? 'reserve' : 'confirmed');
       await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: data, mode: 'no-cors' });
+      setSubmittedAsReserve(goesToReserve);
       setIsSubmitted(true);
     } catch {
       setError(t.registration.error);
@@ -133,6 +177,21 @@ export default function Registration() {
                 </p>
               </div>
 
+              {isFull ? (
+                <div className="mb-6 border-2 border-amber-500/40 bg-amber-500/10 px-5 py-4 flex gap-3">
+                  <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-amber-300 font-bold text-sm mb-1">{t.registration.capacity.full}</p>
+                    <p className="text-amber-200/80 text-sm leading-relaxed">{t.registration.capacity.fullNote}</p>
+                  </div>
+                </div>
+              ) : spotsLeft !== null && spotsLeft <= 10 ? (
+                <div className="mb-6 inline-flex items-center gap-2 text-brand-400 text-sm font-semibold">
+                  <Users className="w-4 h-4" />
+                  {spotsLeft} {t.registration.capacity.spotsLeft}
+                </div>
+              ) : null}
+
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label className="block text-sm font-semibold text-gray-300 mb-2">
@@ -201,7 +260,11 @@ export default function Registration() {
                   disabled={isSubmitting}
                   className="btn-primary w-full py-4 text-base font-black uppercase tracking-wide flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
                 >
-                  {isSubmitting ? t.registration.fields.sending : t.registration.fields.submit}
+                  {isSubmitting
+                    ? t.registration.fields.sending
+                    : isFull
+                      ? t.registration.capacity.submitReserve
+                      : t.registration.fields.submit}
                   {!isSubmitting && <Send className="w-4 h-4" />}
                 </button>
 
@@ -212,14 +275,16 @@ export default function Registration() {
             </>
           ) : (
             <div className="text-center py-12">
-              <div className="w-20 h-20 bg-brand-500 flex items-center justify-center mx-auto mb-8">
-                <CheckCircle className="w-10 h-10 text-black" />
+              <div className={`w-20 h-20 flex items-center justify-center mx-auto mb-8 ${submittedAsReserve ? 'bg-amber-500' : 'bg-brand-500'}`}>
+                {submittedAsReserve
+                  ? <Clock className="w-10 h-10 text-black" />
+                  : <CheckCircle className="w-10 h-10 text-black" />}
               </div>
               <h2 className="font-black-heading text-3xl lg:text-4xl text-white mb-4">
-                {t.registration.success}
+                {submittedAsReserve ? t.registration.reserveSuccess : t.registration.success}
               </h2>
               <p className="text-gray-400 mb-10 text-base lg:text-lg max-w-sm mx-auto leading-relaxed">
-                {t.registration.successSub}
+                {submittedAsReserve ? t.registration.reserveSuccessSub : t.registration.successSub}
               </p>
               <Link
                 to="/"
