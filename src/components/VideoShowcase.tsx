@@ -21,10 +21,10 @@ export default function VideoShowcase() {
         <section id="media" className="py-24 bg-[#020617] border-t border-white/[0.06] overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16 px-4">
-                    <div className="inline-flex items-center gap-3 px-4 py-2 bg-brand-500 mb-6 animate-fade-in-up">
+                    <div className="inline-flex items-center gap-3 px-4 py-2 bg-ice-500 mb-6 animate-fade-in-up">
                         <span className="text-black font-black text-sm tracking-widest uppercase">Media</span>
                     </div>
-                    <h2 className="font-black-heading text-4xl sm:text-5xl lg:text-7xl text-white mb-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+                    <h2 className="font-black-heading text-4xl sm:text-5xl lg:text-7xl frost-text mb-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
                         {t.videoShowcase.title}
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg animate-fade-in-up" style={{ animationDelay: '200ms' }}>
@@ -36,7 +36,7 @@ export default function VideoShowcase() {
                     {videos.map((video, index) => (
                         <div key={index} className="group relative">
                             {/* Video Container */}
-                            <div className="relative aspect-video overflow-hidden bg-gray-800 border-2 border-gray-700 shadow-2xl transition-all duration-500 group-hover:border-brand-500">
+                            <div className="relative aspect-video overflow-hidden bg-gray-800 border-2 border-gray-700 shadow-2xl transition-all duration-500 group-hover:border-ice-500">
                                 <video
                                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                                     controls
@@ -51,7 +51,7 @@ export default function VideoShowcase() {
 
                                 {/* Play Button Decor */}
                                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                    <div className="w-16 h-16 bg-brand-500 flex items-center justify-center">
+                                    <div className="w-16 h-16 bg-ice-500 flex items-center justify-center">
                                         <Play className="text-white fill-white w-6 h-6" />
                                     </div>
                                 </div>
@@ -59,10 +59,10 @@ export default function VideoShowcase() {
 
                             {/* Title */}
                             <div className="mt-6 text-center md:text-left">
-                                <h3 className="text-xl font-bold text-white group-hover:text-brand-400 transition-colors duration-300">
+                                <h3 className="text-xl font-bold text-white group-hover:text-ice-400 transition-colors duration-300">
                                     {video.title}
                                 </h3>
-                                <div className="mt-2 w-12 h-1 bg-brand-500 group-hover:w-24 transition-all duration-500" />
+                                <div className="mt-2 w-12 h-1 bg-ice-500 group-hover:w-24 transition-all duration-500" />
                             </div>
                         </div>
                     ))}

@@ -25,11 +25,11 @@ export default function HowItWorks() {
     ];
 
     return (
-        <section id="how-it-works" className="py-24 bg-[#111] border-t border-white/[0.06]">
+        <section id="how-it-works" className="py-24 bg-[#020617] border-t border-white/[0.06]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h2 className="font-black-heading text-4xl sm:text-5xl lg:text-7xl text-white mb-4">
+                    <h2 className="font-black-heading text-4xl sm:text-5xl lg:text-7xl frost-text mb-4">
                         {t.howItWorks.title}
                     </h2>
                     <p className="text-gray-400 text-lg max-w-2xl mx-auto">
@@ -43,17 +43,17 @@ export default function HowItWorks() {
                         <div key={step.title} className="relative group flex flex-col">
                             {/* Connector line */}
                             {index < steps.length - 1 && (
-                                <div className="hidden md:block absolute top-16 left-1/2 w-full h-1 bg-brand-500/30" />
+                                <div className="hidden md:block absolute top-16 left-1/2 w-full h-1 bg-ice-500/30" />
                             )}
 
-                            <div className="relative bg-white/[0.03] border border-white/10 hover:border-brand-500 p-6 sm:p-8 text-center transition-colors duration-300 h-full">
+                            <div className="relative bg-white/[0.03] border border-white/10 hover:border-ice-500 p-6 sm:p-8 text-center transition-colors duration-300 h-full">
                                 {/* Step number */}
-                                <div className="absolute -top-3 -right-3 w-10 h-10 bg-brand-500 text-white flex items-center justify-center text-base font-black">
+                                <div className="absolute -top-3 -right-3 w-10 h-10 bg-ice-500 text-white flex items-center justify-center text-base font-black">
                                     {index + 1}
                                 </div>
 
                                 {/* Icon */}
-                                <div className="inline-flex items-center justify-center w-16 h-16 bg-brand-500 mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <div className="inline-flex items-center justify-center w-16 h-16 bg-ice-500 mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                                     <step.icon className="h-8 w-8 text-white" />
                                 </div>
 

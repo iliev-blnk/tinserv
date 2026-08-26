@@ -18,6 +18,18 @@
   --color-brand-800: #7a6900;
   --color-brand-900: #524600;
 
+  /* Icy blue - primary winter accent */
+  --color-ice-50:  #f0f9ff;
+  --color-ice-100: #e0f2fe;
+  --color-ice-200: #cfe8f3;
+  --color-ice-300: #a5d3e8;
+  --color-ice-400: #7db8d4;
+  --color-ice-500: #5b9bbd;
+  --color-ice-600: #4a7f9c;
+  --color-ice-700: #3a6379;
+  --color-ice-800: #2b4a5b;
+  --color-ice-900: #1d3240;
+
   /* Near-black - Accent / dark sections */
   --color-accent-50:  #f8fafc;
   --color-accent-100: #f1f5f9;

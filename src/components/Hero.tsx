@@ -83,7 +83,7 @@ export default function Hero() {
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 bg-brand-500 text-black px-4 py-2 mb-8 self-start max-w-full animate-fade-in-up">
+          <div className="flex flex-wrap items-center gap-2 bg-ice-500 text-black px-4 py-2 mb-8 self-start max-w-full animate-fade-in-up">
             <span className="font-black text-xs uppercase tracking-widest">{t.hero.badge}</span>
           </div>
 
@@ -91,7 +91,7 @@ export default function Hero() {
             TinSerV
           </h1>
 
-          <p className="flex items-center gap-3 font-black text-lg sm:text-2xl lg:text-3xl text-brand-500 uppercase tracking-wide lg:tracking-widest mb-3 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+          <p className="flex items-center gap-3 font-black text-lg sm:text-2xl lg:text-3xl text-ice-500 uppercase tracking-wide lg:tracking-widest mb-3 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
             <Snowflake className="w-5 h-5 lg:w-6 lg:h-6 flex-shrink-0" />
             4 – 9 January 2027
           </p>
@@ -121,12 +121,12 @@ export default function Hero() {
 
           <div className="flex items-center gap-3 mt-6 animate-fade-in-up" style={{ animationDelay: '400ms' }}>
             <a href="https://instagram.com/tinserv.chisinau" target="_blank" rel="noopener noreferrer"
-              className="p-2.5 border border-white/20 text-white hover:bg-brand-500 hover:border-brand-500 hover:text-black transition-all duration-300"
+              className="p-2.5 border border-white/20 text-white hover:bg-ice-500 hover:border-ice-500 hover:text-black transition-all duration-300"
               aria-label="Instagram">
               <Instagram className="h-4 w-4" />
             </a>
             <a href="https://t.me/tinservchisinau" target="_blank" rel="noopener noreferrer"
-              className="p-2.5 border border-white/20 text-white hover:bg-brand-500 hover:border-brand-500 hover:text-black transition-all duration-300"
+              className="p-2.5 border border-white/20 text-white hover:bg-ice-500 hover:border-ice-500 hover:text-black transition-all duration-300"
               aria-label="Telegram">
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
@@ -142,7 +142,7 @@ export default function Hero() {
             <br />
             {t.hero.headline2}
             <br />
-            <span className="italic">{t.hero.headlineHighlight}</span>
+            <span className="italic frost-text">{t.hero.headlineHighlight}</span>
           </p>
 
           {/* Carousel controls */}
@@ -152,19 +152,19 @@ export default function Hero() {
                 <button
                   key={index}
                   onClick={() => setActiveSlide(index)}
-                  className={`h-1 transition-all duration-300 ${index === activeSlide ? 'bg-brand-500 w-8' : 'bg-white/30 w-4 hover:bg-white/50'}`}
+                  className={`h-1 transition-all duration-300 ${index === activeSlide ? 'bg-ice-500 w-8' : 'bg-white/30 w-4 hover:bg-white/50'}`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
               ))}
             </div>
             <div className="flex gap-2">
               <button onClick={prevSlide}
-                className="p-2 border border-white/30 text-white hover:bg-brand-500 hover:border-brand-500 hover:text-black transition-all"
+                className="p-2 border border-white/30 text-white hover:bg-ice-500 hover:border-ice-500 hover:text-black transition-all"
                 aria-label="Previous slide">
                 <ChevronLeft className="h-4 w-4" />
               </button>
               <button onClick={nextSlide}
-                className="p-2 border border-white/30 text-white hover:bg-brand-500 hover:border-brand-500 hover:text-black transition-all"
+                className="p-2 border border-white/30 text-white hover:bg-ice-500 hover:border-ice-500 hover:text-black transition-all"
                 aria-label="Next slide">
                 <ChevronRight className="h-4 w-4" />
               </button>
@@ -185,7 +185,7 @@ export default function Hero() {
               className="absolute inset-0 bg-center bg-cover"
               style={{ backgroundImage: `url('${slide.image}')` }}
             />
-            <div className={`absolute inset-0 transition-colors duration-300 ${index === activeSlide ? 'bg-brand-500/30' : 'bg-black/60 hover:bg-black/40'}`} />
+            <div className={`absolute inset-0 transition-colors duration-300 ${index === activeSlide ? 'bg-ice-500/30' : 'bg-black/60 hover:bg-black/40'}`} />
             {index < heroSlides.length - 1 && (
               <div className="absolute top-0 right-0 bottom-0 border-r border-white/10 z-10" />
             )}
@@ -197,9 +197,9 @@ export default function Hero() {
       {isCollaborationModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in-up" style={{ animationDuration: '0.3s' }}>
           <div className="absolute inset-0 bg-black/80" onClick={() => setIsCollaborationModalOpen(false)} />
-          <div className="relative bg-white border-l-8 border-brand-500 p-8 max-w-lg w-full shadow-2xl overflow-hidden">
+          <div className="relative bg-white border-l-8 border-ice-500 p-8 max-w-lg w-full shadow-2xl overflow-hidden">
             <button onClick={() => setIsCollaborationModalOpen(false)}
-              className="absolute top-6 right-6 text-gray-400 hover:text-brand-500 transition-colors" aria-label="Close modal">
+              className="absolute top-6 right-6 text-gray-400 hover:text-ice-500 transition-colors" aria-label="Close modal">
               <ChevronRight className="w-6 h-6 rotate-45" />
             </button>
             <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4 pr-8">{t.collaboration.title}</h3>
@@ -207,14 +207,14 @@ export default function Hero() {
             <div className="space-y-4 mb-8">
               <p className="text-sm font-bold text-gray-700 uppercase tracking-wider">{t.collaboration.contactTitle}</p>
               <div className="space-y-3">
-                <a href="mailto:oponeatovskii@mail.ru" className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors p-3 border-2 border-gray-200 hover:border-brand-500 bg-gray-50">
-                  <div className="w-8 h-8 bg-brand-100 flex items-center justify-center text-gray-700">
+                <a href="mailto:oponeatovskii@mail.ru" className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors p-3 border-2 border-gray-200 hover:border-ice-500 bg-gray-50">
+                  <div className="w-8 h-8 bg-ice-100 flex items-center justify-center text-gray-700">
                     <span className="text-lg">@</span>
                   </div>
                   <span className="font-medium">oponeatovskii@mail.ru</span>
                 </a>
-                <a href="tel:+37368753358" className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors p-3 border-2 border-gray-200 hover:border-brand-500 bg-gray-50">
-                  <div className="w-8 h-8 bg-brand-100 flex items-center justify-center text-gray-700">
+                <a href="tel:+37368753358" className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors p-3 border-2 border-gray-200 hover:border-ice-500 bg-gray-50">
+                  <div className="w-8 h-8 bg-ice-100 flex items-center justify-center text-gray-700">
                     <span className="text-lg">📞</span>
                   </div>
                   <span className="font-medium">+373 68 753 358</span>
@@ -235,13 +235,13 @@ export default function Hero() {
       {isVolunteerModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in-up" style={{ animationDuration: '0.3s' }}>
           <div className="absolute inset-0 bg-black/90" onClick={() => setIsVolunteerModalOpen(false)} />
-          <div className="relative bg-white border-t-8 border-brand-500 p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white border-t-8 border-ice-500 p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onClick={() => setIsVolunteerModalOpen(false)}
-              className="absolute top-6 right-6 text-gray-400 hover:text-brand-500 transition-colors z-10 p-2" aria-label="Close modal">
+              className="absolute top-6 right-6 text-gray-400 hover:text-ice-500 transition-colors z-10 p-2" aria-label="Close modal">
               <ChevronRight className="w-6 h-6 rotate-45" />
             </button>
             <div className="text-center mb-8 mt-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-500 text-black text-xs font-black uppercase tracking-widest mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-ice-500 text-black text-xs font-black uppercase tracking-widest mb-4">
                 {t.volunteerEvent.modalTitle}
               </div>
               <h3 className="text-3xl md:text-4xl font-black-heading text-gray-900 mb-2">{t.volunteerEvent.eventTitle}</h3>
@@ -252,7 +252,7 @@ export default function Hero() {
                   <span className="text-xl md:text-3xl font-mono font-bold text-white mb-1">
                     {String(timeLeft[unit as keyof typeof timeLeft]).padStart(2, '0')}
                   </span>
-                  <span className="text-[10px] md:text-xs text-brand-400 uppercase tracking-wider">
+                  <span className="text-[10px] md:text-xs text-ice-400 uppercase tracking-wider">
                     {t.volunteerEvent.timer[unit as keyof typeof t.volunteerEvent.timer]}
                   </span>
                 </div>
@@ -261,8 +261,8 @@ export default function Hero() {
             <div className="flex flex-col md:flex-row gap-8 mb-8">
               <div className="flex-1 space-y-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-brand-500/20 flex items-center justify-center flex-shrink-0 mt-1">
-                    <MapPin className="text-brand-500 w-5 h-5" />
+                  <div className="w-10 h-10 bg-ice-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                    <MapPin className="text-ice-500 w-5 h-5" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 uppercase tracking-wide font-bold mb-1">{t.volunteerEvent.locationLabel}</p>
@@ -273,14 +273,14 @@ export default function Hero() {
                     </a>
                   </div>
                 </div>
-                <div className="border-l-4 border-brand-500 bg-gray-50 p-4">
+                <div className="border-l-4 border-ice-500 bg-gray-50 p-4">
                   <p className="text-gray-700 text-sm leading-relaxed">{t.volunteerEvent.description}</p>
                 </div>
               </div>
-              <a href="https://maps.google.com/?q=Cimișlia,Moldova" target="_blank" rel="noopener noreferrer" className="w-full md:w-1/3 aspect-square overflow-hidden relative border border-gray-200 group cursor-pointer hover:border-brand-500 transition-colors hidden md:block">
+              <a href="https://maps.google.com/?q=Cimișlia,Moldova" target="_blank" rel="noopener noreferrer" className="w-full md:w-1/3 aspect-square overflow-hidden relative border border-gray-200 group cursor-pointer hover:border-ice-500 transition-colors hidden md:block">
                 <div className="absolute inset-0 bg-gray-100 flex items-center justify-center bg-[url('/map-placeholder.png')] bg-cover bg-center">
                   <div className="absolute inset-0 bg-gray-100/40 group-hover:bg-transparent transition-colors" />
-                  <MapPin className="w-8 h-8 text-brand-500 drop-shadow-lg animate-bounce-gentle" />
+                  <MapPin className="w-8 h-8 text-ice-500 drop-shadow-lg animate-bounce-gentle" />
                 </div>
               </a>
             </div>

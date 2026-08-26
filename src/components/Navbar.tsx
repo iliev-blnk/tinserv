@@ -29,7 +29,7 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${isScrolled
-        ? 'bg-[#020617] shadow-[0_4px_0_0_#ffe600]'
+        ? 'bg-[#020617] shadow-[0_4px_0_0_#5b9bbd]'
         : 'bg-[#020617] lg:bg-transparent'
         }`}
     >
@@ -52,8 +52,8 @@ export default function Navbar() {
                 href={link.href}
                 {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 className={`relative px-4 py-2 font-semibold text-sm uppercase tracking-wide whitespace-nowrap transition-all duration-200
-                  after:absolute after:bottom-0 after:left-4 after:h-0.5 after:w-0 after:bg-brand-500 after:transition-all after:duration-300 hover:after:w-[calc(100%-2rem)]
-                  ${isScrolled ? 'text-gray-300 hover:text-brand-500' : 'text-white'}`}
+                  after:absolute after:bottom-0 after:left-4 after:h-0.5 after:w-0 after:bg-ice-500 after:transition-all after:duration-300 hover:after:w-[calc(100%-2rem)]
+                  ${isScrolled ? 'text-gray-300 hover:text-ice-500' : 'text-white'}`}
               >
                 {link.label}
               </a>
@@ -65,8 +65,8 @@ export default function Navbar() {
             <button
               onClick={toggleLanguage}
               className={`border-2 border-current font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all duration-200 ${isScrolled
-                ? 'text-gray-300 hover:border-brand-500 hover:text-brand-500'
-                : 'text-white hover:border-brand-500 hover:text-brand-500'
+                ? 'text-gray-300 hover:border-ice-500 hover:text-ice-500'
+                : 'text-white hover:border-ice-500 hover:text-ice-500'
                 }`}
             >
               {language === 'ro' ? '🇷🇴 RO' : '🇷🇺 RU'}
@@ -92,7 +92,7 @@ export default function Navbar() {
             </Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 transition-colors ${isScrolled ? 'text-gray-300 hover:text-brand-500' : 'text-white'}`}
+              className={`p-2 transition-colors ${isScrolled ? 'text-gray-300 hover:text-ice-500' : 'text-white'}`}
               aria-label="Toggle menu"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -103,7 +103,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden bg-[#020617] border-t-4 border-brand-500 animate-slide-down">
+        <div className="lg:hidden bg-[#020617] border-t-4 border-ice-500 animate-slide-down">
           <div className="px-4 py-6 space-y-1">
             {navLinks.map((link) => (
               <a
@@ -111,7 +111,7 @@ export default function Navbar() {
                 href={link.href}
                 {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 onClick={() => setIsOpen(false)}
-                className="block px-4 py-4 text-gray-200 font-bold text-lg border-b border-white/10 uppercase tracking-wide hover:text-brand-500 transition-colors"
+                className="block px-4 py-4 text-gray-200 font-bold text-lg border-b border-white/10 uppercase tracking-wide hover:text-ice-500 transition-colors"
               >
                 {link.label}
               </a>
@@ -123,7 +123,7 @@ export default function Navbar() {
                   toggleLanguage();
                   setIsOpen(false);
                 }}
-                className="w-full px-4 py-3 border-2 border-white/20 text-gray-300 font-bold text-sm uppercase tracking-widest hover:border-brand-500 hover:text-brand-500 transition-colors flex items-center justify-center gap-2"
+                className="w-full px-4 py-3 border-2 border-white/20 text-gray-300 font-bold text-sm uppercase tracking-widest hover:border-ice-500 hover:text-ice-500 transition-colors flex items-center justify-center gap-2"
               >
                 {language === 'ro' ? '🇷🇺 Switch to Russian' : '🇷🇴 Переключить на румынский'}
               </button>

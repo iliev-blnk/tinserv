@@ -24,7 +24,7 @@ export default function Footer() {
                     <div className="text-center md:text-left">
                         <div className="mb-8">
                             <h3 className="font-black-heading text-2xl md:text-3xl text-white mb-3">{t.footer.title}</h3>
-                            <blockquote className="border-l-4 border-brand-500 pl-4 italic text-brand-300 mb-6">
+                            <blockquote className="border-l-4 border-ice-500 pl-4 italic text-ice-300 mb-6">
                                 {t.footer.slogan}
                             </blockquote>
                         </div>
@@ -38,7 +38,7 @@ export default function Footer() {
                                 t.footer.items.youth,
                             ].map((item) => (
                                 <li key={item} className="flex gap-4">
-                                    <div className="flex-shrink-0 w-2 h-2 bg-brand-500 mt-2" />
+                                    <div className="flex-shrink-0 w-2 h-2 bg-ice-500 mt-2" />
                                     <p className="text-gray-300 text-sm leading-relaxed">
                                         {item}
                                     </p>
@@ -51,32 +51,32 @@ export default function Footer() {
                 {/* Centered Contact Section */}
                 <div className="max-w-4xl mx-auto border-t border-gray-800 pt-16">
                     <div className="text-center mb-12 px-4">
-                        <div className="inline-flex items-center gap-3 px-4 py-2 bg-brand-500 mb-6">
+                        <div className="inline-flex items-center gap-3 px-4 py-2 bg-ice-500 mb-6">
                             <span className="text-black font-black text-sm tracking-widest uppercase">{t.footer.cta.badge}</span>
                         </div>
-                        <h2 className="font-black-heading text-3xl sm:text-4xl md:text-6xl text-white mb-4">{t.footer.cta.title}</h2>
+                        <h2 className="font-black-heading text-3xl sm:text-4xl md:text-6xl frost-text mb-4">{t.footer.cta.title}</h2>
                         <p className="text-gray-400 max-w-xl mx-auto">{t.footer.cta.subtitle}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <a href="mailto:oponeatovskii@mail.ru" className="group p-4 sm:p-6 border border-gray-700 hover:border-brand-500 hover:bg-brand-500/5 transition-all duration-300 text-center">
-                            <div className="w-12 h-12 bg-brand-500/10 flex items-center justify-center text-brand-400 group-hover:bg-brand-500/20 transition-all duration-300 mx-auto mb-4">
+                        <a href="mailto:oponeatovskii@mail.ru" className="group p-4 sm:p-6 border border-gray-700 hover:border-ice-500 hover:bg-ice-500/5 transition-all duration-300 text-center">
+                            <div className="w-12 h-12 bg-ice-500/10 flex items-center justify-center text-ice-400 group-hover:bg-ice-500/20 transition-all duration-300 mx-auto mb-4">
                                 <Mail className="h-6 w-6" />
                             </div>
                             <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mb-1">{t.footer.contacts.write}</p>
                             <p className="text-gray-300 group-hover:text-white transition-colors text-sm font-medium break-all">{"oponeatovskii@mail.ru"}</p>
                         </a>
 
-                        <div className="group p-4 sm:p-6 border border-gray-700 hover:border-brand-500 hover:bg-brand-500/5 transition-all duration-300 text-center">
-                            <div className="w-12 h-12 bg-brand-500/10 flex items-center justify-center text-brand-400 group-hover:bg-brand-500/20 transition-all duration-300 mx-auto mb-4">
+                        <div className="group p-4 sm:p-6 border border-gray-700 hover:border-ice-500 hover:bg-ice-500/5 transition-all duration-300 text-center">
+                            <div className="w-12 h-12 bg-ice-500/10 flex items-center justify-center text-ice-400 group-hover:bg-ice-500/20 transition-all duration-300 mx-auto mb-4">
                                 <MapPin className="h-6 w-6" />
                             </div>
                             <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mb-1">{t.footer.contacts.location}</p>
                             <p className="text-gray-300 group-hover:text-white transition-colors text-sm font-medium">{t.footer.items.location}</p>
                         </div>
 
-                        <a href="tel:+37368753358" className="group p-4 sm:p-6 border border-gray-700 hover:border-brand-500 hover:bg-brand-500/5 transition-all duration-300 text-center">
-                            <div className="w-12 h-12 bg-brand-500/10 flex items-center justify-center text-brand-400 group-hover:bg-brand-500/20 transition-all duration-300 mx-auto mb-4">
+                        <a href="tel:+37368753358" className="group p-4 sm:p-6 border border-gray-700 hover:border-ice-500 hover:bg-ice-500/5 transition-all duration-300 text-center">
+                            <div className="w-12 h-12 bg-ice-500/10 flex items-center justify-center text-ice-400 group-hover:bg-ice-500/20 transition-all duration-300 mx-auto mb-4">
                                 <Phone className="h-6 w-6" />
                             </div>
                             <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mb-1">{t.footer.contacts.call}</p>

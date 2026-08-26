@@ -83,7 +83,7 @@ export default function Registration() {
   const langToggle = (
     <button
       onClick={() => setLanguage(language === 'ro' ? 'ru' : 'ro')}
-      className="border-2 border-white/20 text-gray-400 hover:border-brand-500 hover:text-brand-500 font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all flex-shrink-0"
+      className="border-2 border-white/20 text-gray-400 hover:border-ice-500 hover:text-ice-500 font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all flex-shrink-0"
     >
       {language === 'ro' ? '🇷🇺 RU' : '🇷🇴 RO'}
     </button>
@@ -96,13 +96,13 @@ export default function Registration() {
       <div className="lg:hidden bg-[#020617] border-b border-white/10 px-5 py-4 flex items-center justify-between">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-gray-500 hover:text-brand-500 transition-colors text-sm font-medium group"
+          className="inline-flex items-center gap-2 text-gray-500 hover:text-ice-500 transition-colors text-sm font-medium group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           {t.registration.back}
         </Link>
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 text-brand-500">
+          <div className="flex items-center gap-1.5 text-ice-500">
             <MapPin className="w-3.5 h-3.5" />
             <span className="text-xs font-bold uppercase tracking-[0.15em]">Cimișlia</span>
           </div>
@@ -118,7 +118,7 @@ export default function Registration() {
           <div className="flex items-center justify-between mb-10">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-gray-500 hover:text-brand-500 transition-colors text-sm font-medium group"
+              className="inline-flex items-center gap-2 text-gray-500 hover:text-ice-500 transition-colors text-sm font-medium group"
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               {t.registration.back}
@@ -128,8 +128,8 @@ export default function Registration() {
 
           {/* Place name */}
           <div className="flex items-center gap-2 mb-6">
-            <MapPin className="w-4 h-4 text-brand-500 flex-shrink-0" />
-            <span className="text-brand-500 text-xs font-bold uppercase tracking-[0.2em]">
+            <MapPin className="w-4 h-4 text-ice-500 flex-shrink-0" />
+            <span className="text-ice-500 text-xs font-bold uppercase tracking-[0.2em]">
               TinSerV Cimișlia
             </span>
           </div>
@@ -137,11 +137,11 @@ export default function Registration() {
           {/* Heading */}
           <h1 className="font-black-heading text-5xl lg:text-6xl text-white mb-8 leading-[0.9]">
             {t.registration.heading}<br />
-            <span className="text-brand-500">{t.registration.headingAccent}</span>
+            <span className="frost-text">{t.registration.headingAccent}</span>
           </h1>
 
           {/* Motivational quote */}
-          <blockquote className="border-l-4 border-brand-500 pl-5 mb-10">
+          <blockquote className="border-l-4 border-ice-500 pl-5 mb-10">
             <p className="text-white text-xl font-heading font-bold leading-snug mb-2">
               {t.registration.quote}
             </p>
@@ -186,7 +186,7 @@ export default function Registration() {
                   </div>
                 </div>
               ) : spotsLeft !== null && spotsLeft <= 10 ? (
-                <div className="mb-6 inline-flex items-center gap-2 text-brand-400 text-sm font-semibold">
+                <div className="mb-6 inline-flex items-center gap-2 text-ice-400 text-sm font-semibold">
                   <Users className="w-4 h-4" />
                   {spotsLeft} {t.registration.capacity.spotsLeft}
                 </div>
@@ -204,7 +204,7 @@ export default function Registration() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Ion Popescu"
-                    className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors text-base"
+                    className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-ice-500 transition-colors text-base"
                   />
                 </div>
 
@@ -220,7 +220,7 @@ export default function Registration() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="ion@example.com"
-                      className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors text-base"
+                      className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-ice-500 transition-colors text-base"
                     />
                   </div>
                   <div>
@@ -234,7 +234,7 @@ export default function Registration() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+373 60 123 456"
-                      className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors text-base"
+                      className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-ice-500 transition-colors text-base"
                     />
                   </div>
                 </div>
@@ -249,7 +249,7 @@ export default function Registration() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder={t.registration.fields.messagePlaceholder}
-                    className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-500 transition-colors resize-none text-base"
+                    className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-ice-500 transition-colors resize-none text-base"
                   />
                 </div>
 
@@ -275,7 +275,7 @@ export default function Registration() {
             </>
           ) : (
             <div className="text-center py-12">
-              <div className={`w-20 h-20 flex items-center justify-center mx-auto mb-8 ${submittedAsReserve ? 'bg-amber-500' : 'bg-brand-500'}`}>
+              <div className={`w-20 h-20 flex items-center justify-center mx-auto mb-8 ${submittedAsReserve ? 'bg-amber-500' : 'bg-ice-500'}`}>
                 {submittedAsReserve
                   ? <Clock className="w-10 h-10 text-black" />
                   : <CheckCircle className="w-10 h-10 text-black" />}
