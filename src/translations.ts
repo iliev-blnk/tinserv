@@ -94,9 +94,9 @@ export const translations = {
         },
         volunteerEvent: {
             modalTitle: 'Următorul Eveniment',
-            eventTitle: 'TinSerV Stefan Voda',
-            description: 'Alătură-te echipei noastre pentru o acțiune de vara! Vom curăța malurile râului și vom planta copaci pentru un viitor mai verde.',
-            location: 'Stefan Voda',
+            eventTitle: 'TinSerV Cimișlia',
+            description: 'Alătură-te echipei noastre pentru ediția de iarnă! Împreună aducem căldură celor din jur, ajutăm familiile în nevoie și construim un viitor mai luminos.',
+            location: 'Cimișlia',
             timer: {
                 days: 'Zile',
                 hours: 'Ore',
@@ -235,9 +235,9 @@ export const translations = {
         },
         volunteerEvent: {
             modalTitle: 'Следующее событие',
-            eventTitle: 'TinSerV Штефан Водэ',
-            description: 'Присоединяйтесь к нашей команде для масштабной летней акции! Мы будем очищать берега реки и сажать деревья для более зеленого будущего.',
-            location: 'Stefan Voda',
+            eventTitle: 'TinSerV Чимишлия',
+            description: 'Присоединяйтесь к нашей команде на зимнюю смену! Вместе мы дарим тепло окружающим, помогаем нуждающимся семьям и строим более светлое будущее.',
+            location: 'Чимишлия',
             timer: {
                 days: 'Дней',
                 hours: 'Часов',

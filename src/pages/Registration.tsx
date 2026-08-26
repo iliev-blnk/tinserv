@@ -104,7 +104,7 @@ export default function Registration() {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5 text-brand-500">
             <MapPin className="w-3.5 h-3.5" />
-            <span className="text-xs font-bold uppercase tracking-[0.15em]">Ștefan Vodă</span>
+            <span className="text-xs font-bold uppercase tracking-[0.15em]">Cimișlia</span>
           </div>
           {langToggle}
         </div>
@@ -130,7 +130,7 @@ export default function Registration() {
           <div className="flex items-center gap-2 mb-6">
             <MapPin className="w-4 h-4 text-brand-500 flex-shrink-0" />
             <span className="text-brand-500 text-xs font-bold uppercase tracking-[0.2em]">
-              TinSerV Ștefan Vodă
+              TinSerV Cimișlia
             </span>
           </div>
 
@@ -151,8 +151,8 @@ export default function Registration() {
           {/* Map */}
           <div className="flex-1 min-h-0 overflow-hidden border-2 border-white/10">
             <iframe
-              title="TinSerV Ștefan Vodă"
-              src="https://maps.google.com/maps?q=Stefan+Voda,Moldova&z=13&output=embed"
+              title="TinSerV Cimișlia"
+              src="https://maps.google.com/maps?q=Cimișlia,Moldova&z=13&output=embed"
               className="w-full h-full"
               style={{ minHeight: '200px' }}
               loading="lazy"

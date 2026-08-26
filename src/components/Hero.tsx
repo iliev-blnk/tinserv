@@ -25,7 +25,7 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    const countDownDate = new Date("Jul 26, 2026 09:00:00").getTime();
+    const countDownDate = new Date("Jan 4, 2027 09:00:00").getTime();
     const updateTimer = () => {
       const now = new Date().getTime();
       const distance = countDownDate - now;
@@ -85,11 +85,11 @@ export default function Hero() {
           </h1>
 
           <p className="font-black text-lg sm:text-2xl lg:text-3xl text-brand-500 uppercase tracking-wide lg:tracking-widest mb-3 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
-            26 July – 1 August 2026
+            4 – 9 January 2027
           </p>
 
           <p className="font-semibold text-xl text-white mb-8 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-            Ștefan Vodă, Moldova 🇲🇩
+            Cimișlia, Moldova 🇲🇩
           </p>
 
           <p className="italic text-gray-300 text-lg mb-10 max-w-sm leading-relaxed animate-fade-in-up" style={{ animationDelay: '250ms' }}>
@@ -259,7 +259,7 @@ export default function Hero() {
                   <div>
                     <p className="text-sm text-gray-500 uppercase tracking-wide font-bold mb-1">{t.volunteerEvent.locationLabel}</p>
                     <p className="text-gray-900 font-medium">{t.volunteerEvent.location}</p>
-                    <a href="https://maps.google.com/?q=Ștefan+Vodă,Moldova" target="_blank" rel="noopener noreferrer"
+                    <a href="https://maps.google.com/?q=Cimișlia,Moldova" target="_blank" rel="noopener noreferrer"
                       className="text-xs text-gray-500 hover:underline mt-1 inline-block">
                       {t.volunteerEvent.viewOnMap}
                     </a>
@@ -269,7 +269,7 @@ export default function Hero() {
                   <p className="text-gray-700 text-sm leading-relaxed">{t.volunteerEvent.description}</p>
                 </div>
               </div>
-              <a href="https://maps.google.com/?q=Ștefan+Vodă,Moldova" target="_blank" rel="noopener noreferrer" className="w-full md:w-1/3 aspect-square overflow-hidden relative border border-gray-200 group cursor-pointer hover:border-brand-500 transition-colors hidden md:block">
+              <a href="https://maps.google.com/?q=Cimișlia,Moldova" target="_blank" rel="noopener noreferrer" className="w-full md:w-1/3 aspect-square overflow-hidden relative border border-gray-200 group cursor-pointer hover:border-brand-500 transition-colors hidden md:block">
                 <div className="absolute inset-0 bg-gray-100 flex items-center justify-center bg-[url('/map-placeholder.png')] bg-cover bg-center">
                   <div className="absolute inset-0 bg-gray-100/40 group-hover:bg-transparent transition-colors" />
                   <MapPin className="w-8 h-8 text-brand-500 drop-shadow-lg animate-bounce-gentle" />
