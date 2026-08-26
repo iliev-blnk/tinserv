@@ -14,7 +14,8 @@ export const translations = {
             headline3: '',
             ctaPrimary: 'Colaborează',
             ctaSecondary: 'Voluntariat',
-            badge: 'Alătură-te la 30+ voluntari care fac diferența'
+            badge: 'Alătură-te la 30+ voluntari care fac diferența',
+            winterEdition: 'Ediția de Iarnă'
         },
         opportunities: {
             title: 'Găsește-ți Pasiunea',
@@ -154,7 +155,8 @@ export const translations = {
             headline3: '',
             ctaPrimary: 'Сотрудничать',
             ctaSecondary: 'Волонтёрство',
-            badge: 'Присоединяйтесь к 30+ волонтёрам, которые меняют мир'
+            badge: 'Присоединяйтесь к 30+ волонтёрам, которые меняют мир',
+            winterEdition: 'Зимняя Смена'
         },
         opportunities: {
             title: 'Найди свою страсть',

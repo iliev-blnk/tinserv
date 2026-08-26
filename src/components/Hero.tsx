@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Instagram, MapPin } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Instagram, MapPin, Snowflake } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -68,14 +68,21 @@ export default function Hero() {
       ))}
 
       {/* Mobile: semi-transparent overlay. Desktop: gradient left→transparent */}
-      <div className="absolute inset-0 bg-[#171717]/75 lg:bg-none" />
-      <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#171717] from-20% via-[#171717]/75 via-45% to-transparent" />
+      <div className="absolute inset-0 bg-[#020617]/75 lg:bg-none" />
+      <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[#020617] from-20% via-[#020617]/75 via-45% to-transparent" />
 
       {/* Content grid */}
       <div className="relative z-10 flex-1 grid lg:grid-cols-[48%_52%] min-h-screen">
 
         {/* Left — content */}
         <div className="flex flex-col justify-center px-8 sm:px-12 lg:px-16 pt-24 pb-12 lg:py-0">
+          <div className="flex flex-wrap items-center gap-2 mb-4 self-start animate-fade-in-up">
+            <span className="inline-flex items-center gap-2 border-2 border-white/25 text-white px-4 py-1.5 font-black text-xs uppercase tracking-widest backdrop-blur-sm">
+              <Snowflake className="w-3.5 h-3.5 text-brand-500" />
+              {t.hero.winterEdition}
+            </span>
+          </div>
+
           <div className="flex flex-wrap items-center gap-2 bg-brand-500 text-black px-4 py-2 mb-8 self-start max-w-full animate-fade-in-up">
             <span className="font-black text-xs uppercase tracking-widest">{t.hero.badge}</span>
           </div>
@@ -84,7 +91,8 @@ export default function Hero() {
             TinSerV
           </h1>
 
-          <p className="font-black text-lg sm:text-2xl lg:text-3xl text-brand-500 uppercase tracking-wide lg:tracking-widest mb-3 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+          <p className="flex items-center gap-3 font-black text-lg sm:text-2xl lg:text-3xl text-brand-500 uppercase tracking-wide lg:tracking-widest mb-3 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+            <Snowflake className="w-5 h-5 lg:w-6 lg:h-6 flex-shrink-0" />
             4 – 9 January 2027
           </p>
 

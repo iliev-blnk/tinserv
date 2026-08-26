@@ -29,8 +29,8 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${isScrolled
-        ? 'bg-[#171717] shadow-[0_4px_0_0_#ffe600]'
-        : 'bg-[#171717] lg:bg-transparent'
+        ? 'bg-[#020617] shadow-[0_4px_0_0_#ffe600]'
+        : 'bg-[#020617] lg:bg-transparent'
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -102,7 +102,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden bg-[#171717] border-t-4 border-brand-500 animate-slide-down">
+        <div className="lg:hidden bg-[#020617] border-t-4 border-brand-500 animate-slide-down">
           <div className="px-4 py-6 space-y-1">
             {navLinks.map((link) => (
               <a

@@ -55,7 +55,7 @@ body {
   font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #171717; /* matches hero/footer dark, prevents white flash on overscroll */
+  background-color: #020617; /* cold deep-slate winter base, prevents white flash on overscroll */
   overscroll-behavior: none;
 }
 
@@ -280,13 +280,57 @@ h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background: #171717;
+  background: #020617;
 }
 
 ::-webkit-scrollbar-thumb {
   background: rgba(148, 163, 184, 0.3);
   border-radius: 10px;
-  border: 2px solid #171717;
+  border: 2px solid #020617;
+}
+
+/* ── Winter snowfall overlay ──────────────────────────────── */
+.snowfall {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 40;
+}
+
+.snowflake {
+  position: absolute;
+  top: -6vh;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+  animation-name: snow-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translate3d(0, -6vh, 0);
+  }
+
+  100% {
+    transform: translate3d(var(--drift, 0), 106vh, 0);
+  }
+}
+
+/* Frosted-glass panel — cold, translucent surface for winter sections */
+.frost-panel {
+  background: rgba(226, 232, 240, 0.06);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(226, 232, 240, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snowfall {
+    display: none;
+  }
 }
 
 ::-webkit-scrollbar-thumb:hover {

@@ -90,10 +90,10 @@ export default function Registration() {
   );
 
   return (
-    <div className="min-h-screen bg-[#171717] flex flex-col lg:flex-row">
+    <div className="min-h-screen bg-[#020617] flex flex-col lg:flex-row">
 
       {/* ── MOBILE TOPBAR (hidden on desktop) ── */}
-      <div className="lg:hidden bg-[#171717] border-b border-white/10 px-5 py-4 flex items-center justify-between">
+      <div className="lg:hidden bg-[#020617] border-b border-white/10 px-5 py-4 flex items-center justify-between">
         <Link
           to="/"
           className="inline-flex items-center gap-2 text-gray-500 hover:text-brand-500 transition-colors text-sm font-medium group"
@@ -111,7 +111,7 @@ export default function Registration() {
       </div>
 
       {/* ── LEFT PANEL (desktop only) ── */}
-      <div className="hidden lg:flex lg:w-5/12 bg-[#171717] lg:min-h-screen lg:sticky lg:top-0 flex-col">
+      <div className="hidden lg:flex lg:w-5/12 bg-[#020617] lg:min-h-screen lg:sticky lg:top-0 flex-col">
         <div className="flex flex-col flex-1 px-12 py-12 max-w-lg mx-auto w-full">
 
           {/* Back + lang switcher */}
@@ -163,7 +163,7 @@ export default function Registration() {
       </div>
 
       {/* ── FORM PANEL ── */}
-      <div className="flex-1 lg:w-7/12 bg-[#1e1e1e] flex items-center justify-center px-6 py-10 lg:py-16 lg:px-16">
+      <div className="flex-1 lg:w-7/12 bg-[#0b1220] flex items-center justify-center px-6 py-10 lg:py-16 lg:px-16">
         <div className="w-full max-w-lg">
 
           {!isSubmitted ? (

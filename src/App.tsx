@@ -6,6 +6,7 @@ import VideoShowcase from './components/VideoShowcase';
 import Footer from './components/Footer';
 import Registration from './pages/Registration';
 import Admin from './pages/Admin';
+import Snowfall from './components/Snowfall';
 import { LanguageProvider } from './contexts/LanguageContext';
 
 function MainLayout() {
@@ -24,7 +25,8 @@ function App() {
   return (
     <Router>
       <LanguageProvider>
-        <div className="min-h-screen bg-[#171717]">
+        <div className="min-h-screen bg-[#020617]">
+          <Snowfall />
           <Routes>
             <Route path="/" element={<MainLayout />} />
             <Route path="/registration" element={<Registration />} />

@@ -18,7 +18,7 @@ export default function VideoShowcase() {
     ];
 
     return (
-        <section id="media" className="py-24 bg-[#171717] border-t border-white/[0.06] overflow-hidden">
+        <section id="media" className="py-24 bg-[#020617] border-t border-white/[0.06] overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16 px-4">
                     <div className="inline-flex items-center gap-3 px-4 py-2 bg-brand-500 mb-6 animate-fade-in-up">
