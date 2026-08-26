@@ -77,9 +77,9 @@ export default function Hero() {
         {/* Left — content */}
         <div className="flex flex-col justify-center px-8 sm:px-12 lg:px-16 pt-24 pb-12 lg:py-0">
           <div className="flex flex-wrap items-center gap-2 mb-4 self-start animate-fade-in-up">
-            <span className="inline-flex items-center gap-2 border-2 border-white/25 text-white px-4 py-1.5 font-black text-xs uppercase tracking-widest backdrop-blur-sm">
-              <Snowflake className="w-3.5 h-3.5 text-brand-500" />
-              {t.hero.winterEdition}
+            <span className="inline-flex items-center gap-2 border-2 border-sky-200/30 px-4 py-1.5 font-black text-xs uppercase tracking-widest backdrop-blur-sm">
+              <Snowflake className="w-3.5 h-3.5 text-sky-200" />
+              <span className="frost-text">{t.hero.winterEdition}</span>
             </span>
           </div>
 

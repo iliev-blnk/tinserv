@@ -20,8 +20,8 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { href: '#impact', label: t.nav.impact },
+  const navLinks: { href: string; label: string; external?: boolean }[] = [
+    { href: 'https://instagram.com/tinserv.chisinau', label: t.nav.impact, external: true },
     { href: '#how-it-works', label: t.nav.howItWorks },
     { href: '#media', label: 'Media' },
   ];
@@ -50,6 +50,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
+                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 className={`relative px-4 py-2 font-semibold text-sm uppercase tracking-wide whitespace-nowrap transition-all duration-200
                   after:absolute after:bottom-0 after:left-4 after:h-0.5 after:w-0 after:bg-brand-500 after:transition-all after:duration-300 hover:after:w-[calc(100%-2rem)]
                   ${isScrolled ? 'text-gray-300 hover:text-brand-500' : 'text-white'}`}
@@ -108,6 +109,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
+                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 onClick={() => setIsOpen(false)}
                 className="block px-4 py-4 text-gray-200 font-bold text-lg border-b border-white/10 uppercase tracking-wide hover:text-brand-500 transition-colors"
               >

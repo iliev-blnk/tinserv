@@ -81,6 +81,15 @@ h6 {
   font-family: var(--font-family-heading);
 }
 
+/* Icy frost text — steel-blue winter accent for select words */
+.frost-text {
+  background: linear-gradient(180deg, #dceaf1 0%, #9db9c8 48%, #6d94a6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
 /* Gradient text (kept for any remaining uses) */
 .gradient-text {
   background: linear-gradient(135deg, var(--color-brand-500) 0%, var(--color-brand-700) 100%);
