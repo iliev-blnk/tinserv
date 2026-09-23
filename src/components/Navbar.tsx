@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -62,6 +62,15 @@ export default function Navbar() {
 
           {/* Right side actions */}
           <div className="hidden lg:flex items-center justify-end gap-4">
+            <Link
+              to="/donate"
+              className={`inline-flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide whitespace-nowrap transition-colors ${
+                isScrolled ? 'text-gray-300 hover:text-brand-500' : 'text-white hover:text-brand-500'
+              }`}
+            >
+              <Heart className="w-4 h-4 fill-current" />
+              {t.donate.navLabel}
+            </Link>
             <button
               onClick={toggleLanguage}
               className={`border-2 border-current font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all duration-200 ${isScrolled
@@ -116,6 +125,15 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
+
+            <Link
+              to="/donate"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-2 px-4 py-4 text-gray-200 font-bold text-lg border-b border-white/10 uppercase tracking-wide hover:text-brand-500 transition-colors"
+            >
+              <Heart className="w-5 h-5 fill-current text-brand-500" />
+              {t.donate.navLabel}
+            </Link>
 
             <div className="border-t border-white/10 pt-4 mt-4">
               <button

@@ -5,6 +5,7 @@ import HowItWorks from './components/HowItWorks';
 import VideoShowcase from './components/VideoShowcase';
 import Footer from './components/Footer';
 import Registration from './pages/Registration';
+import Donate from './pages/Donate';
 import Admin from './pages/Admin';
 import Snowfall from './components/Snowfall';
 import { LanguageProvider } from './contexts/LanguageContext';
@@ -30,6 +31,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MainLayout />} />
             <Route path="/registration" element={<Registration />} />
+            <Route path="/donate" element={<Donate />} />
             <Route path="/admin" element={<Admin />} />
           </Routes>
         </div>
