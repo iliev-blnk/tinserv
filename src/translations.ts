@@ -4,6 +4,7 @@ export const translations = {
             nav: { camp: 'Ediția de iarnă', about: 'Ce facem', media: 'Media', contact: 'Contact', donate: 'Donează', register: 'Înscrie-te' },
             hero: {
                 title: 'Fii lumina.',
+                winter: 'iarna asta',
                 camp: 'TinSerV · Ediția de iarnă',
                 when: 'Cimișlia · 4–9 ianuarie 2027',
                 seats: '40 de locuri · Înscrieri din noiembrie',
@@ -138,6 +139,7 @@ export const translations = {
             nav: { camp: 'Зимняя смена', about: 'Что мы делаем', media: 'Медиа', contact: 'Контакты', donate: 'Пожертвовать', register: 'Записаться' },
             hero: {
                 title: 'Будь светом.',
+                winter: 'этой зимой',
                 camp: 'TinSerV · Зимняя смена',
                 when: 'Чимишлия · 4–9 января 2027',
                 seats: '40 мест · Регистрация с ноября',

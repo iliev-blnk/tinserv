@@ -14,6 +14,13 @@ export default function Hero() {
       <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-between px-5 pb-8 pt-24 sm:px-8 lg:pb-12 lg:pt-32">
         <h1 className="font-black-heading animate-fade-in-up text-[clamp(3.5rem,11vw,10rem)] text-white">
           {h.title}
+          {/* revealed when the light turns cold; opacity follows --cold set by Raze */}
+          <span
+            className="mt-[0.15em] block text-[0.5em] text-ice"
+            style={{ opacity: 'var(--cold, 0)', transform: 'translateY(calc((1 - var(--cold, 0)) * 0.12em))', filter: 'blur(calc((1 - var(--cold, 0)) * 6px))' }}
+          >
+            {h.winter}
+          </span>
         </h1>
 
         <div className="animate-fade-in-up max-w-md" style={{ animationDelay: '200ms' }}>

@@ -44,12 +44,16 @@ const COLD = { core: [240, 248, 255], mid: [110, 160, 255], edge: [40, 30, 210],
 type Rgb = number[];
 const mixRgb = (a: Rgb, b: Rgb, k: number) => a.map((v, i) => Math.round(v + (b[i] - v) * k)).join(',');
 
-// 0 = warm, 1 = cold. Each colour holds for ~10 s, with a 2.5 s fade at every switch.
+// 0 = warm, 1 = cold. Opens warm, turns cold around 3.5 s and holds it for 20 s,
+// then alternates 15 s warm / 15 s cold. Every switch is a 3 s fade.
+const FADE = 3;
 function coldness(t: number) {
   const ramp = (x: number) => { const c = Math.min(1, Math.max(0, x)); return c * c * (3 - 2 * c); };
-  const p = (t + 1.25) % 20;
-  if (p < 10) return p < 1.25 ? 1 - ramp((p + 1.25) / 2.5) : ramp((p - 8.75) / 2.5);
-  return p > 18.75 ? 1 - ramp((p - 18.75) / 2.5) : ramp((p - 8.75) / 2.5);
+  if (t < 2) return 0;
+  if (t < 25) return ramp((t - 2) / FADE);
+  const p = (t - 25) % 30;
+  if (p < 15) return 1 - ramp(p / FADE);
+  return ramp((p - 15) / FADE);
 }
 
 function noiseTile(size: number, alpha: number) {
@@ -75,6 +79,9 @@ export default function Raze({ className = '' }: { className?: string }) {
     const cv = canvas.current!;
     const ctx = cv.getContext('2d')!;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const host = el.parentElement;
+    // Without motion the light stays warm, so the line is simply shown.
+    if (reduced) host?.style.setProperty('--cold', '1');
     const coarse = window.matchMedia('(pointer: coarse)').matches;
     const STEPS = coarse ? 26 : 40;
 
@@ -137,6 +144,8 @@ export default function Raze({ className = '' }: { className?: string }) {
       if (!body || !spark) return;
       const t = now / 1000;
       const k = reduced ? 0 : coldness(t);
+      // Lets the hero text follow the light: --cold drives the "iarna asta" line.
+      host?.style.setProperty('--cold', k.toFixed(3));
       const { fh, cx, cy, home } = layout();
       const [tx, ty] = pointer && !reduced
         ? pointer
