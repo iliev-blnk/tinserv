@@ -44,14 +44,14 @@ const COLD = { core: [240, 248, 255], mid: [110, 160, 255], edge: [40, 30, 210],
 type Rgb = number[];
 const mixRgb = (a: Rgb, b: Rgb, k: number) => a.map((v, i) => Math.round(v + (b[i] - v) * k)).join(',');
 
-// 0 = warm, 1 = cold. Opens warm, turns cold around 3.5 s and holds it for 20 s,
+// 0 = warm, 1 = cold. Opens warm; at 3 s it fades to cold and holds cold for 25 s,
 // then alternates 15 s warm / 15 s cold. Every switch is a 3 s fade.
 const FADE = 3;
 function coldness(t: number) {
   const ramp = (x: number) => { const c = Math.min(1, Math.max(0, x)); return c * c * (3 - 2 * c); };
-  if (t < 2) return 0;
-  if (t < 25) return ramp((t - 2) / FADE);
-  const p = (t - 25) % 30;
+  if (t < 3) return 0;
+  if (t < 3 + FADE + 25) return ramp((t - 3) / FADE);
+  const p = (t - 3 - FADE - 25) % 30;
   if (p < 15) return 1 - ramp(p / FADE);
   return ramp((p - 15) / FADE);
 }
