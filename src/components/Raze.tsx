@@ -38,6 +38,20 @@ function silhouette(img: HTMLImageElement) {
   return c;
 }
 
+// Light colours: warm (yellow-orange) and cold (blue). The hero fades between them.
+const WARM = { core: [255, 250, 232], mid: [255, 196, 40], edge: [255, 80, 0], dust: [255, 226, 160], halo: [255, 230, 0] };
+const COLD = { core: [240, 248, 255], mid: [110, 160, 255], edge: [40, 30, 210], dust: [200, 220, 255], halo: [159, 195, 255] };
+type Rgb = number[];
+const mixRgb = (a: Rgb, b: Rgb, k: number) => a.map((v, i) => Math.round(v + (b[i] - v) * k)).join(',');
+
+// 0 = warm, 1 = cold. Each colour holds for ~10 s, with a 2.5 s fade at every switch.
+function coldness(t: number) {
+  const ramp = (x: number) => { const c = Math.min(1, Math.max(0, x)); return c * c * (3 - 2 * c); };
+  const p = (t + 1.25) % 20;
+  if (p < 10) return p < 1.25 ? 1 - ramp((p + 1.25) / 2.5) : ramp((p - 8.75) / 2.5);
+  return p > 18.75 ? 1 - ramp((p - 18.75) / 2.5) : ramp((p - 8.75) / 2.5);
+}
+
 function noiseTile(size: number, alpha: number) {
   const c = document.createElement('canvas');
   c.width = c.height = size;
@@ -122,6 +136,7 @@ export default function Raze({ className = '' }: { className?: string }) {
     const frame = (now: number) => {
       if (!body || !spark) return;
       const t = now / 1000;
+      const k = reduced ? 0 : coldness(t);
       const { fh, cx, cy, home } = layout();
       const [tx, ty] = pointer && !reduced
         ? pointer
@@ -135,10 +150,10 @@ export default function Raze({ className = '' }: { className?: string }) {
       lctx.fillRect(0, 0, light.width, light.height);
       const r = Math.max(W, H) * 0.5 * 0.42;
       const g = lctx.createRadialGradient(lx / 2, ly / 2, 0, lx / 2, ly / 2, r);
-      g.addColorStop(0, 'rgba(255,250,232,1)');
-      g.addColorStop(0.1, 'rgba(255,196,40,0.92)');
-      g.addColorStop(0.45, 'rgba(255,80,0,0.25)');
-      g.addColorStop(1, 'rgba(255,80,0,0)');
+      g.addColorStop(0, `rgba(${mixRgb(WARM.core, COLD.core, k)},1)`);
+      g.addColorStop(0.1, `rgba(${mixRgb(WARM.mid, COLD.mid, k)},0.9)`);
+      g.addColorStop(0.45, `rgba(${mixRgb(WARM.edge, COLD.edge, k)},0.25)`);
+      g.addColorStop(1, `rgba(${mixRgb(WARM.edge, COLD.edge, k)},0)`);
       lctx.fillStyle = g;
       lctx.fillRect(0, 0, light.width, light.height);
       drawRunner(lctx, cx / 2, cy / 2, fh / 2);
@@ -159,13 +174,14 @@ export default function Raze({ className = '' }: { className?: string }) {
       // dust shows only where the light actually reaches
       pctx.drawImage(cv, 0, 0, probe.width, probe.height);
       const px = pctx.getImageData(0, 0, probe.width, probe.height).data;
+      const dustRgb = mixRgb(WARM.dust, COLD.dust, k);
       for (const d of dust) {
         d.x = (d.x + d.vx + Math.sin(t + d.ph) * 0.25 + W) % W;
         d.y = (d.y + d.vy + H) % H;
         const i = (Math.floor(d.y / 12) * probe.width + Math.floor(d.x / 12)) * 4;
         const lum = (px[i] + px[i + 1] + px[i + 2]) / 765;
         if (lum < 0.08) continue;
-        ctx.fillStyle = `rgba(255,226,160,${Math.min(1, lum * 1.4) * (0.35 + d.z * 0.6)})`;
+        ctx.fillStyle = `rgba(${dustRgb},${Math.min(1, lum * 1.4) * (0.35 + d.z * 0.6)})`;
         ctx.beginPath();
         ctx.arc(d.x, d.y, 0.5 + d.z * 1.4, 0, Math.PI * 2);
         ctx.fill();
@@ -176,7 +192,7 @@ export default function Raze({ className = '' }: { className?: string }) {
       const ss = fh * 0.1 * (1 + Math.sin(t * 2.2) * 0.05);
       ctx.save();
       ctx.shadowBlur = ss * 0.8;
-      ctx.shadowColor = '#FFE600';
+      ctx.shadowColor = `rgb(${mixRgb(WARM.halo, COLD.halo, k)})`;
       ctx.translate(lx, ly);
       ctx.rotate(Math.sin(t * 0.9) * 0.12);
       ctx.drawImage(spark, -ss / 2, -ss / 2, ss, ss);
