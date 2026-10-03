@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, Fragment } from 'react';
 import { Search, RefreshCw, Download, Users, TrendingUp, Calendar, MessageSquare, LogOut, Eye, EyeOff, Trash2 } from 'lucide-react';
+import { parseCSV } from '../lib/csv';
 
 // ─── CONFIG ─────────────────────────────────────────────────────────────────
 const ADMIN_PASSWORD = '4tinserv2025';
@@ -31,31 +32,17 @@ function rowKey(r: Registrant) {
   return `${r.email}::${r.timestamp}`;
 }
 
-function parseCSV(text: string): Registrant[] {
-  const lines = text.trim().split('\n');
-  if (lines.length < 2) return [];
-  return lines
+function parseRegistrants(text: string): Registrant[] {
+  // Sheet columns: name, email, phone, message, timestamp
+  return parseCSV(text)
     .slice(1)
-    .filter(l => l.trim())
-    .map(line => {
-      const cols: string[] = [];
-      let cur = '';
-      let inQ = false;
-      for (const ch of line) {
-        if (ch === '"') { inQ = !inQ; continue; }
-        if (ch === ',' && !inQ) { cols.push(cur); cur = ''; continue; }
-        cur += ch;
-      }
-      cols.push(cur);
-      // Sheet columns: name, email, phone, message, timestamp
-      return {
-        name:      cols[0]?.trim() ?? '',
-        email:     cols[1]?.trim() ?? '',
-        phone:     cols[2]?.trim() ?? '',
-        message:   cols[3]?.trim() ?? '',
-        timestamp: cols[4]?.trim() ?? '',
-      };
-    })
+    .map(cols => ({
+      name:      cols[0]?.trim() ?? '',
+      email:     cols[1]?.trim() ?? '',
+      phone:     cols[2]?.trim() ?? '',
+      message:   cols[3]?.trim() ?? '',
+      timestamp: cols[4]?.trim() ?? '',
+    }))
     .reverse();
 }
 
@@ -168,7 +155,7 @@ export default function Admin() {
       const res = await fetch(SHEET_CSV_URL);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const text = await res.text();
-      setData(parseCSV(text));
+      setData(parseRegistrants(text));
       setIsDemo(false);
       setLastRefresh(new Date());
     } catch (e) {

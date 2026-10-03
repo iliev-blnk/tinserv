@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { ArrowLeft, Send, CheckCircle, MapPin, Clock, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { parseCSV } from '../lib/csv';
 
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyx88nINdcSPkueotz2Y_fDGjPoReXkEzAb2neW6kHFbTxwqczunyUwNKi8P5rMKliNmQ/exec';
 
@@ -11,11 +12,10 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzsLMFea
 
 const CAPACITY = 40;
 
-// Count non-empty data rows in the published CSV (first line is the header).
+// Count data rows in the published CSV (first row is the header). Parsed properly,
+// because a message with line breaks spans several lines of the file.
 function countRegistrations(csv: string): number {
-  const lines = csv.trim().split('\n');
-  if (lines.length < 2) return 0;
-  return lines.slice(1).filter(l => l.trim()).length;
+  return Math.max(0, parseCSV(csv).length - 1);
 }
 
 async function fetchRegistrationCount(): Promise<number> {
@@ -83,26 +83,26 @@ export default function Registration() {
   const langToggle = (
     <button
       onClick={() => setLanguage(language === 'ro' ? 'ru' : 'ro')}
-      className="border-2 border-white/20 text-gray-400 hover:border-ice-500 hover:text-ice-500 font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all flex-shrink-0"
+      className="border-2 border-white/20 text-paper/60 hover:border-brand-500 hover:text-brand-500 font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all flex-shrink-0"
     >
       {language === 'ro' ? '🇷🇺 RU' : '🇷🇴 RO'}
     </button>
   );
 
   return (
-    <div className="min-h-screen bg-[#020617] flex flex-col lg:flex-row">
+    <div className="min-h-screen bg-night flex flex-col lg:flex-row">
 
       {/* ── MOBILE TOPBAR (hidden on desktop) ── */}
-      <div className="lg:hidden bg-[#020617] border-b border-white/10 px-5 py-4 flex items-center justify-between">
+      <div className="lg:hidden bg-night border-b border-white/10 px-5 py-4 flex items-center justify-between">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-gray-500 hover:text-ice-500 transition-colors text-sm font-medium group"
+          className="inline-flex items-center gap-2 text-paper/50 hover:text-brand-500 transition-colors text-sm font-medium group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           {t.registration.back}
         </Link>
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 text-ice-500">
+          <div className="flex items-center gap-1.5 text-brand-500">
             <MapPin className="w-3.5 h-3.5" />
             <span className="text-xs font-bold uppercase tracking-[0.15em]">Cimișlia</span>
           </div>
@@ -111,14 +111,14 @@ export default function Registration() {
       </div>
 
       {/* ── LEFT PANEL (desktop only) ── */}
-      <div className="hidden lg:flex lg:w-5/12 bg-[#020617] lg:min-h-screen lg:sticky lg:top-0 flex-col">
+      <div className="hidden lg:flex lg:w-5/12 bg-night lg:min-h-screen lg:sticky lg:top-0 flex-col">
         <div className="flex flex-col flex-1 px-12 py-12 max-w-lg mx-auto w-full">
 
           {/* Back + lang switcher */}
           <div className="flex items-center justify-between mb-10">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-gray-500 hover:text-ice-500 transition-colors text-sm font-medium group"
+              className="inline-flex items-center gap-2 text-paper/50 hover:text-brand-500 transition-colors text-sm font-medium group"
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               {t.registration.back}
@@ -128,8 +128,8 @@ export default function Registration() {
 
           {/* Place name */}
           <div className="flex items-center gap-2 mb-6">
-            <MapPin className="w-4 h-4 text-ice-500 flex-shrink-0" />
-            <span className="text-ice-500 text-xs font-bold uppercase tracking-[0.2em]">
+            <MapPin className="w-4 h-4 text-brand-500 flex-shrink-0" />
+            <span className="text-brand-500 text-xs font-bold uppercase tracking-[0.2em]">
               TinSerV Cimișlia
             </span>
           </div>
@@ -141,11 +141,11 @@ export default function Registration() {
           </h1>
 
           {/* Motivational quote */}
-          <blockquote className="border-l-4 border-ice-500 pl-5 mb-10">
+          <blockquote className="border-l-4 border-brand-500 pl-5 mb-10">
             <p className="text-white text-xl font-heading font-bold leading-snug mb-2">
               {t.registration.quote}
             </p>
-            <cite className="text-gray-500 text-sm not-italic">{t.registration.quoteCite}</cite>
+            <cite className="text-paper/50 text-sm not-italic">{t.registration.quoteCite}</cite>
           </blockquote>
 
           {/* Map */}
@@ -163,7 +163,7 @@ export default function Registration() {
       </div>
 
       {/* ── FORM PANEL ── */}
-      <div className="flex-1 lg:w-7/12 bg-[#0b1220] flex items-center justify-center px-6 py-10 lg:py-16 lg:px-16">
+      <div className="flex-1 lg:w-7/12 bg-night-2 flex items-center justify-center px-6 py-10 lg:py-16 lg:px-16">
         <div className="w-full max-w-lg">
 
           {!isSubmitted ? (
@@ -172,7 +172,7 @@ export default function Registration() {
                 <h2 className="font-black-heading text-3xl lg:text-4xl text-white mb-3">
                   {t.registration.title}
                 </h2>
-                <p className="text-gray-400 text-sm lg:text-base leading-relaxed">
+                <p className="text-paper/60 text-sm lg:text-base leading-relaxed">
                   {t.registration.subtitle}
                 </p>
               </div>
@@ -186,7 +186,7 @@ export default function Registration() {
                   </div>
                 </div>
               ) : spotsLeft !== null && spotsLeft <= 10 ? (
-                <div className="mb-6 inline-flex items-center gap-2 text-ice-400 text-sm font-semibold">
+                <div className="mb-6 inline-flex items-center gap-2 text-brand-500 text-sm font-semibold">
                   <Users className="w-4 h-4" />
                   {spotsLeft} {t.registration.capacity.spotsLeft}
                 </div>
@@ -194,7 +194,7 @@ export default function Registration() {
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-2">
+                  <label className="block text-sm font-semibold text-paper/80 mb-2">
                     {t.registration.fields.name}
                   </label>
                   <input
@@ -204,13 +204,13 @@ export default function Registration() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Ion Popescu"
-                    className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-ice-500 transition-colors text-base"
+                    className="w-full px-4 py-3.5 bg-white/[0.04] border-2 border-white/15 text-white placeholder:text-paper/40 focus:outline-none focus:border-brand-500 transition-colors text-base"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                    <label className="block text-sm font-semibold text-paper/80 mb-2">
                       {t.registration.fields.email}
                     </label>
                     <input
@@ -220,11 +220,11 @@ export default function Registration() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="ion@example.com"
-                      className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-ice-500 transition-colors text-base"
+                      className="w-full px-4 py-3.5 bg-white/[0.04] border-2 border-white/15 text-white placeholder:text-paper/40 focus:outline-none focus:border-brand-500 transition-colors text-base"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                    <label className="block text-sm font-semibold text-paper/80 mb-2">
                       {t.registration.fields.phone}
                     </label>
                     <input
@@ -234,13 +234,13 @@ export default function Registration() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+373 60 123 456"
-                      className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-ice-500 transition-colors text-base"
+                      className="w-full px-4 py-3.5 bg-white/[0.04] border-2 border-white/15 text-white placeholder:text-paper/40 focus:outline-none focus:border-brand-500 transition-colors text-base"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-2">
+                  <label className="block text-sm font-semibold text-paper/80 mb-2">
                     {t.registration.fields.message}
                   </label>
                   <textarea
@@ -249,7 +249,7 @@ export default function Registration() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder={t.registration.fields.messagePlaceholder}
-                    className="w-full px-4 py-3.5 bg-[#2a2a2a] border-2 border-[#333] text-white placeholder:text-gray-600 focus:outline-none focus:border-ice-500 transition-colors resize-none text-base"
+                    className="w-full px-4 py-3.5 bg-white/[0.04] border-2 border-white/15 text-white placeholder:text-paper/40 focus:outline-none focus:border-brand-500 transition-colors resize-none text-base"
                   />
                 </div>
 
@@ -268,14 +268,14 @@ export default function Registration() {
                   {!isSubmitting && <Send className="w-4 h-4" />}
                 </button>
 
-                <p className="text-gray-600 text-xs text-center">
+                <p className="text-paper/40 text-xs text-center">
                   {t.registration.privacy}
                 </p>
               </form>
             </>
           ) : (
             <div className="text-center py-12">
-              <div className={`w-20 h-20 flex items-center justify-center mx-auto mb-8 ${submittedAsReserve ? 'bg-amber-500' : 'bg-ice-500'}`}>
+              <div className={`w-20 h-20 flex items-center justify-center mx-auto mb-8 ${submittedAsReserve ? 'bg-amber-500' : 'bg-brand-500'}`}>
                 {submittedAsReserve
                   ? <Clock className="w-10 h-10 text-black" />
                   : <CheckCircle className="w-10 h-10 text-black" />}
@@ -283,7 +283,7 @@ export default function Registration() {
               <h2 className="font-black-heading text-3xl lg:text-4xl text-white mb-4">
                 {submittedAsReserve ? t.registration.reserveSuccess : t.registration.success}
               </h2>
-              <p className="text-gray-400 mb-10 text-base lg:text-lg max-w-sm mx-auto leading-relaxed">
+              <p className="text-paper/60 mb-10 text-base lg:text-lg max-w-sm mx-auto leading-relaxed">
                 {submittedAsReserve ? t.registration.reserveSuccessSub : t.registration.successSub}
               </p>
               <Link

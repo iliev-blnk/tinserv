@@ -13,14 +13,19 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
     const [language, setLanguageState] = useState<Language>(() => {
-        // Get language from localStorage or default to Romanian
-        const saved = localStorage.getItem('tinserv-language');
-        return (saved === 'ru' ? 'ru' : 'ro') as Language;
+        // Saved choice, else Romanian. Storage can throw in private windows.
+        try {
+            return localStorage.getItem('tinserv-language') === 'ru' ? 'ru' : 'ro';
+        } catch {
+            return 'ro';
+        }
     });
 
     useEffect(() => {
-        // Save language preference to localStorage
-        localStorage.setItem('tinserv-language', language);
+        document.documentElement.lang = language;
+        try {
+            localStorage.setItem('tinserv-language', language);
+        } catch { /* not persisted, still works for this visit */ }
     }, [language]);
 
     const setLanguage = (lang: Language) => {
@@ -40,6 +45,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useLanguage() {
     const context = useContext(LanguageContext);
     if (context === undefined) {

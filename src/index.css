@@ -1,12 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap');
 @import "tailwindcss";
 
-/* Tailwind v4 theme configuration */
+/* TinSerV site, winter 2026–27: the campaign's look. Warm black, film grain,
+   one monospace for text, Montserrat only for big headlines, yellow only for
+   light (the sparkle and the sign-up button). */
 @theme {
-  --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-family-heading: 'Montserrat', 'Inter', sans-serif;
+  --font-sans: 'JetBrains Mono', ui-monospace, monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-display: 'Montserrat', sans-serif;
 
-  /* Electric Yellow - Primary brand color */
+  --color-night: #0a0908;
+  --color-night-2: #12110f;
+  --color-paper: #edebe6;
+
+  /* Electric yellow, the brand colour */
   --color-brand-50:  #fffff0;
   --color-brand-100: #fefcbf;
   --color-brand-200: #fef08a;
@@ -18,342 +24,120 @@
   --color-brand-800: #7a6900;
   --color-brand-900: #524600;
 
-  /* Icy blue - primary winter accent */
-  --color-ice-50:  #f0f9ff;
-  --color-ice-100: #e0f2fe;
-  --color-ice-200: #cfe8f3;
-  --color-ice-300: #a5d3e8;
-  --color-ice-400: #7db8d4;
-  --color-ice-500: #5b9bbd;
-  --color-ice-600: #4a7f9c;
-  --color-ice-700: #3a6379;
-  --color-ice-800: #2b4a5b;
-  --color-ice-900: #1d3240;
-
-  /* Near-black - Accent / dark sections */
-  --color-accent-50:  #f8fafc;
-  --color-accent-100: #f1f5f9;
-  --color-accent-200: #e2e8f0;
-  --color-accent-300: #94a3b8;
-  --color-accent-400: #64748b;
-  --color-accent-500: #1e293b;
-  --color-accent-600: #0f172a;
-  --color-accent-700: #020617;
-  --color-accent-800: #020617;
-  --color-accent-900: #020617;
-
-  /* Custom animations */
-  --animate-fade-in-up: fadeInUp 0.6s ease-out forwards;
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
-  --animate-slide-down: slideDown 0.3s ease-out forwards;
-  --animate-bounce-gentle: bounce-gentle 2s ease-in-out infinite;
-
-  /* Custom shadows */
-  --shadow-glow:    0 0 20px rgba(255, 230, 0, 0.35);
-  --shadow-glow-lg: 0 0 40px rgba(255, 230, 0, 0.45);
-  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-card-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  --shadow-glow: 0 0 24px rgba(255, 230, 0, 0.35);
 }
 
-/* Base Styles */
 html {
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  padding: 0;
-  font-family: var(--font-family-sans);
+  background: var(--color-night);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #020617; /* cold deep-slate winter base, prevents white flash on overscroll */
   overscroll-behavior: none;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-family-heading);
+/* Film grain over everything, like the campaign posters */
+body::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Bold display heading utility */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
 .font-black-heading {
-  font-family: var(--font-family-heading);
-  font-weight: 900;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.025em;
   line-height: 0.95;
 }
 
-/* Font utilities */
 .font-heading {
-  font-family: var(--font-family-heading);
+  font-family: var(--font-display);
 }
 
-/* Icy frost text — steel-blue winter accent for select words */
+/* The one accent: a word that catches the light */
 .frost-text {
-  background: linear-gradient(180deg, #dceaf1 0%, #9db9c8 48%, #6d94a6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
+  color: var(--color-brand-500);
 }
 
-/* Gradient text (kept for any remaining uses) */
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-brand-500) 0%, var(--color-brand-700) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Electric yellow CTA — chunky hard-shadow button */
 .btn-primary {
-  background: #ffe600;
-  color: #000000;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  box-shadow: 4px 4px 0px #a38d00;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  background: var(--color-brand-500);
+  color: #000;
+  font-weight: 700;
+  transition: box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .btn-primary:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px #a38d00;
+  box-shadow: 0 0 28px rgba(255, 230, 0, 0.45);
 }
 
-.btn-primary:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px #a38d00;
-}
-
-/* Ghost white button — for use on dark / image backgrounds */
-.btn-outline-white {
-  background: transparent;
-  color: #fff;
-  font-weight: 800;
-  border: 3px solid #fff;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.btn-outline-white:hover {
-  background: #fff;
-  color: #0f172a;
-}
-
-/* Dark button — CTA on yellow/light sections */
 .btn-dark {
-  background: #0f172a;
-  color: #fff;
-  font-weight: 800;
-  box-shadow: 4px 4px 0px #ffe600;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  background: transparent;
+  color: var(--color-paper);
+  font-weight: 700;
+  border: 1px solid rgba(237, 235, 230, 0.3);
+  transition: border-color 0.2s ease;
 }
 
 .btn-dark:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px #ffe600;
+  border-color: var(--color-brand-500);
 }
 
-.btn-dark:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px #ffe600;
+.link {
+  text-decoration: underline;
+  text-decoration-color: rgba(237, 235, 230, 0.3);
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color 0.2s ease, color 0.2s ease;
 }
 
-/* Compact orange — inside cards */
-.btn-card {
-  background: #f97316;
-  color: #fff;
-  font-weight: 700;
-  transition: background 0.2s ease;
+.link:hover {
+  text-decoration-color: var(--color-brand-500);
 }
 
-.btn-card:hover {
-  background: #ea580c;
-}
-
-/* Diagonal section dividers */
-.section-slant-top {
-  clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 100%);
-  margin-top: -2rem;
-  padding-top: 5rem;
-}
-
-.section-slant-both {
-  clip-path: polygon(0 4%, 100% 0, 100% 96%, 0 100%);
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
-
-.card-hover {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-}
-
-/* Category badges — flat solid fills */
-.badge-education {
-  background: #2563eb;
-}
-
-.badge-environment {
-  background: #16a34a;
-}
-
-.badge-healthcare {
-  background: #dc2626;
-}
-
-.badge-community {
-  background: #f97316;
-}
-
-/* Keyframe Animations */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes pulse-glow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 20px rgba(255, 230, 0, 0.35);
-  }
-
-  50% {
-    box-shadow: 0 0 40px rgba(255, 230, 0, 0.55);
-  }
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes bounce-gentle {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-5px);
-  }
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+  animation: fadeInUp 0.8s ease-out both;
 }
 
 .animate-slide-down {
   animation: slideDown 0.3s ease-out forwards;
 }
 
-.animate-bounce-gentle {
-  animation: bounce-gentle 2s ease-in-out infinite;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #020617;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
-  border-radius: 10px;
-  border: 2px solid #020617;
-}
-
-/* ── Winter snowfall overlay ──────────────────────────────── */
-.snowfall {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 40;
-}
-
-.snowflake {
-  position: absolute;
-  top: -6vh;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
-  animation-name: snow-fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  will-change: transform;
-}
-
-@keyframes snow-fall {
-  0% {
-    transform: translate3d(0, -6vh, 0);
-  }
-
-  100% {
-    transform: translate3d(var(--drift, 0), 106vh, 0);
-  }
-}
-
-/* Frosted-glass panel — cold, translucent surface for winter sections */
-.frost-panel {
-  background: rgba(226, 232, 240, 0.06);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(226, 232, 240, 0.12);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .snowfall {
-    display: none;
-  }
+  html { scroll-behavior: auto; }
+  .animate-fade-in-up, .animate-slide-down { animation: none; }
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-night); }
+::-webkit-scrollbar-thumb { background: rgba(237, 235, 230, 0.2); border: 2px solid var(--color-night); }
+::-webkit-scrollbar-thumb:hover { background: rgba(237, 235, 230, 0.35); }
+
+/* Visible keyboard focus everywhere; mouse clicks stay clean */
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 3px;
 }

@@ -1,73 +1,58 @@
-import { Play } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
+const photos = [
+  { src: '/media/photo_4.jpg', alt: 'TinSerV volunteers in winter' },
+  { src: '/media/photo1.jpg', alt: 'Community service volunteers' },
+  { src: '/media/photo2.jpg', alt: 'Outdoor volunteer group' },
+  { src: '/media/photo3.jpg', alt: 'TinSerV volunteers' },
+];
+
 export default function VideoShowcase() {
-    const { t } = useLanguage();
+  const { t } = useLanguage();
+  const videos = [
+    { src: '/media/copii.mp4', poster: '/media/copii.jpg', title: t.videoShowcase.video1, tall: true },
+    { src: '/media/colinde.mp4', poster: '/media/colinde.jpg', title: t.videoShowcase.video2, tall: false },
+  ];
 
-    const videos = [
-        {
-            src: '/vid3.MOV',
-            title: t.videoShowcase.video1,
-            type: 'video/quicktime'
-        },
-        {
-            src: '/vid4.mp4',
-            title: t.videoShowcase.video2,
-            type: 'video/mp4'
-        }
-    ];
+  return (
+    <section id="media" className="scroll-mt-20 border-t border-paper/10">
+      <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
+        <h2 className="font-black-heading mb-4 text-5xl text-white sm:text-6xl">{t.site.media.title}</h2>
+        <p className="mb-12 max-w-xl text-paper/60">{t.videoShowcase.subtitle}</p>
 
-    return (
-        <section id="media" className="py-24 bg-[#020617] border-t border-white/[0.06] overflow-hidden">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="text-center mb-16 px-4">
-                    <div className="inline-flex items-center gap-3 px-4 py-2 bg-ice-500 mb-6 animate-fade-in-up">
-                        <span className="text-black font-black text-sm tracking-widest uppercase">Media</span>
-                    </div>
-                    <h2 className="font-black-heading text-4xl sm:text-5xl lg:text-7xl frost-text mb-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-                        {t.videoShowcase.title}
-                    </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto text-lg animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-                        {t.videoShowcase.subtitle}
-                    </p>
-                </div>
+        {/* big + wide + two small: fills a 2-column grid on phones and 4×2 on desktop */}
+        <div className="mb-4 grid grid-cols-2 gap-4 lg:h-[34rem] lg:grid-cols-4 lg:grid-rows-2">
+          {photos.map((p, i) => (
+            <img
+              key={p.src}
+              src={p.src}
+              alt={p.alt}
+              loading="lazy"
+              className={`h-full w-full object-cover ${
+                i === 0 ? 'col-span-2 aspect-[4/3] lg:row-span-2 lg:aspect-auto'
+                : i === 1 ? 'col-span-2 aspect-[2/1] lg:aspect-auto'
+                : 'aspect-square lg:aspect-auto'
+              }`}
+            />
+          ))}
+        </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-                    {videos.map((video, index) => (
-                        <div key={index} className="group relative">
-                            {/* Video Container */}
-                            <div className="relative aspect-video overflow-hidden bg-gray-800 border-2 border-gray-700 shadow-2xl transition-all duration-500 group-hover:border-ice-500">
-                                <video
-                                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-                                    controls
-                                    preload="metadata"
-                                >
-                                    <source src={video.src} type={video.type} />
-                                    Your browser does not support the video tag.
-                                </video>
-
-                                {/* Overlay Gradient */}
-                                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60" />
-
-                                {/* Play Button Decor */}
-                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                    <div className="w-16 h-16 bg-ice-500 flex items-center justify-center">
-                                        <Play className="text-white fill-white w-6 h-6" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Title */}
-                            <div className="mt-6 text-center md:text-left">
-                                <h3 className="text-xl font-bold text-white group-hover:text-ice-400 transition-colors duration-300">
-                                    {video.title}
-                                </h3>
-                                <div className="mt-2 w-12 h-1 bg-ice-500 group-hover:w-24 transition-all duration-500" />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
+        <div className="grid gap-4 md:grid-cols-[1fr_3.16fr]">
+          {videos.map((v) => (
+            <figure key={v.src}>
+              <video
+                className={`w-full bg-black object-cover ${v.tall ? 'aspect-[9/16]' : 'aspect-video'}`}
+                src={v.src}
+                poster={v.poster}
+                controls
+                playsInline
+                preload="none"
+              />
+              <figcaption className="mt-3 text-sm text-paper/60">{v.title}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

@@ -1,101 +1,52 @@
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Footer() {
-    const { t } = useLanguage();
+  const { t } = useLanguage();
+  const c = t.site.contact;
 
-    return (
-        <footer className="bg-[#020617] border-t border-white/[0.06] text-gray-300">
-            {/* Main Footer */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
-                <div className="grid grid-cols-1 md:grid-cols-[auto_auto] gap-8 md:gap-12 items-center justify-center mb-20">
-                    {/* Logo Column */}
-                    <div className="flex items-center justify-center md:justify-start">
-                        <a href="#" className="block max-w-[180px] md:max-w-[220px]">
-                            <img
-                                src="/logo-1.png"
-                                alt="TinSerV Logo"
-                                className="w-full h-auto mx-auto md:mx-0"
-                            />
-                        </a>
-                    </div>
+  const rows = [
+    { label: t.footer.contacts.write, value: 'oponeatovskii@mail.ru', href: 'mailto:oponeatovskii@mail.ru' },
+    { label: t.footer.contacts.call, value: '+373 68 753 358', href: 'tel:+37368753358' },
+    { label: t.footer.contacts.location, value: t.footer.items.location },
+    { label: 'Instagram', value: '@tinserv.chisinau', href: 'https://instagram.com/tinserv.chisinau' },
+    { label: 'Telegram', value: 't.me/tinservchisinau', href: 'https://t.me/tinservchisinau' },
+  ];
 
-                    {/* Content Column */}
-                    <div className="text-center md:text-left">
-                        <div className="mb-8">
-                            <h3 className="font-black-heading text-2xl md:text-3xl text-white mb-3">{t.footer.title}</h3>
-                            <blockquote className="border-l-4 border-ice-500 pl-4 italic text-ice-300 mb-6">
-                                {t.footer.slogan}
-                            </blockquote>
-                        </div>
+  return (
+    <footer id="contact" className="scroll-mt-20 border-t border-paper/10">
+      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 sm:px-8 lg:grid-cols-2 lg:py-28">
+        <div>
+          <h2 className="font-black-heading mb-6 text-5xl text-white sm:text-6xl">{c.title}</h2>
+          <p className="mb-8 max-w-md leading-relaxed text-paper/70">{c.subtitle}</p>
+          <p className="italic text-paper/60">{t.footer.slogan}</p>
+        </div>
 
-                        <ul className="space-y-4 w-full">
-                            {[
-                                t.footer.items.practical,
-                                t.footer.items.community,
-                                t.footer.items.spiritual,
-                                t.footer.items.charity,
-                                t.footer.items.youth,
-                            ].map((item) => (
-                                <li key={item} className="flex gap-4">
-                                    <div className="flex-shrink-0 w-2 h-2 bg-ice-500 mt-2" />
-                                    <p className="text-gray-300 text-sm leading-relaxed">
-                                        {item}
-                                    </p>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-
-                {/* Centered Contact Section */}
-                <div className="max-w-4xl mx-auto border-t border-gray-800 pt-16">
-                    <div className="text-center mb-12 px-4">
-                        <div className="inline-flex items-center gap-3 px-4 py-2 bg-ice-500 mb-6">
-                            <span className="text-black font-black text-sm tracking-widest uppercase">{t.footer.cta.badge}</span>
-                        </div>
-                        <h2 className="font-black-heading text-3xl sm:text-4xl md:text-6xl frost-text mb-4">{t.footer.cta.title}</h2>
-                        <p className="text-gray-400 max-w-xl mx-auto">{t.footer.cta.subtitle}</p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <a href="mailto:oponeatovskii@mail.ru" className="group p-4 sm:p-6 border border-gray-700 hover:border-ice-500 hover:bg-ice-500/5 transition-all duration-300 text-center">
-                            <div className="w-12 h-12 bg-ice-500/10 flex items-center justify-center text-ice-400 group-hover:bg-ice-500/20 transition-all duration-300 mx-auto mb-4">
-                                <Mail className="h-6 w-6" />
-                            </div>
-                            <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mb-1">{t.footer.contacts.write}</p>
-                            <p className="text-gray-300 group-hover:text-white transition-colors text-sm font-medium break-all">{"oponeatovskii@mail.ru"}</p>
-                        </a>
-
-                        <div className="group p-4 sm:p-6 border border-gray-700 hover:border-ice-500 hover:bg-ice-500/5 transition-all duration-300 text-center">
-                            <div className="w-12 h-12 bg-ice-500/10 flex items-center justify-center text-ice-400 group-hover:bg-ice-500/20 transition-all duration-300 mx-auto mb-4">
-                                <MapPin className="h-6 w-6" />
-                            </div>
-                            <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mb-1">{t.footer.contacts.location}</p>
-                            <p className="text-gray-300 group-hover:text-white transition-colors text-sm font-medium">{t.footer.items.location}</p>
-                        </div>
-
-                        <a href="tel:+37368753358" className="group p-4 sm:p-6 border border-gray-700 hover:border-ice-500 hover:bg-ice-500/5 transition-all duration-300 text-center">
-                            <div className="w-12 h-12 bg-ice-500/10 flex items-center justify-center text-ice-400 group-hover:bg-ice-500/20 transition-all duration-300 mx-auto mb-4">
-                                <Phone className="h-6 w-6" />
-                            </div>
-                            <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mb-1">{t.footer.contacts.call}</p>
-                            <p className="text-gray-300 group-hover:text-white transition-colors text-sm font-medium">+373 68 753 358</p>
-                        </a>
-                    </div>
-                </div>
+        <dl className="self-end border-t border-paper/10">
+          {rows.map((r) => (
+            <div key={r.label} className="flex justify-between gap-6 border-b border-paper/10 py-4">
+              <dt className="text-paper/50">{r.label}</dt>
+              <dd className="min-w-0 break-all text-right">
+                {r.href ? (
+                  <a href={r.href} className="link text-white" {...(r.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                    {r.value}
+                  </a>
+                ) : (
+                  <span className="text-white">{r.value}</span>
+                )}
+              </dd>
             </div>
+          ))}
+        </dl>
+      </div>
 
-            {/* Bottom Bar */}
-            <div className="border-t border-gray-800">
-                <div className="max-w-7xl mx-auto px-6 py-6">
-                    <div className="flex items-center justify-center">
-                        <p className="text-gray-500 text-sm text-center">
-                            {t.footer.copyright}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    );
+      <div className="border-t border-paper/10">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-6 text-sm text-paper/50 sm:px-8">
+          <img src="/logo.png" alt="TinSerV" className="h-6 w-auto" />
+          <span>{t.site.copyright}</span>
+          <Link to="/donate" className="link">{t.site.nav.donate}</Link>
+        </div>
+      </div>
+    </footer>
+  );
 }

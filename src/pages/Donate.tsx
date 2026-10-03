@@ -37,7 +37,7 @@ export default function Donate() {
   const langToggle = (
     <button
       onClick={() => setLanguage(language === 'ro' ? 'ru' : 'ro')}
-      className="border-2 border-white/20 text-gray-400 hover:border-ice-500 hover:text-ice-500 font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all flex-shrink-0"
+      className="border-2 border-white/20 text-paper/60 hover:border-brand-500 hover:text-brand-500 font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all flex-shrink-0"
     >
       {language === 'ro' ? '🇷🇺 RU' : '🇷🇴 RO'}
     </button>
@@ -54,13 +54,13 @@ export default function Donate() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#020617] flex flex-col lg:flex-row">
+    <div className="min-h-screen bg-night flex flex-col lg:flex-row">
 
       {/* ── MOBILE TOPBAR (hidden on desktop) ── */}
-      <div className="lg:hidden bg-[#020617] border-b border-white/10 px-5 py-4 flex items-center justify-between">
+      <div className="lg:hidden bg-night border-b border-white/10 px-5 py-4 flex items-center justify-between">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-gray-500 hover:text-ice-500 transition-colors text-sm font-medium group"
+          className="inline-flex items-center gap-2 text-paper/50 hover:text-brand-500 transition-colors text-sm font-medium group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           {d.back}
@@ -75,14 +75,14 @@ export default function Donate() {
       </div>
 
       {/* ── LEFT PANEL (desktop only) ── */}
-      <div className="hidden lg:flex lg:w-5/12 bg-[#020617] lg:min-h-screen lg:sticky lg:top-0 flex-col">
+      <div className="hidden lg:flex lg:w-5/12 bg-night lg:min-h-screen lg:sticky lg:top-0 flex-col">
         <div className="flex flex-col flex-1 px-12 py-12 max-w-lg mx-auto w-full">
 
           {/* Back + lang switcher */}
           <div className="flex items-center justify-between mb-10">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-gray-500 hover:text-ice-500 transition-colors text-sm font-medium group"
+              className="inline-flex items-center gap-2 text-paper/50 hover:text-brand-500 transition-colors text-sm font-medium group"
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               {d.back}
@@ -109,25 +109,25 @@ export default function Donate() {
             <p className="text-white text-xl font-heading font-bold leading-snug mb-2">
               {d.quote}
             </p>
-            <cite className="text-gray-500 text-sm not-italic">{d.quoteCite}</cite>
+            <cite className="text-paper/50 text-sm not-italic">{d.quoteCite}</cite>
           </blockquote>
 
           {/* Intro / why donate */}
-          <p className="text-gray-400 text-base leading-relaxed">
+          <p className="text-paper/60 text-base leading-relaxed">
             {d.intro}
           </p>
         </div>
       </div>
 
       {/* ── DONATION PANEL ── */}
-      <div className="flex-1 lg:w-7/12 bg-[#0b1220] flex items-center justify-center px-6 py-10 lg:py-16 lg:px-16">
+      <div className="flex-1 lg:w-7/12 bg-night-2 flex items-center justify-center px-6 py-10 lg:py-16 lg:px-16">
         <div className="w-full max-w-lg">
 
           <div className="mb-8">
             <h2 className="font-black-heading text-3xl lg:text-4xl text-white mb-3">
               {d.title}
             </h2>
-            <p className="text-gray-400 text-sm lg:text-base leading-relaxed">
+            <p className="text-paper/60 text-sm lg:text-base leading-relaxed">
               {d.subtitle}
             </p>
           </div>
@@ -135,10 +135,10 @@ export default function Donate() {
           {/* Amount selector */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-3">
-              <label className="block text-sm font-semibold text-gray-300">
+              <label className="block text-sm font-semibold text-paper/80">
                 {d.amountLabel}
               </label>
-              <span className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold border border-white/10 px-2 py-1">
+              <span className="text-[10px] uppercase tracking-[0.15em] text-paper/50 font-bold border border-white/10 px-2 py-1">
                 {d.once}
               </span>
             </div>
@@ -154,7 +154,7 @@ export default function Donate() {
                     className={`py-4 font-black text-lg border-2 transition-all ${
                       active
                         ? 'bg-brand-500 text-black border-brand-500 shadow-glow'
-                        : 'bg-[#2a2a2a] text-white border-[#333] hover:border-brand-500'
+                        : 'bg-white/[0.04] text-white border-white/15 hover:border-brand-500'
                     }`}
                   >
                     {preset}
@@ -166,8 +166,8 @@ export default function Donate() {
 
             {/* Custom amount */}
             <div className={`flex items-center border-2 transition-colors ${
-              amount === 'custom' ? 'border-brand-500' : 'border-[#333]'
-            } bg-[#2a2a2a]`}>
+              amount === 'custom' ? 'border-brand-500' : 'border-white/15'
+            } bg-white/[0.04]`}>
               <input
                 type="number"
                 min="1"
@@ -176,21 +176,21 @@ export default function Donate() {
                 onFocus={() => setAmount('custom')}
                 onChange={(e) => { setCustomValue(e.target.value); setAmount('custom'); }}
                 placeholder={d.customAmount}
-                className="flex-1 px-4 py-3.5 bg-transparent text-white placeholder:text-gray-600 focus:outline-none text-base"
+                className="flex-1 px-4 py-3.5 bg-transparent text-white placeholder:text-paper/40 focus:outline-none text-base"
               />
-              <span className="px-4 text-gray-500 font-bold text-sm">{d.currency}</span>
+              <span className="px-4 text-paper/50 font-bold text-sm">{d.currency}</span>
             </div>
           </div>
 
           {/* Payment methods */}
-          <p className="text-sm font-semibold text-gray-300 mb-3">{d.methodsLabel}</p>
+          <p className="text-sm font-semibold text-paper/80 mb-3">{d.methodsLabel}</p>
 
           {/* Method 1 — Bank transfer (live) */}
           <div className="border-2 border-brand-500/40 bg-brand-500/[0.04] p-5 mb-4">
             <div className="flex items-start justify-between gap-3 mb-4">
               <div>
                 <h3 className="text-white font-bold text-lg leading-tight">{d.transfer.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed mt-1">{d.transfer.desc}</p>
+                <p className="text-paper/60 text-sm leading-relaxed mt-1">{d.transfer.desc}</p>
               </div>
               <span className="flex-shrink-0 text-[10px] uppercase tracking-wider font-black text-black bg-brand-500 px-2 py-1">
                 {d.transfer.badge}
@@ -199,7 +199,7 @@ export default function Donate() {
 
             {/* Suggested amount echo */}
             <div className="flex items-center justify-between border-t border-white/10 pt-3 mb-1">
-              <span className="text-xs uppercase tracking-[0.15em] text-gray-500 font-bold">{d.transfer.suggested}</span>
+              <span className="text-xs uppercase tracking-[0.15em] text-paper/50 font-bold">{d.transfer.suggested}</span>
               <span className="text-brand-500 font-black text-lg">{suggestedLabel}</span>
             </div>
 
@@ -208,15 +208,15 @@ export default function Donate() {
               {rows.map(row => (
                 <div key={row.key} className="flex items-center justify-between gap-3 py-2.5">
                   <div className="min-w-0">
-                    <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold mb-0.5">{row.label}</p>
-                    <p className="text-gray-200 text-sm font-medium break-all">{row.value}</p>
+                    <p className="text-[10px] uppercase tracking-[0.15em] text-paper/50 font-bold mb-0.5">{row.label}</p>
+                    <p className="text-paper text-sm font-medium break-all">{row.value}</p>
                   </div>
                   {row.copyable && (
                     <button
                       type="button"
                       onClick={() => copy(row.key, row.value)}
                       aria-label={d.transfer.copy}
-                      className="flex-shrink-0 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400 hover:text-brand-500 border border-white/10 hover:border-brand-500 px-2.5 py-1.5 transition-all"
+                      className="flex-shrink-0 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-paper/60 hover:text-brand-500 border border-white/10 hover:border-brand-500 px-2.5 py-1.5 transition-all"
                     >
                       {copiedKey === row.key
                         ? <><Check className="w-3.5 h-3.5" />{d.transfer.copied}</>
@@ -229,22 +229,22 @@ export default function Donate() {
           </div>
 
           {/* Method 2 — Card (coming soon, ready for Victoriabank gateway) */}
-          <div className="border-2 border-[#333] bg-[#2a2a2a]/40 p-5 mb-6 opacity-70">
+          <div className="border-2 border-white/15 bg-white/[0.02] p-5 mb-6 opacity-70">
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-start gap-3">
-                <CreditCard className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
+                <CreditCard className="w-5 h-5 text-paper/50 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="text-gray-300 font-bold text-lg leading-tight">{d.card.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed mt-1">{d.card.desc}</p>
+                  <h3 className="text-paper/80 font-bold text-lg leading-tight">{d.card.title}</h3>
+                  <p className="text-paper/50 text-sm leading-relaxed mt-1">{d.card.desc}</p>
                 </div>
               </div>
-              <span className="flex-shrink-0 text-[10px] uppercase tracking-wider font-black text-gray-400 border border-white/15 px-2 py-1">
+              <span className="flex-shrink-0 text-[10px] uppercase tracking-wider font-black text-paper/60 border border-white/15 px-2 py-1">
                 {d.card.comingSoon}
               </span>
             </div>
           </div>
 
-          <p className="text-gray-600 text-xs text-center leading-relaxed">
+          <p className="text-paper/40 text-xs text-center leading-relaxed">
             {d.receiptNote}
           </p>
         </div>

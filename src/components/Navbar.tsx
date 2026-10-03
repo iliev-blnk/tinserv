@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Heart } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -7,156 +7,76 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { language, setLanguage, t } = useLanguage();
-
-  const toggleLanguage = () => {
-    setLanguage(language === 'ro' ? 'ru' : 'ro');
-  };
+  const n = t.site.nav;
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navLinks: { href: string; label: string; external?: boolean }[] = [
-    { href: 'https://instagram.com/tinserv.chisinau', label: t.nav.impact, external: true },
-    { href: '#how-it-works', label: t.nav.howItWorks },
-    { href: '#media', label: 'Media' },
+  // Lock page scroll behind the open phone menu, and always release it on the way out.
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  const links = [
+    { href: '#iarna', label: n.camp },
+    { href: '#ce-facem', label: n.about },
+    { href: '#media', label: n.media },
+    { href: '#contact', label: n.contact },
   ];
 
-  return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${isScrolled
-        ? 'bg-[#020617] shadow-[0_4px_0_0_#5b9bbd]'
-        : 'bg-[#020617] lg:bg-transparent'
-        }`}
+  const langButton = (
+    <button
+      onClick={() => setLanguage(language === 'ro' ? 'ru' : 'ro')}
+      className="text-paper/60 hover:text-paper transition-colors"
+      aria-label={language === 'ro' ? 'Русский' : 'Română'}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between lg:grid lg:grid-cols-3 items-center h-16 lg:h-20">
-          {/* Logo */}
-          <a href="#" className="flex items-center space-x-3 group">
-            <img
-              src="/logo.png"
-              alt="TinSerV Logo"
-              className="h-9 w-auto lg:h-11 transition-transform group-hover:scale-105"
-            />
-          </a>
+      <span className={language === 'ro' ? 'text-paper' : ''}>ro</span>
+      <span className="mx-1 text-paper/30">/</span>
+      <span className={language === 'ru' ? 'text-paper' : ''}>ru</span>
+    </button>
+  );
 
-          {/* Desktop Menu — truly centered */}
-          <div className="hidden lg:flex items-center justify-center space-x-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className={`relative px-4 py-2 font-semibold text-sm uppercase tracking-wide whitespace-nowrap transition-all duration-200
-                  after:absolute after:bottom-0 after:left-4 after:h-0.5 after:w-0 after:bg-ice-500 after:transition-all after:duration-300 hover:after:w-[calc(100%-2rem)]
-                  ${isScrolled ? 'text-gray-300 hover:text-ice-500' : 'text-white'}`}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
+  return (
+    <nav className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${isScrolled || isOpen ? 'bg-night/90 backdrop-blur-sm' : ''}`}>
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-5 text-sm sm:px-8 lg:h-20">
+        <a href="#" aria-label="TinSerV">
+          <img src="/logo.png" alt="TinSerV" className="h-7 w-auto lg:h-8" />
+        </a>
 
-          {/* Right side actions */}
-          <div className="hidden lg:flex items-center justify-end gap-4">
-            <Link
-              to="/donate"
-              className={`inline-flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide whitespace-nowrap transition-colors ${
-                isScrolled ? 'text-gray-300 hover:text-brand-500' : 'text-white hover:text-brand-500'
-              }`}
-            >
-              <Heart className="w-4 h-4 fill-current" />
-              {t.donate.navLabel}
-            </Link>
-            <button
-              onClick={toggleLanguage}
-              className={`border-2 border-current font-bold text-xs uppercase tracking-widest px-3 py-1.5 transition-all duration-200 ${isScrolled
-                ? 'text-gray-300 hover:border-ice-500 hover:text-ice-500'
-                : 'text-white hover:border-ice-500 hover:text-ice-500'
-                }`}
-            >
-              {language === 'ro' ? '🇷🇴 RO' : '🇷🇺 RU'}
-            </button>
+        <div className="hidden items-center gap-8 lg:flex">
+          {links.map((l) => (
+            <a key={l.href} href={l.href} className="text-paper/70 transition-colors hover:text-paper">
+              {l.label}
+            </a>
+          ))}
+          <Link to="/donate" className="text-paper/70 transition-colors hover:text-paper">{n.donate}</Link>
+          {langButton}
+          <Link to="/registration" className="btn-primary px-5 py-2.5">{n.register}</Link>
+        </div>
 
-            <Link
-              to="/registration"
-              className="btn-primary flex items-center gap-2 px-6 py-2.5 text-sm font-black uppercase tracking-wide"
-            >
-              {t.nav.getStarted}
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          {/* Mobile: registration button + hamburger */}
-          <div className="lg:hidden flex items-center gap-2 justify-self-end">
-            <Link
-              to="/registration"
-              className="btn-primary flex items-center gap-1.5 px-4 py-2 text-xs font-black uppercase tracking-wide"
-            >
-              {t.nav.getStarted}
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 transition-colors ${isScrolled ? 'text-gray-300 hover:text-ice-500' : 'text-white'}`}
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+        <div className="flex items-center gap-4 lg:hidden">
+          <Link to="/registration" onClick={() => setIsOpen(false)} className="btn-primary px-4 py-2 text-xs">{n.register}</Link>
+          <button onClick={() => setIsOpen(!isOpen)} className="p-1 text-paper" aria-label="Menu" aria-expanded={isOpen} aria-controls="mobile-menu">
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden bg-[#020617] border-t-4 border-ice-500 animate-slide-down">
-          <div className="px-4 py-6 space-y-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                onClick={() => setIsOpen(false)}
-                className="block px-4 py-4 text-gray-200 font-bold text-lg border-b border-white/10 uppercase tracking-wide hover:text-ice-500 transition-colors"
-              >
-                {link.label}
+        <div id="mobile-menu" className="h-[calc(100dvh-4rem)] animate-slide-down border-t border-paper/10 bg-night px-5 py-8 lg:hidden">
+          <div className="flex flex-col gap-6 text-2xl">
+            {links.map((l) => (
+              <a key={l.href} href={l.href} onClick={() => setIsOpen(false)} className="text-paper">
+                {l.label}
               </a>
             ))}
-
-            <Link
-              to="/donate"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2 px-4 py-4 text-gray-200 font-bold text-lg border-b border-white/10 uppercase tracking-wide hover:text-brand-500 transition-colors"
-            >
-              <Heart className="w-5 h-5 fill-current text-brand-500" />
-              {t.donate.navLabel}
-            </Link>
-
-            <div className="border-t border-white/10 pt-4 mt-4">
-              <button
-                onClick={() => {
-                  toggleLanguage();
-                  setIsOpen(false);
-                }}
-                className="w-full px-4 py-3 border-2 border-white/20 text-gray-300 font-bold text-sm uppercase tracking-widest hover:border-ice-500 hover:text-ice-500 transition-colors flex items-center justify-center gap-2"
-              >
-                {language === 'ro' ? '🇷🇺 Switch to Russian' : '🇷🇴 Переключить на румынский'}
-              </button>
-            </div>
-
-            <div className="pt-4">
-              <Link
-                to="/registration"
-                onClick={() => setIsOpen(false)}
-                className="btn-primary w-full flex items-center justify-center gap-2 font-black px-6 py-4 text-sm uppercase tracking-wide"
-              >
-                {t.nav.getStarted}
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
+            <Link to="/donate" onClick={() => setIsOpen(false)} className="text-paper">{n.donate}</Link>
+            <div className="pt-4 text-base">{langButton}</div>
           </div>
         </div>
       )}

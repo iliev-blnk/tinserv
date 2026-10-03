@@ -1,31 +1,28 @@
 export const translations = {
     ro: {
-        nav: {
-            opportunities: 'Oportunități',
-            howItWorks: 'Cum funcționează',
-            impact: 'Impactul nostru',
-            stories: 'Povești',
-            getStarted: 'Începe acum'
-        },
-        hero: {
-            headline1: 'Fii lumina',
-            headline2: 'care schimba',
-            headlineHighlight: 'lumea',
-            headline3: '',
-            ctaPrimary: 'Colaborează',
-            ctaSecondary: 'Voluntariat',
-            badge: 'Alătură-te la 30+ voluntari care fac diferența',
-            winterEdition: 'Ediția de Iarnă'
-        },
-        opportunities: {
-            title: 'Găsește-ți Pasiunea',
-            subtitle: 'Explorează oportunități de voluntariat care se potrivesc cu interesele și programul tău',
-            education: 'Educație',
-            environment: 'Mediu',
-            healthcare: 'Sănătate',
-            community: 'Comunitate',
-            viewAll: 'Vezi toate',
-            learnMore: 'Află mai mult'
+        site: {
+            nav: { camp: 'Ediția de iarnă', about: 'Ce facem', media: 'Media', contact: 'Contact', donate: 'Donează', register: 'Înscrie-te' },
+            hero: {
+                title: 'Fii lumina.',
+                camp: 'TinSerV · Ediția de iarnă',
+                when: 'Cimișlia · 4–9 ianuarie 2027',
+                seats: '40 de locuri · Înscrieri din noiembrie',
+                register: 'Înscrie-te',
+                collaborate: 'Colaborează cu noi'
+            },
+            camp: {
+                title: 'Ediția de iarnă',
+                where: 'Unde', whereValue: 'Cimișlia, Moldova',
+                when: 'Când', whenValue: '4–9 ianuarie 2027',
+                seats: 'Locuri', seatsValue: '40',
+                signup: 'Înscrieri', signupValue: 'din noiembrie 2026',
+                map: 'Vezi pe hartă',
+                started: 'Ediția de iarnă a început.'
+            },
+            about: { title: 'Ce facem', activities: 'Activități' },
+            media: { title: 'Din teren' },
+            contact: { title: 'Contact', subtitle: 'Scrie-ne dacă vrei să te alături sau să colaborezi.', social: 'Rețele' },
+            copyright: '© 2026 A.O. TinSerV Chișinău'
         },
         howItWorks: {
             title: 'Ce Facem',
@@ -43,24 +40,9 @@ export const translations = {
                 description: 'Lumina transformă întunericul. Nu doar ajutăm — schimbăm vieți, construim un viitor mai bun pentru tineri și comunitate.'
             }
         },
-        impact: {
-            title: 'Impactul Nostru',
-            subtitle: 'Împreună, creăm schimbări pozitive în comunitățile noastre',
-            organizations: 'Organizații',
-            volunteers: 'Voluntari',
-            hours: 'Ore donate',
-            projects: 'Proiecte'
-        },
-        testimonials: {
-            title: 'Povești de la Voluntari',
-            subtitle: 'Povești reale de la voluntari reali care fac diferența în fiecare zi',
-            quote1: 'Voluntariatul aici mi-a schimbat viața. Conexiunile pe care le-am făcut și zâmbetele pe care le-am primit fac fiecare oră să merite. TinSerV a făcut atât de ușor să găsesc oportunități care se potrivesc cu programul meu.',
-            quote2: 'A fi mentor prin această platformă mi-a dat un scop dincolo de locul meu de muncă. A vedea copiii să crească și să reușească datorită sesiunilor noastre este incredibil de satisfăcător.',
-            quote3: 'Am început cu o curățare de plajă și acum conduc proiecte lunare de restaurare a naturii. TinSerV m-a ajutat să-mi găsesc chemarea și o comunitate de oameni cu aceleași valori.'
-        },
         footer: {
             title: 'TinSerV (Tinerii în Serviciul Voluntar)',
-            slogan: '„Fii lumina care schimba lumea"',
+            slogan: '„Fii lumina care schimbă lumea"',
             items: {
                 practical: 'Ajutor Practic: Sprijin direct familiilor vulnerabile.',
                 community: 'Activități Comunitare: Școli de vacanță, activități educative și ateliere creative.',
@@ -69,45 +51,19 @@ export const translations = {
                 youth: 'Formarea Tinerilor: Dezvoltarea empatiei și responsabilității sociale.',
                 location: 'Chișinău, Moldova'
             },
-            cta: {
-                badge: 'Ești interesat?',
-                title: 'Hai să discutăm!',
-                subtitle: 'Suntem bucuroși să primim voluntari noi sau să răspundem la întrebări.'
-            },
             contacts: {
                 write: 'Scrie',
                 location: 'Locație',
                 call: 'Sună'
             },
-            copyright: '© 2026 TinSerV Chisinau. Built with ❤️ for a better world.'
         },
         videoShowcase: {
-            title: 'Impactul în imagini',
             subtitle: 'Vezi cum schimbăm vieți și comunități prin proiectele noastre.',
             video1: 'Activități și Voluntariat',
             video2: 'Misiune în Acțiune'
         },
-        collaboration: {
-            title: 'Colaborează cu TinSerV',
-            description: 'Suntem mereu în căutare de parteneri și oameni dedicați. Dacă dorești să te implici într-un proiect actual, să propui o idee nouă sau să sprijini misiunea noastră, suntem deschiși la dialog.',
-            contactTitle: 'Cum ne poți contacta:',
-            close: 'Închide'
-        },
         volunteerEvent: {
-            modalTitle: 'Următorul Eveniment',
-            eventTitle: 'TinSerV Cimișlia',
             description: 'Alătură-te echipei noastre pentru ediția de iarnă! Împreună aducem căldură celor din jur, ajutăm familiile în nevoie și construim un viitor mai luminos.',
-            location: 'Cimișlia',
-            timer: {
-                days: 'Zile',
-                hours: 'Ore',
-                minutes: 'Minute',
-                seconds: 'Secunde'
-            },
-            joinBtn: 'Mă Înscriu!',
-            close: 'Închide',
-            locationLabel: 'Locație',
-            viewOnMap: 'Vezi pe hartă →'
         },
         registration: {
             title: 'Înscriere Voluntariat',
@@ -178,32 +134,29 @@ export const translations = {
         }
     },
     ru: {
-        nav: {
-            opportunities: 'Возможности',
-            howItWorks: 'О нас',
-            impact: 'Импакт',
-            stories: 'Истории',
-            getStarted: 'Начать'
-        },
-        hero: {
-            headline1: 'Будь светом',
-            headline2: 'который',
-            headlineHighlight: 'меняет мир',
-            headline3: '',
-            ctaPrimary: 'Сотрудничать',
-            ctaSecondary: 'Волонтёрство',
-            badge: 'Присоединяйтесь к 30+ волонтёрам, которые меняют мир',
-            winterEdition: 'Зимняя Смена'
-        },
-        opportunities: {
-            title: 'Найди свою страсть',
-            subtitle: 'Исследуйте возможности волонтёрства, которые соответствуют вашим интересам и расписанию',
-            education: 'Образование',
-            environment: 'Окружающая среда',
-            healthcare: 'Здравоохранение',
-            community: 'Сообщество',
-            viewAll: 'Смотреть все',
-            learnMore: 'Узнать больше'
+        site: {
+            nav: { camp: 'Зимняя смена', about: 'Что мы делаем', media: 'Медиа', contact: 'Контакты', donate: 'Пожертвовать', register: 'Записаться' },
+            hero: {
+                title: 'Будь светом.',
+                camp: 'TinSerV · Зимняя смена',
+                when: 'Чимишлия · 4–9 января 2027',
+                seats: '40 мест · Регистрация с ноября',
+                register: 'Записаться',
+                collaborate: 'Сотрудничать с нами'
+            },
+            camp: {
+                title: 'Зимняя смена',
+                where: 'Где', whereValue: 'Чимишлия, Молдова',
+                when: 'Когда', whenValue: '4–9 января 2027',
+                seats: 'Мест', seatsValue: '40',
+                signup: 'Регистрация', signupValue: 'с ноября 2026',
+                map: 'Посмотреть на карте',
+                started: 'Зимняя смена началась.'
+            },
+            about: { title: 'Что мы делаем', activities: 'Деятельность' },
+            media: { title: 'С мест' },
+            contact: { title: 'Контакты', subtitle: 'Напишите нам, если хотите присоединиться или сотрудничать.', social: 'Соцсети' },
+            copyright: '© 2026 A.O. TinSerV Chișinău'
         },
         howItWorks: {
             title: 'Что Мы Делаем',
@@ -221,21 +174,6 @@ export const translations = {
                 description: 'Свет преобразует тьму. Мы не просто помогаем — мы меняем жизни и строим лучшее будущее для молодёжи и сообщества.'
             }
         },
-        impact: {
-            title: 'Наше влияние',
-            subtitle: 'Вместе мы создаём позитивные изменения в наших сообществах',
-            organizations: 'Организаций',
-            volunteers: 'Волонтёров',
-            hours: 'Часов отдано',
-            projects: 'Проектов'
-        },
-        testimonials: {
-            title: 'Истории волонтёров',
-            subtitle: 'Реальные истории от реальных волонтёров, которые меняют мир каждый день',
-            quote1: 'Волонтёрство здесь изменило мою жизнь. Связи, которые я установил, и улыбки, которые я получил, делают каждый час стоящим. TinSerV сделал так легко находить возможности, которые подходят моему расписанию.',
-            quote2: 'Быть наставником через эту платформу дало мне цель за пределами моей работы. Видеть, как дети растут и преуспевают благодаря нашим сессиям, невероятно вознаграждающе.',
-            quote3: 'Я начал с одной уборки пляжа, и теперь я веду ежемесячные проекты по восстановлению природы. TinSerV помог мне найти своё призвание и сообщество единомышленников.'
-        },
         footer: {
             title: 'TinSerV (Молодежь в волонтерском служении)',
             slogan: '«Будь светом который меняет мир»',
@@ -247,46 +185,19 @@ export const translations = {
                 youth: 'Формирование молодежи: Развитие эмпатии и социальной ответственности.',
                 location: 'Кишинёв, Молдова'
             },
-            cta: {
-                badge: 'Интересно?',
-                title: 'Давайте обсудим!',
-                subtitle: 'Мы рады новым волонтерам и готовы ответить на ваши вопросы.'
-            },
             contacts: {
                 write: 'Пишите',
                 location: 'Местоположение',
                 call: 'Звоните'
             },
-            locationValue: 'Кишинёв, Молдова',
-            copyright: '© 2026 TinSerV Chisinau. Built with ❤️ for a better world.'
         },
         videoShowcase: {
-            title: 'Наше влияние в кадрах',
             subtitle: 'Посмотрите, как мы меняем жизни и сообщества через наши проекты.',
             video1: 'Деятельность и волонтерство',
             video2: 'Миссия в действии'
         },
-        collaboration: {
-            title: 'Сотрудничество с TinSerV',
-            description: 'Мы всегда ищем партнеров и преданных делу людей. Если вы хотите принять участие в текущем проекте, предложить новую идею или поддержать нашу миссию, мы открыты для диалога.',
-            contactTitle: 'Как с нами связаться:',
-            close: 'Закрыть'
-        },
         volunteerEvent: {
-            modalTitle: 'Следующее событие',
-            eventTitle: 'TinSerV Чимишлия',
             description: 'Присоединяйтесь к нашей команде на зимнюю смену! Вместе мы дарим тепло окружающим, помогаем нуждающимся семьям и строим более светлое будущее.',
-            location: 'Чимишлия',
-            timer: {
-                days: 'Дней',
-                hours: 'Часов',
-                minutes: 'Минут',
-                seconds: 'Секунд'
-            },
-            joinBtn: 'Я участвую!',
-            close: 'Закрыть',
-            locationLabel: 'Местоположение',
-            viewOnMap: 'Посмотреть на карте →'
         },
         registration: {
             title: 'Регистрация Волонтёра',
