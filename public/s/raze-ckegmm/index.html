@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TinSerV · raze</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.1/lib/p5.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #0b0b0b; color: #ddd; font: 13px/1.5 'JetBrains Mono', ui-monospace, monospace; padding: 20px; min-height: 100vh; }
+  .wrap { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+  #stage canvas { display: block; height: calc(100vh - 40px) !important; width: auto !important; max-width: 100%; cursor: none; }
+  aside { display: flex; flex-direction: column; gap: 14px; min-width: 220px; }
+  aside div { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  aside b { color: #777; font-weight: 400; width: 100%; }
+  button { background: none; border: 0; color: #777; font: inherit; cursor: pointer; padding: 0; }
+  button:hover { color: #ddd; }
+  button.on { color: #ffe600; }
+  #status { color: #777; min-height: 1.5em; }
+  @media (max-width: 700px) { #stage canvas { height: auto !important; width: 100% !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="stage"></div>
+  <aside>
+    <div><b>format</b><button data-fmt="feed" class="on">feed 1080×1350</button><button data-fmt="story">story 1080×1920</button></div>
+    <div><b>light</b><button data-look="0" class="on">warm</button><button data-look="1">cold</button><button data-look="2">white</button></div>
+    <div><b>move</b><button data-move="mouse" class="on">mouse</button><button data-move="orbit">orbit</button></div>
+    <div><b>text</b><button data-text="1" class="on">on</button><button data-text="0">off</button></div>
+    <div><b>export</b><button id="png">save png</button><button id="rec">record 6s loop</button></div>
+    <div id="status"></div>
+  </aside>
+</div>
+
+<script>
+const YEL = '#FFE600', MONO = 'JetBrains Mono', HEAD = 'Montserrat';
+const FIG = { w: 567, h: 654 };
+const PARTS = { leg: { x: 0, y: 376 }, torso: { x: 144, y: 119 }, head: { x: 132, y: 128 }, sparkle: { x: 409, y: 0 } };
+const BODY = ['leg', 'torso', 'head'];
+const FORMATS = { feed: [1080, 1350], story: [1080, 1920] };
+const LOOPS = 6, FPS = 30;
+const LOOKS = [
+  { core: 'rgba(255,250,232,1)', mid: 'rgba(255,196,40,0.92)', edge: 'rgba(255,80,0,0)', glow: YEL, spark: null, dust: [255, 226, 160] },
+  { core: 'rgba(240,248,255,1)', mid: 'rgba(110,160,255,0.88)', edge: 'rgba(40,30,210,0)', glow: '#9fc3ff', spark: '#e4ecff', dust: [200, 220, 255] },
+  { core: 'rgba(255,255,255,1)', mid: 'rgba(225,225,225,0.85)', edge: 'rgba(120,120,120,0)', glow: '#ffffff', spark: '#ffffff', dust: [235, 235, 235] },
+];
+
+const q = new URLSearchParams(location.search);
+const state = { fmt: q.get('fmt') === 'story' ? 'story' : 'feed', look: 0, move: 'mouse', text: true, rec: null, recStart: 0, hover: false };
+
+new p5(p => {
+  let imgs, logo, black, sparks, L, grain, lines, probe, dust, lx, ly, cnv;
+
+  const bake = (img, col) => {
+    const g = p.createGraphics(img.width, img.height);
+    g.pixelDensity(1); g.tint(col); g.image(img, 0, 0);
+    return g;
+  };
+  const drawFigure = (g, set, cx, cy, h) => {
+    const s = h / FIG.h;
+    for (const k of BODY) g.image(set[k], cx + (PARTS[k].x - FIG.w / 2) * s, cy + (PARTS[k].y - FIG.h / 2) * s, set[k].width * s, set[k].height * s);
+  };
+  const layout = () => {
+    const W = p.width, H = p.height;
+    const fh = Math.min(H * 0.62, W * 0.98 * FIG.h / FIG.w);
+    const cx = W * 0.47, cy = state.fmt === 'story' ? H * 0.54 : H * 0.56;
+    const s = fh / FIG.h;
+    return { fh, cx, cy, home: [cx + (488 - FIG.w / 2) * s, cy + (80 - FIG.h / 2) * s] };
+  };
+
+  function build() {
+    const [W, H] = FORMATS[state.fmt];
+    if (!cnv) { cnv = p.createCanvas(W, H); cnv.parent('stage'); }
+    else p.resizeCanvas(W, H);
+    p.pixelDensity(1);
+    L = p.createGraphics(W / 2, H / 2); L.pixelDensity(1);
+    grain = p.createGraphics(W, H); grain.pixelDensity(1); grain.loadPixels();
+    for (let i = 0; i < grain.pixels.length; i += 4) {
+      grain.pixels[i] = grain.pixels[i + 1] = grain.pixels[i + 2] = Math.random() * 255;
+      grain.pixels[i + 3] = 30;
+    }
+    grain.updatePixels();
+    lines = p.createGraphics(W, H); lines.pixelDensity(1); lines.stroke(0, 80); lines.strokeWeight(1.5);
+    for (let y = 0; y < H; y += 4) lines.line(0, y, W, y);
+    probe = document.createElement('canvas'); probe.width = W / 10; probe.height = H / 10;
+    dust = Array.from({ length: 420 }, () => ({
+      x: Math.random() * W, y: Math.random() * H, z: Math.random(),
+      vx: (Math.random() - 0.5) * 0.6, vy: -0.2 - Math.random() * 0.5, ph: Math.random() * 6.28,
+    }));
+    [lx, ly] = layout().home;
+  }
+
+  p.preload = () => {
+    imgs = {};
+    for (const k in PARTS) imgs[k] = p.loadImage(`/s/raze-ckegmm/tinserv/${k}.png`);
+    logo = p.loadImage('/s/raze-ckegmm/tinserv/longyellowlogo.png');
+  };
+
+  p.setup = () => {
+    p.frameRate(FPS);
+    build();
+    black = {}; for (const k of BODY) black[k] = bake(imgs[k], '#000000');
+    sparks = LOOKS.map(l => l.spark ? bake(imgs.sparkle, l.spark) : imgs.sparkle);
+    cnv.elt.addEventListener('pointerenter', () => { state.hover = true; });
+    cnv.elt.addEventListener('pointerleave', () => { state.hover = false; });
+    p.build = build;
+  };
+
+  p.draw = () => {
+    const W = p.width, H = p.height, u = W / 1080, lk = LOOKS[state.look];
+    const { fh, cx, cy, home } = layout();
+    const recording = !!state.rec;
+    const t = recording ? (p.frameCount - state.recStart) / FPS : p.millis() / 1000;
+
+    if (state.move === 'orbit' || recording) {
+      // one loop every LOOPS seconds, so the video wraps without a seam
+      const a = (t / LOOPS) * Math.PI * 2;
+      lx = home[0] + Math.sin(a) * W * 0.16 - W * 0.04;
+      ly = home[1] + Math.sin(a * 2) * H * 0.05 + (1 - Math.cos(a)) * H * 0.05;
+    } else {
+      const [tx, ty] = state.hover ? [p.mouseX, p.mouseY] : [home[0] + Math.sin(t * 0.8) * 30 * u, home[1] + Math.cos(t * 0.6) * 20 * u];
+      lx += (tx - lx) * 0.1; ly += (ty - ly) * 0.1;
+    }
+
+    // light buffer: the glow with the runner cut out
+    L.background(0);
+    const lc = L.drawingContext, r = W * 0.5 * 0.55;
+    const g = lc.createRadialGradient(lx / 2, ly / 2, 0, lx / 2, ly / 2, r);
+    g.addColorStop(0, lk.core); g.addColorStop(0.1, lk.mid); g.addColorStop(0.45, lk.edge.replace(/[\d.]+\)$/, '0.25)')); g.addColorStop(1, lk.edge);
+    lc.fillStyle = g; lc.fillRect(0, 0, L.width, L.height);
+    drawFigure(L, black, cx / 2, cy / 2, fh / 2);
+
+    // smear it outward from the light: the gaps become shafts
+    p.background(0);
+    const c = p.drawingContext;
+    c.globalCompositeOperation = 'lighter';
+    const STEPS = 44;
+    for (let i = 0; i < STEPS; i++) {
+      const s = 1 + i * 0.05;
+      c.globalAlpha = 0.085 * Math.pow(1 - i / STEPS, 1.1);
+      c.drawImage(L.elt, lx * (1 - s), ly * (1 - s), W * s, H * s);
+    }
+    c.globalAlpha = 1;
+
+    // dust only shows where the light actually reaches
+    const pc = probe.getContext('2d', { willReadFrequently: true });
+    pc.drawImage(c.canvas, 0, 0, probe.width, probe.height);
+    const px = pc.getImageData(0, 0, probe.width, probe.height).data;
+    p.noStroke();
+    for (const d of dust) {
+      d.x = (d.x + d.vx + Math.sin(t + d.ph) * 0.3 + W) % W;
+      d.y = (d.y + d.vy + H) % H;
+      const i = (Math.floor(d.y / 10) * probe.width + Math.floor(d.x / 10)) * 4;
+      const lum = (px[i] + px[i + 1] + px[i + 2]) / 765;
+      if (lum < 0.08) continue;
+      p.fill(...lk.dust, 255 * Math.min(1, lum * 1.4) * (0.4 + d.z * 0.6));
+      p.circle(d.x, d.y, (1 + d.z * 3) * u);
+    }
+    c.globalCompositeOperation = 'source-over';
+
+    drawFigure(p, black, cx, cy, fh);
+    p.imageMode(p.CENTER);
+    c.shadowBlur = 50 * u; c.shadowColor = lk.glow;
+    const ss = 72 * u * (1 + Math.sin(t * Math.PI * 2 / LOOPS * 4) * 0.05);
+    p.push(); p.translate(lx, ly); p.rotate(Math.sin(t * Math.PI * 2 / LOOPS) * 0.12);
+    p.image(sparks[state.look], 0, 0, ss, ss); p.pop();
+    c.shadowBlur = 0;
+    p.imageMode(p.CORNER);
+
+    p.image(lines, 0, 0);
+    p.image(grain, Math.floor(Math.random() * 8 - 4), Math.floor(Math.random() * 8 - 4));
+
+    if (state.text) {
+      const m = 64 * u;
+      p.noStroke(); p.fill(255); p.textFont(HEAD); p.textSize(78 * u); p.textAlign(p.RIGHT, p.TOP);
+      p.text('Fii lumina.', W - m, m);
+      p.fill(255, 175); p.textFont(MONO); p.textSize(28 * u);
+      p.text('Будь светом.', W - m, m + 96 * u);
+      p.textAlign(p.LEFT, p.BOTTOM); p.textSize(24 * u);
+      p.fill(255, 220);
+      p.text('Tabăra de iarnă · Cimișlia, 4–9 ianuarie 2027', m, H - m - 64 * u);
+      p.fill(255, 140);
+      p.text('Зимний лагерь · Чимишлия, 4–9 января 2027', m, H - m - 32 * u);
+      p.fill(255, 220);
+      p.text('40 de locuri · Înscrieri din noiembrie', m, H - m);
+      const lw = 190 * u, lh = lw * logo.height / logo.width;
+      p.image(logo, W - m - lw, H - m - lh + 4 * u, lw, lh);
+    }
+
+    if (recording) {
+      const left = LOOPS - t;
+      document.getElementById('status').textContent = `recording… ${Math.max(0, left).toFixed(1)}s`;
+      if (left <= 0) { state.rec.stop(); state.rec = null; }
+    }
+  };
+
+  window.raze = p;
+}, document.getElementById('stage'));
+
+// controls
+function group(attr, apply) {
+  document.querySelectorAll(`[data-${attr}]`).forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll(`[data-${attr}]`).forEach(x => x.classList.toggle('on', x === b));
+    apply(b.dataset[attr]);
+  }));
+}
+document.querySelectorAll('[data-fmt]').forEach(b => b.classList.toggle('on', b.dataset.fmt === state.fmt));
+group('fmt', v => { state.fmt = v; raze.build(); });
+group('look', v => { state.look = +v; });
+group('move', v => { state.move = v; });
+group('text', v => { state.text = v === '1'; });
+
+document.getElementById('png').addEventListener('click', () => raze.saveCanvas(`tinserv-raze-${state.fmt}`, 'png'));
+document.getElementById('rec').addEventListener('click', () => {
+  if (state.rec) return;
+  const type = ['video/mp4;codecs=avc1', 'video/mp4', 'video/webm;codecs=vp9', 'video/webm'].find(t => MediaRecorder.isTypeSupported(t));
+  const rec = new MediaRecorder(raze.drawingContext.canvas.captureStream(FPS), { mimeType: type, videoBitsPerSecond: 16e6 });
+  const chunks = [];
+  rec.ondataavailable = e => chunks.push(e.data);
+  rec.onstop = () => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(chunks, { type }));
+    a.download = `tinserv-raze-${state.fmt}.${type.includes('mp4') ? 'mp4' : 'webm'}`;
+    a.click();
+    document.getElementById('status').textContent = `saved ${a.download}`;
+  };
+  state.recStart = raze.frameCount;
+  state.rec = rec;
+  rec.start();
+});
+</script>
+</body>
+</html>
