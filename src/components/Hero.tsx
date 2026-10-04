@@ -12,12 +12,17 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/70 to-transparent" />
 
       <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-between px-5 pb-8 pt-24 sm:px-8 lg:pb-12 lg:pt-32">
-        <h1 className="font-black-heading animate-fade-in-up text-[clamp(3.5rem,11vw,10rem)] text-white">
+        <h1 className="font-black-heading animate-fade-in-up text-[clamp(3.25rem,9.5vw,8.5rem)] text-white">
           {h.title}
-          {/* revealed when the light turns cold; opacity follows --cold set by Raze */}
+          {/* One sentence that grows with the cold light (--cold, set by Raze):
+              "Fii lumină." becomes "Fii lumină, / iarna asta." */}
+          <span className="inline-grid">
+            <span className="[grid-area:1/1]" style={{ opacity: 'calc(1 - var(--cold, 0))' }}>.</span>
+            <span className="[grid-area:1/1]" style={{ opacity: 'var(--cold, 0)' }}>,</span>
+          </span>
           <span
-            className="mt-[0.15em] block text-[0.5em] text-ice"
-            style={{ opacity: 'var(--cold, 0)', transform: 'translateY(calc((1 - var(--cold, 0)) * 0.12em))', filter: 'blur(calc((1 - var(--cold, 0)) * 6px))' }}
+            className="block text-ice"
+            style={{ opacity: 'var(--cold, 0)', transform: 'translateY(calc((1 - var(--cold, 0)) * 0.08em))', filter: 'blur(calc((1 - var(--cold, 0)) * 8px))' }}
           >
             {h.winter}
           </span>

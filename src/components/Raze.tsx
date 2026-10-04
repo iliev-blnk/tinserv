@@ -105,7 +105,7 @@ export default function Raze({ className = '' }: { className?: string }) {
       const wide = W > H * 1.05;
       // Short, wide windows (laptops, the 1200×630 share image) keep the head clear of the headline.
       const fh = wide ? Math.min(H * 0.74, W * 0.4 * FIG.h / FIG.w) : Math.min(H * 0.42, W * 0.8 * FIG.h / FIG.w);
-      const cx = wide ? W * (W / H > 1.7 ? 0.74 : 0.7) : W * 0.5;
+      const cx = wide ? W * (W / H > 1.7 ? 0.75 : 0.72) : W * 0.5;
       const cy = wide ? H * 0.56 : H * 0.5;
       const s = fh / FIG.h;
       return { fh, cx, cy, home: [cx + (SPARK.x - FIG.w / 2) * s, cy + (SPARK.y - FIG.h / 2) * s] as [number, number] };
