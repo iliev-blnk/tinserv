@@ -15,7 +15,7 @@ export default function Hero() {
         <h1 className="font-black-heading animate-fade-in-up text-[clamp(3.25rem,9.5vw,8.5rem)] text-white">
           {h.title}
           {/* One sentence that grows with the cold light (--cold, set by Raze):
-              "Fii lumină." becomes "Fii lumină, / iarna asta." */}
+              "Fii lumina." becomes "Fii lumina, / iarna asta." */}
           <span className="inline-grid">
             <span className="[grid-area:1/1]" style={{ opacity: 'calc(1 - var(--cold, 0))' }}>.</span>
             <span className="[grid-area:1/1]" style={{ opacity: 'var(--cold, 0)' }}>,</span>

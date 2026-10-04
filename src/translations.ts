@@ -3,7 +3,7 @@ export const translations = {
         site: {
             nav: { camp: 'Ediția de iarnă', about: 'Ce facem', media: 'Media', contact: 'Contact', donate: 'Donează', register: 'Înscrie-te' },
             hero: {
-                title: 'Fii lumină',
+                title: 'Fii lumina',
                 winter: 'iarna asta.',
                 camp: 'TinSerV · Ediția de iarnă',
                 when: 'Cimișlia · 4–9 ianuarie 2027',
