@@ -7,8 +7,8 @@ export const translations = {
                 winter: 'iarna asta.',
                 camp: 'TinSerV · Ediția de iarnă',
                 when: 'Cimișlia · 4–9 ianuarie 2027',
-                seats: '40 de locuri · Înscrieri deschise',
-                register: 'Înscrie-te',
+                seats: '40 de locuri ocupate · Listă de rezervă',
+                register: 'Lista de rezervă',
                 collaborate: 'Colaborează cu noi'
             },
             camp: {
@@ -16,7 +16,7 @@ export const translations = {
                 where: 'Unde', whereValue: 'Cimișlia, Moldova',
                 when: 'Când', whenValue: '4–9 ianuarie 2027',
                 seats: 'Locuri', seatsValue: '40',
-                signup: 'Înscrieri', signupValue: 'deschise',
+                signup: 'Înscrieri', signupValue: 'listă de rezervă',
                 map: 'Vezi pe hartă',
                 started: 'Ediția de iarnă a început.'
             },
@@ -142,8 +142,8 @@ export const translations = {
                 winter: 'этой зимой.',
                 camp: 'TinSerV · Зимняя смена',
                 when: 'Чимишлия · 4–9 января 2027',
-                seats: '40 мест · Регистрация открыта',
-                register: 'Записаться',
+                seats: '40 мест заняты · Резервный список',
+                register: 'Резервный список',
                 collaborate: 'Сотрудничать с нами'
             },
             camp: {
@@ -151,7 +151,7 @@ export const translations = {
                 where: 'Где', whereValue: 'Чимишлия, Молдова',
                 when: 'Когда', whenValue: '4–9 января 2027',
                 seats: 'Мест', seatsValue: '40',
-                signup: 'Регистрация', signupValue: 'открыта',
+                signup: 'Регистрация', signupValue: 'резервный список',
                 map: 'Посмотреть на карте',
                 started: 'Зимняя смена началась.'
             },

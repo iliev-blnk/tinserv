@@ -11,6 +11,9 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyx88nINdcSPk
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzsLMFea0FYkp6tj6ZR5meJhnEd1rL9v3RJDVPo2WCi6cQCMMkKVcxnhHJBbj1qTMsvbt4S5gEwkVl/pub?gid=0&single=true&output=csv';
 
 const CAPACITY = 40;
+// The camp is full even though the sheet has fewer rows (some places were
+// filled outside the form), so every new sign-up goes to the reserve list.
+const FORCE_FULL = true;
 
 // Count data rows in the published CSV (first row is the header). Parsed properly,
 // because a message with line breaks spans several lines of the file.
@@ -42,7 +45,7 @@ export default function Registration() {
 
   useEffect(() => { refreshCount(); }, [refreshCount]);
 
-  const isFull = registeredCount !== null && registeredCount >= CAPACITY;
+  const isFull = FORCE_FULL || (registeredCount !== null && registeredCount >= CAPACITY);
   const spotsLeft = registeredCount === null ? null : Math.max(0, CAPACITY - registeredCount);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,13 +60,14 @@ export default function Registration() {
         setRegisteredCount(count);
       } catch {/* keep the count we already have */}
 
-      const goesToReserve = count !== null && count >= CAPACITY;
+      const goesToReserve = FORCE_FULL || (count !== null && count >= CAPACITY);
 
       const data = new FormData();
       data.append('name', formData.name);
       data.append('email', formData.email);
       data.append('phone', formData.phone);
-      data.append('message', formData.message);
+      // The sheet's script drops the status field, so mark reserves in the message too.
+      data.append('message', goesToReserve ? `[REZERVĂ] ${formData.message}`.trim() : formData.message);
       data.append('status', goesToReserve ? 'reserve' : 'confirmed');
       await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: data, mode: 'no-cors' });
       setSubmittedAsReserve(goesToReserve);
